@@ -1,4 +1,4 @@
-package virophage.game;
+package virophage.core;
 
 public class InfectCellException extends Exception {
 

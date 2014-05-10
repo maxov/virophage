@@ -32,7 +32,7 @@ public class HexagonNode extends RenderNode {
         Graphics2D g = (Graphics2D) gr;
 
         RenderTree tree = getRenderTree();
-        double zoom = tree.getZoom();
+        double zoom = tree.zoom;
 
         g.scale(zoom, zoom);
 

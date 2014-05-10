@@ -1,10 +1,10 @@
-package virophage.game;
+package virophage.core;
 
 public class Cell {
 
     public Virus occupant;
 
-    public void infectWith(Virus virus) throws InfectCellException {
+    public void beInfected(Virus virus) throws InfectCellException {
         if (occupant == null) {
             occupant = virus;
         } else {

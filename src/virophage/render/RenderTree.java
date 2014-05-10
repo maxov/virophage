@@ -1,29 +1,45 @@
 package virophage.render;
 
+import virophage.Start;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 import java.util.ArrayList;
 
-public class RenderTree {
+public class RenderTree extends JPanel {
 
-    private double zoom = 1;
+    public double zoom = 1;
     private double displaceX = 0;
     private double displaceY = 0;
-    private ArrayList<RenderNode> nodes = new ArrayList<RenderNode>();
-    private JComponent master;
 
-    public RenderTree(JComponent master) {
-        this.master = master;
+    private Point prevMousePos;
+    private ArrayList<RenderNode> nodes = new ArrayList<RenderNode>();
+
+    public RenderTree() {
+        setLayout(null);
+        setBackground(Color.WHITE);
+
+        add(new HexagonNode(0, 0));
+        add(new HexagonNode(1, 1));
+        add(new HexagonNode(-1, 0));
+
+        updateNodes();
+
+        MListener m = new MListener();
+
+        addMouseListener(m);
+        addMouseMotionListener(m);
+        addMouseWheelListener(m);
     }
 
     public void add(RenderNode node) {
+        super.add(node);
         nodes.add(node);
         node.setRenderTree(this);
-        master.add(node);
-        update();
     }
 
-    private void update() {
+    public void updateNodes() {
         for(RenderNode node: nodes) {
             Dimension preferredSize = node.getPreferredSize();
             Point preferredPos = node.getPreferredPosition();
@@ -33,8 +49,8 @@ public class RenderTree {
                     (int) Math.ceil(preferredSize.height * zoom)
             );
             Point pos = new Point(
-                    (int) (getZoom() * (preferredPos.getX() + getDisplaceX())),
-                    (int) (getZoom() * (preferredPos.getY() + getDisplaceY()))
+                    (int) (zoom * (preferredPos.getX() + displaceX)),
+                    (int) (zoom * (preferredPos.getY() + displaceY))
             );
 
             node.setBounds(new Rectangle(pos, size));
@@ -42,31 +58,40 @@ public class RenderTree {
         }
     }
 
-    public double getZoom() {
-        return zoom;
-    }
+    private class MListener implements MouseListener, MouseMotionListener, MouseWheelListener {
 
-    public void setZoom(double zoom) {
-        this.zoom = zoom;
-        update();
-    }
+        @Override
+        public void mousePressed(MouseEvent e) {
+            prevMousePos = e.getPoint();
+        }
 
-    public double getDisplaceX() {
-        return displaceX;
-    }
+        @Override
+        public void mouseDragged(MouseEvent e) {
+            Point newPoint = e.getPoint();
+            displaceX += (newPoint.getX() - prevMousePos.getX()) / zoom;
+            displaceY += (newPoint.getY() - prevMousePos.getY()) / zoom;
+            Start.log.info("DRAG " + displaceX + " " + displaceY);
+            updateNodes();
+            prevMousePos = newPoint;
+        }
 
-    public void setDisplaceX(double displaceX) {
-        this.displaceX = displaceX;
-        update();
-    }
+        @Override
+        public void mouseWheelMoved(MouseWheelEvent e) {
+            double rot = e.getPreciseWheelRotation();
+            if ((0.2 < zoom && zoom < 5) ||
+                    (zoom <= 0.2 && rot < 0) ||
+                    (zoom >= 5 && rot > 0)) {
+                zoom = zoom / Math.pow(1.15, rot);
+            }
+            Start.log.info("ZOOM " + zoom);
+            updateNodes();
+        }
 
-    public double getDisplaceY() {
-        return displaceY;
-    }
-
-    public void setDisplaceY(double displaceY) {
-        this.displaceY = displaceY;
-        update();
+        public void mouseClicked(MouseEvent e) {}
+        public void mouseReleased(MouseEvent e) {}
+        public void mouseEntered(MouseEvent e) {}
+        public void mouseExited(MouseEvent e) {}
+        public void mouseMoved(MouseEvent e) {}
     }
 
 }

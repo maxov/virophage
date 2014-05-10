@@ -6,11 +6,11 @@ import virophage.render.RenderTree;
 import javax.swing.*;
 import java.awt.*;
 
-public class VFrame extends JFrame {
+public class GameClient extends JFrame {
 
     public static final Dimension SIZE = new Dimension(1280, 720);
 
-    public VFrame() {
+    public GameClient() {
 
         setTitle("virophage");
         setSize(SIZE);
