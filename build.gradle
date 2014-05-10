@@ -1,0 +1,32 @@
+apply plugin: 'java'
+apply plugin: 'scala'
+
+repositories {
+    mavenCentral()
+}
+
+sourceSets {
+    main {
+        scala {
+            srcDir 'src/scala'
+        }
+        java {
+            srcDir 'src/java'
+        }
+        resources {
+            srcDir 'src/resources'
+        }
+    }
+}
+
+dependencies {
+    // scala
+    compile 'org.scala-lang:scala-library:2.10.4'
+
+    // akka
+    compile 'com.typesafe.akka:akka-actor_2.10:2.3.2'
+    compile 'com.typesafe.akka:akka-remote_2.10:2.3.2'
+
+    // testing
+    testCompile 'junit:junit:4.11'
+}

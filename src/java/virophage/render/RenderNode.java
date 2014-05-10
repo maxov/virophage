@@ -10,7 +10,6 @@ public class RenderNode extends JComponent {
     public RenderTree getRenderTree() {
         return renderTree;
     }
-
     public void setRenderTree(RenderTree renderTree) {
         this.renderTree = renderTree;
     }
