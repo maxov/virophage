@@ -61,16 +61,19 @@ Instructions
 - When a player has eliminated all viruses of the opposing player, he/she has won.
 
 Features List
+
 Must-Haves
 - ‘Stupid’ AI
 - Occupation of cells
 - GUI
 - Energy
 - Dead cells
+
 Want-To-Haves
 - ‘Smart’ AI
 - Ability upgrades
 - Picture on Background
+
 Stretch Features
 - Multiplayer over a network
 
