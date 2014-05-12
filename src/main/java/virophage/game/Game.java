@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 package virophage.game;
 
 public class Game {
@@ -6,3 +7,14 @@ public class Game {
     }
 
 }
+=======
+package virophage.game;
+
+public class Game {
+
+    public void nun() {
+
+    }
+
+}
+>>>>>>> Stashed changes
