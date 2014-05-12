@@ -1,6 +1,6 @@
 package virophage;
 
-import virophage.gui.VFrame;
+import virophage.gui.GameClient;
 
 import java.util.logging.Logger;
 
@@ -10,7 +10,7 @@ public class Start {
 
     public static void main(String[] args) {
         log.info("Constructing frame");
-        VFrame frame = new VFrame();
+        GameClient gameClient = new GameClient();
     }
 
 }

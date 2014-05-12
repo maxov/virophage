@@ -18,16 +18,13 @@ public class RenderTree extends JPanel {
 
     public RenderTree() {
         setLayout(null);
+        setFocusable(true);
         setBackground(Color.WHITE);
 
-        add(new HexagonNode(0, 0));
-        add(new HexagonNode(1, 1));
-        add(new HexagonNode(-1, 0));
-
-        updateNodes();
+        KListener k = new KListener();
+        addKeyListener(k);
 
         MListener m = new MListener();
-
         addMouseListener(m);
         addMouseMotionListener(m);
         addMouseWheelListener(m);
@@ -40,21 +37,23 @@ public class RenderTree extends JPanel {
     }
 
     public void updateNodes() {
-        for(RenderNode node: nodes) {
-            Dimension preferredSize = node.getPreferredSize();
-            Point preferredPos = node.getPreferredPosition();
+        if(nodes != null) {
+            for(RenderNode node: nodes) {
+                Dimension preferredSize = node.getPreferredSize();
+                Point preferredPos = node.getPreferredPosition();
 
-            Dimension size = new Dimension(
-                    (int) Math.ceil(preferredSize.width * zoom),
-                    (int) Math.ceil(preferredSize.height * zoom)
-            );
-            Point pos = new Point(
-                    (int) (zoom * (preferredPos.getX() + displaceX)),
-                    (int) (zoom * (preferredPos.getY() + displaceY))
-            );
+                Dimension size = new Dimension(
+                        (int) Math.ceil(preferredSize.width * zoom),
+                        (int) Math.ceil(preferredSize.height * zoom)
+                );
+                Point pos = new Point(
+                        (int) (zoom * (preferredPos.getX() + displaceX)),
+                        (int) (zoom * (preferredPos.getY() + displaceY))
+                );
 
-            node.setBounds(new Rectangle(pos, size));
-            node.repaint();
+                node.setBounds(new Rectangle(pos, size));
+                node.repaint();
+            }
         }
     }
 
@@ -92,6 +91,36 @@ public class RenderTree extends JPanel {
         public void mouseEntered(MouseEvent e) {}
         public void mouseExited(MouseEvent e) {}
         public void mouseMoved(MouseEvent e) {}
+    }
+
+    private class KListener implements KeyListener {
+
+        @Override
+        public void keyTyped(KeyEvent e) {
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            int code = e.getKeyCode();
+            if(code == KeyEvent.VK_LEFT) {
+                displaceX += 50 / zoom;
+            }
+            if(code == KeyEvent.VK_RIGHT) {
+                displaceX -= 50 / zoom;
+            }
+            if(code == KeyEvent.VK_UP) {
+                displaceY += 50 / zoom;
+            }
+            if(code == KeyEvent.VK_DOWN) {
+                displaceY -= 50 / zoom;
+            }
+            updateNodes();
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+        }
+
     }
 
 }

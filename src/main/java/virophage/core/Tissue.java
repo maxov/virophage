@@ -6,14 +6,21 @@ public class Tissue {
 
     public Tissue(Cell[][] start) {
         cells = start;
-        for(Cell[] arr: cells){
+
+        // Initialize cells
+        /*for(Cell[] arr: cells){
             for(int i = 0; i < arr.length; i++) {
                 Cell c = arr[i];
                 if(c == null) {
                     arr[i] = new Cell();
                 }
             }
-        }
+        }*/
+
+    }
+
+    public Cell getCell(Location loc) {
+        return cells[loc.y][loc.x];
     }
 
 }

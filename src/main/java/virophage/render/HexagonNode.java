@@ -1,15 +1,18 @@
 package virophage.render;
 
+import virophage.core.Location;
+import virophage.util.Vector;
+
 import java.awt.*;
 
 public class HexagonNode extends RenderNode {
 
-    public static final int RADIUS = 100;
-    public static final int TRI_HEIGHT = RADIUS / 2;
-    public static final int TRI_WIDTH = (int) (TRI_HEIGHT * Math.sqrt(3));
+    public static final double RADIUS = 100;
+    public static final double TRI_WIDTH = RADIUS;
+    public static final double TRI_HEIGHT = (int) (TRI_WIDTH / 2 * Math.sqrt(3));
 
-    public static final int BOUNDS_WIDTH = TRI_WIDTH * 2;
-    public static final int BOUNDS_HEIGHT = RADIUS * 2;
+    public static final double BOUNDS_WIDTH = RADIUS * 2;
+    public static final double BOUNDS_HEIGHT = TRI_WIDTH * 2;
 
     private int x;
     private int y;
@@ -20,11 +23,11 @@ public class HexagonNode extends RenderNode {
     }
 
     public Dimension getPreferredSize() {
-        return new Dimension(BOUNDS_WIDTH + 1, BOUNDS_HEIGHT + 1);
+        return new Vector(BOUNDS_WIDTH + 1, BOUNDS_HEIGHT + 1).toDimension();
     }
 
     public Point getPreferredPosition() {
-        return new Point(x * 200, y * 200);
+        return new Location(x, y).asCoordinates().toPoint();
     }
 
     @Override
@@ -37,22 +40,22 @@ public class HexagonNode extends RenderNode {
         g.scale(zoom, zoom);
 
         Polygon hexagon = new Polygon(new int[] {
-                TRI_WIDTH,
-                TRI_WIDTH * 2,
-                TRI_WIDTH * 2,
-                TRI_WIDTH,
-                0,
+                (int) (RADIUS / 2),
+                (int) (RADIUS * 3 / 2),
+                (int) (RADIUS * 2),
+                (int) (RADIUS * 3 / 2),
+                (int) (RADIUS / 2),
                 0
         }, new int[] {
                 0,
-                RADIUS - TRI_HEIGHT,
-                RADIUS + TRI_HEIGHT,
-                2 * RADIUS,
-                RADIUS + TRI_HEIGHT,
-                RADIUS - TRI_HEIGHT
+                0,
+                (int) TRI_HEIGHT,
+                (int) (TRI_HEIGHT * 2),
+                (int) (TRI_HEIGHT * 2),
+                (int) TRI_HEIGHT
         }, 6);
 
-        g.setColor(new Color(227, 239, 255));
+        g.setColor(Color.WHITE);
         g.fillPolygon(hexagon);
         g.setColor(new Color(17, 17, 17));
         g.drawPolygon(hexagon);

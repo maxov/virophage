@@ -1,6 +1,8 @@
 package virophage.gui;
 
 import virophage.Start;
+import virophage.render.HexagonNode;
+import virophage.render.RenderNode;
 import virophage.render.RenderTree;
 
 import javax.swing.*;
@@ -16,7 +18,22 @@ public class GameClient extends JFrame {
         setSize(SIZE);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        add(new RenderTree(), BorderLayout.CENTER);
+        RenderTree tree = new RenderTree();
+
+        int N = 10;
+        
+        for(int x = -N; x <= N; x++) {
+            for(int y = -N; y <= N; y++) {
+                for(int z = -N; z <= N; z++) {
+                    if(x + y + z == 0)
+                        tree.add(new HexagonNode(x, y));
+                }
+            }
+        }
+
+        tree.updateNodes();
+
+        add(tree, BorderLayout.CENTER);
 
         Start.log.info("Setting frame visible");
         setVisible(true);

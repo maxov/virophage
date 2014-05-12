@@ -10,7 +10,7 @@ import scala.concurrent.duration._
 object ScalaStart {
 
   def main(args: Array[String]): Unit = {
-    val sys = ActorSystem("myactors", ConfigFactory.load().getConfig("myactors"))
+    val sys = ActorSystem("myactors", ConfigFactory.load().getConfig("virophage.server"))
     val myactor = sys.actorOf(Props[MyActor], "MyActor")
     println("hi")
     myactor ! Ping()
