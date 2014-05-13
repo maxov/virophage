@@ -61,9 +61,9 @@ public class HexagonNode extends RenderNode {
     
     public void onClick(MouseEvent e) {
     	if(e.isShiftDown()) {
-    		color = Color.BLUE;
+    		color = new Color(200, 250, 200);
     	} else {
-    		color = Color.RED;
+    		color = new Color(250, 200, 200);
     	}
 		repaint();
 	}
