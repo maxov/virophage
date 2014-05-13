@@ -21,7 +21,7 @@ public class GameClient extends JFrame {
         RenderTree tree = new RenderTree();
 
         int N = 10;
-        
+       
         for(int x = -N; x <= N; x++) {
             for(int y = -N; y <= N; y++) {
                 for(int z = -N; z <= N; z++) {

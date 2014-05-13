@@ -3,8 +3,10 @@ package virophage.render;
 import virophage.Start;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 
 public class RenderTree extends JPanel {
@@ -15,6 +17,9 @@ public class RenderTree extends JPanel {
 
     private Point prevMousePos;
     private ArrayList<RenderNode> nodes = new ArrayList<RenderNode>();
+  
+    
+    ArrayList<Shape> shapes = new ArrayList<Shape>();
 
     public RenderTree() {
         setLayout(null);
@@ -37,6 +42,9 @@ public class RenderTree extends JPanel {
     }
 
     public void updateNodes() {
+    	AffineTransform at = new AffineTransform();
+    	at.translate(displaceX * zoom, displaceY * zoom);
+    	at.scale(zoom, zoom);
         if(nodes != null) {
             for(RenderNode node: nodes) {
                 Dimension preferredSize = node.getPreferredSize();
@@ -53,6 +61,7 @@ public class RenderTree extends JPanel {
 
                 node.setBounds(new Rectangle(pos, size));
                 node.repaint();
+                //shapes.add(at.createTransformedShape(node.getCollision()));
             }
         }
     }
@@ -66,12 +75,14 @@ public class RenderTree extends JPanel {
 
         @Override
         public void mouseDragged(MouseEvent e) {
-            Point newPoint = e.getPoint();
-            displaceX += (newPoint.getX() - prevMousePos.getX()) / zoom;
-            displaceY += (newPoint.getY() - prevMousePos.getY()) / zoom;
-            Start.log.info("DRAG " + displaceX + " " + displaceY);
-            updateNodes();
-            prevMousePos = newPoint;
+        	if(e.isControlDown()) {
+        		Point newPoint = e.getPoint();
+                displaceX += (newPoint.getX() - prevMousePos.getX()) / zoom;
+                displaceY += (newPoint.getY() - prevMousePos.getY()) / zoom;
+                Start.log.info("DRAG " + displaceX + " " + displaceY);
+                prevMousePos = newPoint;
+                updateNodes();
+        	}
         }
 
         @Override
@@ -86,19 +97,22 @@ public class RenderTree extends JPanel {
             updateNodes();
         }
 
+        @Override
         public void mouseClicked(MouseEvent e) {
+        	AffineTransform at = new AffineTransform();
+        	at.translate(displaceX * zoom, displaceY * zoom);
+        	at.scale(zoom, zoom);
+        	for(RenderNode r: nodes) {
+        		Shape col = at.createTransformedShape(r.getCollision());
+        		if(col.contains(e.getPoint())) {
+        			r.onClick(e);
+        			break;
+        		}
+        	}
         	
         }
-        public void mouseReleased(MouseEvent e) {
-        	int x = e.getX(); 
-			int y = e.getY();
-			
-//			for(RenderNode node: nodes) {
-//				if (node.contains(x, y)) {
-//					System.out.println("get a hexagon");
-//				}
-//			}
-        }
+        
+        public void mouseReleased(MouseEvent e) {}
         public void mouseEntered(MouseEvent e) {}
         public void mouseExited(MouseEvent e) {}
         public void mouseMoved(MouseEvent e) {}

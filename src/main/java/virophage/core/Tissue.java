@@ -16,12 +16,11 @@ public class Tissue {
                 }
             }
         }*/
-
+        
     }
 
     public Cell getCell(Location loc) {
-    	//location x && y can be negative! Should convert?
-        return cells[cells.length / 2 - loc.y][cells[0].length / 2 - loc.x];
+        return cells[loc.y + cells.length / 2][loc.x + cells[0].length / 2];
     }
 
 }

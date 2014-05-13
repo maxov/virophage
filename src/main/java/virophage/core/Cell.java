@@ -1,5 +1,7 @@
 package virophage.core;
 
+import virophage.core.Virus;
+
 public class Cell {
 
     public Virus occupant;
