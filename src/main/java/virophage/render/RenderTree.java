@@ -86,8 +86,19 @@ public class RenderTree extends JPanel {
             updateNodes();
         }
 
-        public void mouseClicked(MouseEvent e) {}
-        public void mouseReleased(MouseEvent e) {}
+        public void mouseClicked(MouseEvent e) {
+        	
+        }
+        public void mouseReleased(MouseEvent e) {
+        	int x = e.getX(); 
+			int y = e.getY();
+			
+//			for(RenderNode node: nodes) {
+//				if (node.contains(x, y)) {
+//					System.out.println("get a hexagon");
+//				}
+//			}
+        }
         public void mouseEntered(MouseEvent e) {}
         public void mouseExited(MouseEvent e) {}
         public void mouseMoved(MouseEvent e) {}

@@ -37,6 +37,8 @@ public class GameClient extends JFrame {
 
         Start.log.info("Setting frame visible");
         setVisible(true);
+        
+        //create tissue here?
     }
 
 }

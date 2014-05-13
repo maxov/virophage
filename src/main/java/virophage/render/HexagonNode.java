@@ -1,11 +1,12 @@
 package virophage.render;
 
+import virophage.core.Cell;
 import virophage.core.Location;
 import virophage.util.Vector;
 
 import java.awt.*;
 
-public class HexagonNode extends RenderNode {
+public class HexagonNode extends RenderNode{
 
     public static final double RADIUS = 100;
     public static final double TRI_WIDTH = RADIUS;
@@ -16,10 +17,13 @@ public class HexagonNode extends RenderNode {
 
     private int x;
     private int y;
+    private Color c;
+    private Cell space;
 
     public HexagonNode(int x, int y) {
         this.x = x;
         this.y = y;
+        this.c = Color.white;
     }
 
     public Dimension getPreferredSize() {
@@ -55,10 +59,12 @@ public class HexagonNode extends RenderNode {
                 (int) TRI_HEIGHT
         }, 6);
 
-        g.setColor(Color.WHITE);
+        g.setColor(c);
         g.fillPolygon(hexagon);
         g.setColor(new Color(17, 17, 17));
         g.drawPolygon(hexagon);
+        g.setColor(Color.BLACK);
+        g.drawString("5", (int)RADIUS, (int)RADIUS);
 
     }
 

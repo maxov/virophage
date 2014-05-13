@@ -20,7 +20,8 @@ public class Tissue {
     }
 
     public Cell getCell(Location loc) {
-        return cells[loc.y][loc.x];
+    	//location x && y can be negative! Should convert?
+        return cells[cells.length / 2 - loc.y][cells[0].length / 2 - loc.x];
     }
 
 }
