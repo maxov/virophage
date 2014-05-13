@@ -84,7 +84,6 @@ public class HexagonNode extends RenderNode{
         g.setColor(new Color(17, 17, 17));
         g.drawPolygon(hexagon);
         g.setColor(Color.BLACK);
-        g.drawString("5", (int)RADIUS, (int)RADIUS);
 
     }
 
