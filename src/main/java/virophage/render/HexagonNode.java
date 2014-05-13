@@ -4,6 +4,8 @@ import virophage.core.Location;
 import virophage.util.Vector;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 public class HexagonNode extends RenderNode {
 
@@ -17,29 +19,14 @@ public class HexagonNode extends RenderNode {
     private int x;
     private int y;
 
+    private Color color;
+    private Polygon hexagon;
+
     public HexagonNode(int x, int y) {
         this.x = x;
         this.y = y;
-    }
-
-    public Dimension getPreferredSize() {
-        return new Vector(BOUNDS_WIDTH + 1, BOUNDS_HEIGHT + 1).toDimension();
-    }
-
-    public Point getPreferredPosition() {
-        return new Location(x, y).asCoordinates().toPoint();
-    }
-
-    @Override
-    public void paintComponent(Graphics gr) {
-        Graphics2D g = (Graphics2D) gr;
-
-        RenderTree tree = getRenderTree();
-        double zoom = tree.zoom;
-
-        g.scale(zoom, zoom);
-
-        Polygon hexagon = new Polygon(new int[] {
+        color = Color.WHITE;
+        hexagon = new Polygon(new int[] {
                 (int) (RADIUS / 2),
                 (int) (RADIUS * 3 / 2),
                 (int) (RADIUS * 2),
@@ -54,8 +41,35 @@ public class HexagonNode extends RenderNode {
                 (int) (TRI_HEIGHT * 2),
                 (int) TRI_HEIGHT
         }, 6);
+    }
 
-        g.setColor(Color.WHITE);
+    public Dimension getPreferredSize() {
+        return new Vector(BOUNDS_WIDTH + 1, BOUNDS_HEIGHT + 1).toDimension();
+    }
+
+    public Point getPreferredPosition() {
+        return new Location(x, y).asCoordinates().toPoint();
+    }
+    
+    public Shape getCollision() {
+    	return new Polygon(hexagon.xpoints, hexagon.ypoints, hexagon.npoints);
+    }
+    
+    public void onClick(MouseEvent e) {
+		color = Color.BLACK;
+		repaint();
+	}
+
+    @Override
+    public void paintComponent(Graphics gr) {
+        Graphics2D g = (Graphics2D) gr;
+
+        RenderTree tree = getRenderTree();
+        double zoom = tree.zoom;
+
+        g.scale(zoom, zoom);
+
+        g.setColor(color);
         g.fillPolygon(hexagon);
         g.setColor(new Color(17, 17, 17));
         g.drawPolygon(hexagon);

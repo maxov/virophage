@@ -1,28 +1,4 @@
-<<<<<<< Updated upstream
 apply plugin: 'java'
-apply plugin: 'scala'
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    // scala
-    compile 'org.scala-lang:scala-library:2.10.4'
-    compile 'org.scala-lang:scala-compiler:2.10.4'
-
-    // akka
-    compile 'com.typesafe.akka:akka-actor_2.10:2.3.2'
-    compile 'com.typesafe.akka:akka-remote_2.10:2.3.2'
-
-    // graphics
-    //compile 'org.lwjgl.lwjgl:lwjgl:2.9.1'
-
-    // testing
-    testCompile 'junit:junit:4.11'
-=======
-apply plugin: 'java'
-apply plugin: 'scala'
 
 version = '0.0.1-SNAPSHOT'
 
@@ -31,10 +7,6 @@ repositories {
 }
 
 dependencies {
-    // scala
-    compile 'org.scala-lang:scala-library:2.10.4'
-    compile 'org.scala-lang:scala-compiler:2.10.4'
-
     // akka
     compile 'com.typesafe.akka:akka-actor_2.10:2.3.2'
     compile 'com.typesafe.akka:akka-remote_2.10:2.3.2'
@@ -52,16 +24,19 @@ jar {
     }
 }
 
-task uberjar(type: Jar) {
-    from sourceSets.main.output.classesDir
-    from sourceSets.main.output.resourcesDir
-    from configurations.runtime.files.collect { file ->
-        println file
-        zipTree(file)
-    }
-    exclude '**/ParHashMapCombiner$$anonfun$4.*'
+task deployCopy(type: Copy) {
+    from project.configurations.runtime
+    into 'build/deploy/libraries'
+}
 
-    archiveName = 'virophage-uber-${project.version}.jar'
-    manifest = project.jar.manifest
->>>>>>> Stashed changes
+task deploy(type: Jar, dependsOn: deployCopy) {
+    from project.sourceSets.main.output
+
+    destinationDir = file("${project.buildDir}/deploy")
+    appendix = 'deploy'
+    manifest = project.manifest {
+        from project.jar.manifest
+        attributes 'Class-Path': 'libraries/*'
+    }
+
 }

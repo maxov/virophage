@@ -16,11 +16,11 @@ public class Tissue {
                 }
             }
         }*/
-
+        
     }
 
     public Cell getCell(Location loc) {
-        return cells[loc.y][loc.x];
+        return cells[loc.y + cells.length / 2][loc.x + cells[0].length / 2];
     }
 
 }

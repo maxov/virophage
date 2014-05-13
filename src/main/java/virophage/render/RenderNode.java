@@ -1,7 +1,9 @@
 package virophage.render;
 
 import javax.swing.*;
+
 import java.awt.*;
+import java.awt.event.MouseEvent;
 
 public class RenderNode extends JComponent {
 
@@ -17,4 +19,13 @@ public class RenderNode extends JComponent {
     public Point getPreferredPosition() {
         return null;
     }
+    
+    public Shape getCollision() {
+    	return null;
+    }
+    
+    public void onClick(MouseEvent e) {
+    	
+    }
+    
 }

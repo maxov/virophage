@@ -3,8 +3,10 @@ package virophage.render;
 import virophage.Start;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 
 public class RenderTree extends JPanel {
@@ -86,7 +88,21 @@ public class RenderTree extends JPanel {
             updateNodes();
         }
 
-        public void mouseClicked(MouseEvent e) {}
+        @Override
+        public void mouseClicked(MouseEvent e) {
+        	AffineTransform at = new AffineTransform();
+        	at.translate(displaceX, displaceY);
+        	at.scale(zoom, zoom);
+        	for(RenderNode r: nodes) {
+        		Shape col = at.createTransformedShape(r.getCollision());
+        		if(col.contains(e.getPoint())) {
+        			r.onClick(e);
+        			break;
+        		}
+        	}
+        	
+        }
+        
         public void mouseReleased(MouseEvent e) {}
         public void mouseEntered(MouseEvent e) {}
         public void mouseExited(MouseEvent e) {}
