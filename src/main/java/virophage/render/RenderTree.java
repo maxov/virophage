@@ -9,7 +9,7 @@ import java.awt.event.*;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 
-public class RenderTree extends JPanel {
+public class RenderTree extends JComponent {
 
     public double zoom = 1;
     private double displaceX = 0;
@@ -17,6 +17,9 @@ public class RenderTree extends JPanel {
 
     private Point prevMousePos;
     private ArrayList<RenderNode> nodes = new ArrayList<RenderNode>();
+  
+    
+    ArrayList<Shape> shapes = new ArrayList<Shape>();
 
     public RenderTree() {
         setLayout(null);
@@ -39,6 +42,9 @@ public class RenderTree extends JPanel {
     }
 
     public void updateNodes() {
+    	AffineTransform at = new AffineTransform();
+    	at.translate(displaceX * zoom, displaceY * zoom);
+    	at.scale(zoom, zoom);
         if(nodes != null) {
             for(RenderNode node: nodes) {
                 Dimension preferredSize = node.getPreferredSize();
@@ -55,8 +61,18 @@ public class RenderTree extends JPanel {
 
                 node.setBounds(new Rectangle(pos, size));
                 node.repaint();
+                //shapes.add(at.createTransformedShape(node.getCollision()));
             }
         }
+    }
+    
+    @Override
+    public void paintComponent(Graphics gr) {
+    	setBackground(new Color(200, 200, 230));
+    	Graphics2D g = (Graphics2D) gr;
+    	/*for(Shape s: shapes) {
+    		g.draw(s);
+    	}*/
     }
 
     private class MListener implements MouseListener, MouseMotionListener, MouseWheelListener {
@@ -72,8 +88,8 @@ public class RenderTree extends JPanel {
             displaceX += (newPoint.getX() - prevMousePos.getX()) / zoom;
             displaceY += (newPoint.getY() - prevMousePos.getY()) / zoom;
             Start.log.info("DRAG " + displaceX + " " + displaceY);
-            updateNodes();
             prevMousePos = newPoint;
+            updateNodes();
         }
 
         @Override
@@ -91,7 +107,7 @@ public class RenderTree extends JPanel {
         @Override
         public void mouseClicked(MouseEvent e) {
         	AffineTransform at = new AffineTransform();
-        	at.translate(displaceX, displaceY);
+        	at.translate(displaceX * zoom, displaceY * zoom);
         	at.scale(zoom, zoom);
         	for(RenderNode r: nodes) {
         		Shape col = at.createTransformedShape(r.getCollision());

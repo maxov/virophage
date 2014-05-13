@@ -6,6 +6,7 @@ import virophage.util.Vector;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Random;
 
 public class HexagonNode extends RenderNode {
 
@@ -52,11 +53,15 @@ public class HexagonNode extends RenderNode {
     }
     
     public Shape getCollision() {
-    	return new Polygon(hexagon.xpoints, hexagon.ypoints, hexagon.npoints);
+    	Polygon poly = new Polygon(hexagon.xpoints, hexagon.ypoints, hexagon.npoints);
+    	Point p = new Location(x, y).asCoordinates().toPoint();
+    	poly.translate((int) p.getX(), (int) p.getY());
+    	return poly;
     }
     
     public void onClick(MouseEvent e) {
-		color = Color.BLACK;
+    	Random rand = new Random();
+		color = new Color(rand.nextInt(255), rand.nextInt(255), rand.nextInt(255));
 		repaint();
 	}
 
