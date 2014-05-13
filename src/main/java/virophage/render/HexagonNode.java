@@ -60,8 +60,11 @@ public class HexagonNode extends RenderNode {
     }
     
     public void onClick(MouseEvent e) {
-    	Random rand = new Random();
-		color = new Color(rand.nextInt(255), rand.nextInt(255), rand.nextInt(255));
+    	if(e.isShiftDown()) {
+    		color = Color.BLUE;
+    	} else {
+    		color = Color.RED;
+    	}
 		repaint();
 	}
 

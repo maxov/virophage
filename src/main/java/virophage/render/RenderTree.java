@@ -9,7 +9,7 @@ import java.awt.event.*;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 
-public class RenderTree extends JComponent {
+public class RenderTree extends JPanel {
 
     public double zoom = 1;
     private double displaceX = 0;
@@ -65,15 +65,6 @@ public class RenderTree extends JComponent {
             }
         }
     }
-    
-    @Override
-    public void paintComponent(Graphics gr) {
-    	setBackground(new Color(200, 200, 230));
-    	Graphics2D g = (Graphics2D) gr;
-    	/*for(Shape s: shapes) {
-    		g.draw(s);
-    	}*/
-    }
 
     private class MListener implements MouseListener, MouseMotionListener, MouseWheelListener {
 
@@ -84,12 +75,14 @@ public class RenderTree extends JComponent {
 
         @Override
         public void mouseDragged(MouseEvent e) {
-            Point newPoint = e.getPoint();
-            displaceX += (newPoint.getX() - prevMousePos.getX()) / zoom;
-            displaceY += (newPoint.getY() - prevMousePos.getY()) / zoom;
-            Start.log.info("DRAG " + displaceX + " " + displaceY);
-            prevMousePos = newPoint;
-            updateNodes();
+        	if(e.isControlDown()) {
+        		Point newPoint = e.getPoint();
+                displaceX += (newPoint.getX() - prevMousePos.getX()) / zoom;
+                displaceY += (newPoint.getY() - prevMousePos.getY()) / zoom;
+                Start.log.info("DRAG " + displaceX + " " + displaceY);
+                prevMousePos = newPoint;
+                updateNodes();
+        	}
         }
 
         @Override
