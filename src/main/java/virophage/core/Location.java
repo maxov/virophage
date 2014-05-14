@@ -1,23 +1,23 @@
 package virophage.core;
 
-import virophage.render.HexagonNode;
+import virophage.util.HexagonConstants;
 import virophage.util.Vector;
 
 public class Location {
 
     public static final Vector X_VECTOR = new Vector(
-            0.5 * HexagonNode.TRI_WIDTH + HexagonNode.RADIUS,
-            HexagonNode.TRI_HEIGHT
+            0.5 * HexagonConstants.TRI_WIDTH + HexagonConstants.RADIUS,
+            HexagonConstants.TRI_HEIGHT
     );
 
     public static final Vector Y_VECTOR = new Vector(
             0,
-            2 * HexagonNode.TRI_HEIGHT
+            2 * HexagonConstants.TRI_HEIGHT
     );
 
     public static final Vector Z_VECTOR = new Vector(
-            0.5 * HexagonNode.TRI_WIDTH + HexagonNode.RADIUS,
-            -HexagonNode.TRI_HEIGHT
+            0.5 * HexagonConstants.TRI_WIDTH + HexagonConstants.RADIUS,
+            -HexagonConstants.TRI_HEIGHT
     );
 
     public final int x;

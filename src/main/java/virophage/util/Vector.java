@@ -25,6 +25,11 @@ public class Vector {
         this.y = y;
     }
 
+    public Vector(Point point) {
+        this.x = point.getX();
+        this.y = point.getY();
+    }
+
     public boolean equals(Vector that) {
         return x == that.x && y == that.y;
     }

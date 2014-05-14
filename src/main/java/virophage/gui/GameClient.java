@@ -1,6 +1,7 @@
 package virophage.gui;
 
 import virophage.Start;
+import virophage.core.Location;
 import virophage.render.HexagonNode;
 import virophage.render.RenderNode;
 import virophage.render.RenderTree;
@@ -28,12 +29,10 @@ public class GameClient extends JFrame {
             for(int y = -N; y <= N; y++) {
                 for(int z = -N; z <= N; z++) {
                     if(x + y + z == 0)
-                        tree.add(new HexagonNode(x, y));
+                        tree.add(new HexagonNode(new Location(x, y)));
                 }
             }
         }
-
-        tree.updateNodes();
 
         add(tree, BorderLayout.CENTER);
 

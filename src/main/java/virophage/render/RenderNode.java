@@ -1,31 +1,27 @@
 package virophage.render;
 
+import virophage.util.Vector;
+
 import javax.swing.*;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
-public class RenderNode extends JComponent {
+public abstract class RenderNode {
 
     private RenderTree renderTree;
+
+    public abstract Vector getPosition();
+    public abstract Shape getCollision();
+    public abstract void paint(Graphics2D g);
+    
+    public void onClick(MouseEvent e) {}
 
     public RenderTree getRenderTree() {
         return renderTree;
     }
+
     public void setRenderTree(RenderTree renderTree) {
         this.renderTree = renderTree;
     }
-
-    public Point getPreferredPosition() {
-        return null;
-    }
-    
-    public Shape getCollision() {
-    	return null;
-    }
-    
-    public void onClick(MouseEvent e) {
-    	
-    }
-    
 }

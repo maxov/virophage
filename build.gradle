@@ -8,8 +8,8 @@ repositories {
 
 dependencies {
     // akka
-    compile 'com.typesafe.akka:akka-actor_2.10:2.3.2'
-    compile 'com.typesafe.akka:akka-remote_2.10:2.3.2'
+    //compile 'com.typesafe.akka:akka-actor_2.10:2.3.2'
+    //compile 'com.typesafe.akka:akka-remote_2.10:2.3.2'
 
     // graphics
     //compile 'org.lwjgl.lwjgl:lwjgl:2.9.1'

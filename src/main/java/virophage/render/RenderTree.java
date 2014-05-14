@@ -1,6 +1,7 @@
 package virophage.render;
 
 import virophage.Start;
+import virophage.util.Vector;
 
 import javax.swing.*;
 
@@ -9,22 +10,16 @@ import java.awt.event.*;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 
-public class RenderTree extends JPanel {
+public class RenderTree extends JComponent {
 
     public double zoom = 1;
-    private double displaceX = 0;
-    private double displaceY = 0;
+    private Vector displacement = new Vector(0, 0);
 
-    private Point prevMousePos;
     private ArrayList<RenderNode> nodes = new ArrayList<RenderNode>();
-  
-    
-    ArrayList<Shape> shapes = new ArrayList<Shape>();
 
     public RenderTree() {
-        setLayout(null);
         setFocusable(true);
-        setBackground(Color.WHITE);
+        requestFocus();
 
         KListener k = new KListener();
         addKeyListener(k);
@@ -36,52 +31,46 @@ public class RenderTree extends JPanel {
     }
 
     public void add(RenderNode node) {
-        super.add(node);
         nodes.add(node);
         node.setRenderTree(this);
     }
 
-    public void updateNodes() {
-    	AffineTransform at = new AffineTransform();
-    	at.translate(displaceX * zoom, displaceY * zoom);
-    	at.scale(zoom, zoom);
+    @Override
+    public void paintComponent(Graphics g) {
+        AffineTransform at = new AffineTransform();
+        at.translate(displacement.x * zoom, displacement.y * zoom);
+        at.scale(zoom, zoom);
+
         if(nodes != null) {
             for(RenderNode node: nodes) {
-                Dimension preferredSize = node.getPreferredSize();
-                Point preferredPos = node.getPreferredPosition();
+                Vector vec = node.getPosition();
+                AffineTransform nodeTransform = new AffineTransform(at);
+                nodeTransform.translate(vec.x, vec.y);
 
-                Dimension size = new Dimension(
-                        (int) Math.ceil(preferredSize.width * zoom),
-                        (int) Math.ceil(preferredSize.height * zoom)
-                );
-                Point pos = new Point(
-                        (int) (zoom * (preferredPos.getX() + displaceX)),
-                        (int) (zoom * (preferredPos.getY() + displaceY))
-                );
-
-                node.setBounds(new Rectangle(pos, size));
-                node.repaint();
-                //shapes.add(at.createTransformedShape(node.getCollision()));
+                Graphics2D nodeGraphics = (Graphics2D) g.create();
+                nodeGraphics.transform(nodeTransform);
+                node.paint(nodeGraphics);
             }
         }
     }
 
     private class MListener implements MouseListener, MouseMotionListener, MouseWheelListener {
 
+        private Vector prevPos;
+
         @Override
         public void mousePressed(MouseEvent e) {
-            prevMousePos = e.getPoint();
+            prevPos = new Vector(e.getPoint());
         }
 
         @Override
         public void mouseDragged(MouseEvent e) {
         	if(e.isControlDown()) {
-        		Point newPoint = e.getPoint();
-                displaceX += (newPoint.getX() - prevMousePos.getX()) / zoom;
-                displaceY += (newPoint.getY() - prevMousePos.getY()) / zoom;
-                Start.log.info("DRAG " + displaceX + " " + displaceY);
-                prevMousePos = newPoint;
-                updateNodes();
+        		Vector newPos = new Vector(e.getPoint());
+                displacement = displacement.add(newPos.subtract(prevPos).scale(1 / zoom));
+                Start.log.info("DRAG " + displacement.x + " " + displacement.y);
+                prevPos = newPos;
+                repaint();
         	}
         }
 
@@ -94,18 +83,23 @@ public class RenderTree extends JPanel {
                 zoom = zoom / Math.pow(1.15, rot);
             }
             Start.log.info("ZOOM " + zoom);
-            updateNodes();
+            repaint();
         }
 
         @Override
         public void mouseClicked(MouseEvent e) {
         	AffineTransform at = new AffineTransform();
-        	at.translate(displaceX * zoom, displaceY * zoom);
+        	at.translate(displacement.x * zoom, displacement.y * zoom);
         	at.scale(zoom, zoom);
-        	for(RenderNode r: nodes) {
-        		Shape col = at.createTransformedShape(r.getCollision());
+
+        	for(RenderNode node: nodes) {
+                Vector vec = node.getPosition();
+                AffineTransform nodeTransform = new AffineTransform(at);
+                nodeTransform.translate(vec.x, vec.y);
+        		Shape col = nodeTransform.createTransformedShape(node.getCollision());
         		if(col.contains(e.getPoint())) {
-        			r.onClick(e);
+        			node.onClick(e);
+                    repaint();
         			break;
         		}
         	}
@@ -128,18 +122,18 @@ public class RenderTree extends JPanel {
         public void keyPressed(KeyEvent e) {
             int code = e.getKeyCode();
             if(code == KeyEvent.VK_LEFT) {
-                displaceX += 50 / zoom;
+                displacement = displacement.add(Vector.i.scale(50 / zoom));
             }
             if(code == KeyEvent.VK_RIGHT) {
-                displaceX -= 50 / zoom;
+                displacement = displacement.add(Vector.i.scale(-50 / zoom));
             }
             if(code == KeyEvent.VK_UP) {
-                displaceY += 50 / zoom;
+                displacement = displacement.add(Vector.j.scale(50 / zoom));
             }
             if(code == KeyEvent.VK_DOWN) {
-                displaceY -= 50 / zoom;
+                displacement = displacement.add(Vector.j.scale(-50 / zoom));
             }
-            updateNodes();
+            repaint();
         }
 
         @Override
