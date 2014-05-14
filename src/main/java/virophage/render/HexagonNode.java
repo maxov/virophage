@@ -1,5 +1,6 @@
 package virophage.render;
 
+import virophage.Start;
 import virophage.core.Cell;
 import virophage.core.DeadCell;
 import virophage.core.Location;
@@ -8,6 +9,7 @@ import virophage.util.Vector;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 public class HexagonNode extends RenderNode {
 
@@ -59,6 +61,14 @@ public class HexagonNode extends RenderNode {
     }
 
     public void onClick(MouseEvent e) {
+    	if (space != null && space instanceof DeadCell) {
+    		return;
+    	}
+    	
+    	if (space == null) {
+    		ArrayList<Location> listOfNeighborLocs = loc.getNeighbors();
+    	}
+    	
         if (e.isShiftDown()) {
             color = new Color(200, 250, 200);
         } else {
@@ -79,9 +89,9 @@ public class HexagonNode extends RenderNode {
         g.setColor(new Color(17, 17, 17));
         g.drawPolygon(hexagon);
         g.setColor(Color.BLACK);
-        g.drawString(loc.getX()+","+ loc.getY(), 100, 100);
+        //g.drawString(loc.getX()+","+ loc.getY(), 100, 100);
         if (space != null && space.getOccupant() != null) {
-//        	g.drawString(""+ space.getOccupant().getEnergy(), 100, 100);
+        	g.drawString(""+ space.getOccupant().getEnergy(), 100, 100);
         }
     }
 

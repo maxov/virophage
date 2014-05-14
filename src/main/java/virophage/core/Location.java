@@ -1,5 +1,7 @@
 package virophage.core;
 
+import java.util.ArrayList;
+
 import virophage.gui.GameClient;
 import virophage.util.HexagonConstants;
 import virophage.util.Vector;
@@ -24,6 +26,10 @@ public class Location {
     public final int x;
     public final int y;
     public final int z;
+    
+    public final int[][] neighbors = {
+    		{-1,  0}, {-1, +1}, { 0, -1}, {0,  +1}, {+1, -1}, {+1, 0}
+    };
 
     public Location(int x, int y) {
         this.x = x;
@@ -56,5 +62,18 @@ public class Location {
     
     public int getY() {
     	return y;
+    }
+    
+    public ArrayList<Location> getNeighbors() {
+    	ArrayList<Location> list = new ArrayList<Location>();
+    
+    	for (int i = 0; i < neighbors.length; i++) {
+    			Location l = new Location(this.x + neighbors[i][0], this.y + neighbors[i][1]);
+    			if (l.isValidLoc() && !l.equals(this)) {
+    				list.add(l);
+    			}
+    	}
+    	
+    	return list;
     }
 }
