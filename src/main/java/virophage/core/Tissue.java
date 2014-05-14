@@ -1,11 +1,15 @@
 package virophage.core;
 
+import virophage.render.RenderTree;
+
 public class Tissue {
 
     private Cell[][] cells;
+    private RenderTree tree;
 
-    public Tissue(Cell[][] start) {
+    public Tissue(Cell[][] start, RenderTree t) {
         cells = start;
+        tree = t;
 
         // Initialize cells
         /*for(Cell[] arr: cells){
@@ -23,4 +27,7 @@ public class Tissue {
         return cells[loc.y + cells.length / 2][loc.x + cells[0].length / 2];
     }
 
+    public void setCell(Location loc, Cell c) {
+    	cells[loc.y + cells.length / 2][loc.x + cells[0].length / 2] = c;
+    }
 }

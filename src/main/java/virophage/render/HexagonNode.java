@@ -1,6 +1,7 @@
 package virophage.render;
 
 import virophage.core.Cell;
+import virophage.core.DeadCell;
 import virophage.core.Location;
 import virophage.util.HexagonConstants;
 import virophage.util.Vector;
@@ -37,6 +38,18 @@ public class HexagonNode extends RenderNode {
         }, 6);
     }
 
+    public Location getLocation() {
+    	return loc;
+    }
+    
+    public void saveCell(Cell c) {
+    	space = c;
+    }
+    
+    public void setColor(Color c) {
+    	color = c;
+    }
+    
     public Vector getPosition() {
         return loc.asCoordinates();
     }
@@ -55,12 +68,21 @@ public class HexagonNode extends RenderNode {
 
     public void paint(Graphics2D g) {
 
-        g.setColor(color);
+    	if (space != null && space instanceof DeadCell) {
+    		g.setColor(Color.BLACK);;
+    	} 
+    	else {
+    		g.setColor(color);
+    	}
         g.fillPolygon(hexagon);
         g.setStroke(new BasicStroke(4));
         g.setColor(new Color(17, 17, 17));
         g.drawPolygon(hexagon);
         g.setColor(Color.BLACK);
+        //g.drawString(loc.getX()+","+ loc.getY(), 100, 100);
+        if (space != null && space.getOccupant() != null) {
+        	g.drawString(""+ space.getOccupant().getEnergy(), 100, 100);
+        }
     }
 
 }

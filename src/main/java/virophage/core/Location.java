@@ -1,5 +1,6 @@
 package virophage.core;
 
+import virophage.gui.GameClient;
 import virophage.util.HexagonConstants;
 import virophage.util.Vector;
 
@@ -41,5 +42,19 @@ public class Location {
         return X_VECTOR.scale(x).add(Y_VECTOR.scale(y));
     }
 
-
+    public boolean isValidLoc() {
+    	return (Math.abs(x+y) <= GameClient.N);
+    }
+    
+    public boolean equals(Location other) {
+    	return (this.x == other.x && this.y == other.y); 
+    }
+    
+    public int getX() {
+    	return x;
+    }
+    
+    public int getY() {
+    	return y;
+    }
 }

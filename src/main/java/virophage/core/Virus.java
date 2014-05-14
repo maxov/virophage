@@ -8,6 +8,14 @@ public class Virus {
     public Virus(Player player, int energy) {
         this.player = player;
         this.energy = energy;
+        player.addVirus(this);
     }
 
+    public Player getPlayer() {
+    	return player;
+    }
+    
+    public int getEnergy() {
+    	return energy;
+    }
 }

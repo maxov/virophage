@@ -1,6 +1,10 @@
 package virophage.render;
 
 import virophage.Start;
+import virophage.core.Cell;
+import virophage.core.Location;
+import virophage.core.Tissue;
+import virophage.core.Virus;
 import virophage.util.Vector;
 
 import javax.swing.*;
@@ -14,6 +18,7 @@ public class RenderTree extends JComponent {
 
     public double zoom = 1;
     private Vector displacement = new Vector(0, 0);
+    private Tissue tissue;
 
     private ArrayList<RenderNode> nodes = new ArrayList<RenderNode>();
 
@@ -35,6 +40,27 @@ public class RenderTree extends JComponent {
         node.setRenderTree(this);
     }
 
+    public void setTissue(Tissue t) {
+    	tissue = t;
+    }
+    
+    public Tissue getTissue() {
+    	return tissue;
+    }
+    
+    public void saveCellInNode(Cell c, int xPos, int yPos) {
+    	Location other = new Location(xPos, yPos);
+    	for (RenderNode node : nodes) {
+    		if (((HexagonNode)node).getLocation().equals(other)) {
+    			((HexagonNode)node).saveCell(c);
+    			Virus v = c.getOccupant();
+    			if (v != null) {
+    				((HexagonNode)node).setColor(v.getPlayer().getColor());
+    			}
+    		}
+    	}
+    }
+    
     @Override
     public void paintComponent(Graphics g) {
         AffineTransform at = new AffineTransform();

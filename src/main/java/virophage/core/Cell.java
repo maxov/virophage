@@ -10,4 +10,7 @@ public class Cell {
         this.occupant = occupant;
     }
 
+    public Virus getOccupant() {
+    	return occupant;
+    }
 }
