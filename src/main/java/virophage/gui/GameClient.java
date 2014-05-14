@@ -24,11 +24,11 @@ public class GameClient extends JFrame {
         RenderTree tree = new RenderTree();
 
         int N = 10;
-       
-        for(int x = -N; x <= N; x++) {
-            for(int y = -N; y <= N; y++) {
-                for(int z = -N; z <= N; z++) {
-                    if(x + y + z == 0)
+
+        for (int x = -N; x <= N; x++) {
+            for (int y = -N; y <= N; y++) {
+                for (int z = -N; z <= N; z++) {
+                    if (x + y + z == 0)
                         tree.add(new HexagonNode(new Location(x, y)));
                 }
             }
@@ -37,26 +37,26 @@ public class GameClient extends JFrame {
         add(tree, BorderLayout.CENTER);
 
         Start.log.info("Setting frame visible");
-	    cardPanel = new JPanel();
-	    CardLayout cl = new CardLayout();
-	    cardPanel.setLayout(cl);
-	    
-		OptionPanel panel1 = new OptionPanel(this);    
-	    	
-	    cardPanel.add(panel1,"1");
-	    cardPanel.add(tree,"2");
-	    
-	    add(cardPanel);
-	
-	    setVisible(true);
-        
+        cardPanel = new JPanel();
+        CardLayout cl = new CardLayout();
+        cardPanel.setLayout(cl);
+
+        OptionPanel panel1 = new OptionPanel(this);
+
+        cardPanel.add(panel1, "1");
+        cardPanel.add(tree, "2");
+
+        add(cardPanel);
+
+        setVisible(true);
+
         //create tissue here?
     }
-    
-  
-	public void changePanel() {
-		((CardLayout)cardPanel.getLayout()).next(cardPanel);
-		requestFocus();
-	}
+
+
+    public void changePanel() {
+        ((CardLayout) cardPanel.getLayout()).next(cardPanel);
+        requestFocus();
+    }
 
 }

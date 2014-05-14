@@ -20,14 +20,14 @@ public class HexagonNode extends RenderNode {
         this.loc = loc;
 
         color = Color.WHITE;
-        hexagon = new Polygon(new int[] {
+        hexagon = new Polygon(new int[]{
                 (int) (HexagonConstants.RADIUS / 2),
                 (int) (HexagonConstants.RADIUS * 3 / 2),
                 (int) (HexagonConstants.RADIUS * 2),
                 (int) (HexagonConstants.RADIUS * 3 / 2),
                 (int) (HexagonConstants.RADIUS / 2),
                 0
-        }, new int[] {
+        }, new int[]{
                 0,
                 0,
                 (int) HexagonConstants.TRI_HEIGHT,
@@ -40,18 +40,18 @@ public class HexagonNode extends RenderNode {
     public Vector getPosition() {
         return loc.asCoordinates();
     }
-    
+
     public Shape getCollision() {
-    	return new Polygon(hexagon.xpoints, hexagon.ypoints, hexagon.npoints);
+        return new Polygon(hexagon.xpoints, hexagon.ypoints, hexagon.npoints);
     }
-    
+
     public void onClick(MouseEvent e) {
-    	if(e.isShiftDown()) {
-    		color = new Color(200, 250, 200);
-    	} else {
-    		color = new Color(250, 200, 200);
-    	}
-	}
+        if (e.isShiftDown()) {
+            color = new Color(200, 250, 200);
+        } else {
+            color = new Color(250, 200, 200);
+        }
+    }
 
     public void paint(Graphics2D g) {
 

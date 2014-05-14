@@ -12,10 +12,13 @@ public abstract class RenderNode {
     private RenderTree renderTree;
 
     public abstract Vector getPosition();
+
     public abstract Shape getCollision();
+
     public abstract void paint(Graphics2D g);
-    
-    public void onClick(MouseEvent e) {}
+
+    public void onClick(MouseEvent e) {
+    }
 
     public RenderTree getRenderTree() {
         return renderTree;

@@ -16,7 +16,7 @@ public class Tissue {
                 }
             }
         }*/
-        
+
     }
 
     public Cell getCell(Location loc) {

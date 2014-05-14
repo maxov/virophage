@@ -41,8 +41,8 @@ public class RenderTree extends JComponent {
         at.translate(displacement.x * zoom, displacement.y * zoom);
         at.scale(zoom, zoom);
 
-        if(nodes != null) {
-            for(RenderNode node: nodes) {
+        if (nodes != null) {
+            for (RenderNode node : nodes) {
                 Vector vec = node.getPosition();
                 AffineTransform nodeTransform = new AffineTransform(at);
                 nodeTransform.translate(vec.x, vec.y);
@@ -65,13 +65,13 @@ public class RenderTree extends JComponent {
 
         @Override
         public void mouseDragged(MouseEvent e) {
-        	if(e.isControlDown()) {
-        		Vector newPos = new Vector(e.getPoint());
+            if (e.isControlDown()) {
+                Vector newPos = new Vector(e.getPoint());
                 displacement = displacement.add(newPos.subtract(prevPos).scale(1 / zoom));
                 Start.log.info("DRAG " + displacement.x + " " + displacement.y);
                 prevPos = newPos;
                 repaint();
-        	}
+            }
         }
 
         @Override
@@ -88,28 +88,35 @@ public class RenderTree extends JComponent {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-        	AffineTransform at = new AffineTransform();
-        	at.translate(displacement.x * zoom, displacement.y * zoom);
-        	at.scale(zoom, zoom);
+            AffineTransform at = new AffineTransform();
+            at.translate(displacement.x * zoom, displacement.y * zoom);
+            at.scale(zoom, zoom);
 
-        	for(RenderNode node: nodes) {
+            for (RenderNode node : nodes) {
                 Vector vec = node.getPosition();
                 AffineTransform nodeTransform = new AffineTransform(at);
                 nodeTransform.translate(vec.x, vec.y);
-        		Shape col = nodeTransform.createTransformedShape(node.getCollision());
-        		if(col.contains(e.getPoint())) {
-        			node.onClick(e);
+                Shape col = nodeTransform.createTransformedShape(node.getCollision());
+                if (col.contains(e.getPoint())) {
+                    node.onClick(e);
                     repaint();
-        			break;
-        		}
-        	}
-        	
+                    break;
+                }
+            }
+
         }
-        
-        public void mouseReleased(MouseEvent e) {}
-        public void mouseEntered(MouseEvent e) {}
-        public void mouseExited(MouseEvent e) {}
-        public void mouseMoved(MouseEvent e) {}
+
+        public void mouseReleased(MouseEvent e) {
+        }
+
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        public void mouseExited(MouseEvent e) {
+        }
+
+        public void mouseMoved(MouseEvent e) {
+        }
     }
 
     private class KListener implements KeyListener {
@@ -121,16 +128,16 @@ public class RenderTree extends JComponent {
         @Override
         public void keyPressed(KeyEvent e) {
             int code = e.getKeyCode();
-            if(code == KeyEvent.VK_LEFT) {
+            if (code == KeyEvent.VK_LEFT) {
                 displacement = displacement.add(Vector.i.scale(50 / zoom));
             }
-            if(code == KeyEvent.VK_RIGHT) {
+            if (code == KeyEvent.VK_RIGHT) {
                 displacement = displacement.add(Vector.i.scale(-50 / zoom));
             }
-            if(code == KeyEvent.VK_UP) {
+            if (code == KeyEvent.VK_UP) {
                 displacement = displacement.add(Vector.j.scale(50 / zoom));
             }
-            if(code == KeyEvent.VK_DOWN) {
+            if (code == KeyEvent.VK_DOWN) {
                 displacement = displacement.add(Vector.j.scale(-50 / zoom));
             }
             repaint();
