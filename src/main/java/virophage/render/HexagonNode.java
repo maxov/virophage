@@ -1,20 +1,22 @@
 package virophage.render;
 
-import virophage.Start;
 import virophage.core.Cell;
 import virophage.core.DeadCell;
 import virophage.core.Location;
+import virophage.core.Virus;
+import virophage.gui.GameClient;
 import virophage.util.HexagonConstants;
 import virophage.util.Vector;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.awt.geom.Ellipse2D;
 
 public class HexagonNode extends RenderNode {
 
     private Location loc;
-    private Cell space;
+    private Cell cell;
 
     private Color color;
     private Polygon hexagon;
@@ -41,17 +43,22 @@ public class HexagonNode extends RenderNode {
     }
 
     public Location getLocation() {
-    	return loc;
+        return loc;
     }
-    
-    public void saveCell(Cell c) {
-    	space = c;
+
+    public void setCell(Cell c) {
+        cell = c;
+        if (cell != null && cell instanceof DeadCell) {
+            color = Color.BLACK;
+        } else {
+            color = Color.WHITE;
+        }
     }
-    
+
     public void setColor(Color c) {
-    	color = c;
+        color = c;
     }
-    
+
     public Vector getPosition() {
         return loc.asCoordinates();
     }
@@ -61,14 +68,14 @@ public class HexagonNode extends RenderNode {
     }
 
     public void onClick(MouseEvent e) {
-    	if (space != null && space instanceof DeadCell) {
-    		return;
-    	}
-    	
-    	if (space == null) {
-    		ArrayList<Location> listOfNeighborLocs = loc.getNeighbors();
-    	}
-    	
+        if (cell != null && cell instanceof DeadCell) {
+            return;
+        }
+
+        if (cell == null) {
+            ArrayList<Location> listOfNeighborLocs = loc.getNeighbors();
+        }
+
         if (e.isShiftDown()) {
             color = new Color(200, 250, 200);
         } else {
@@ -76,23 +83,44 @@ public class HexagonNode extends RenderNode {
         }
     }
 
-    public void paint(Graphics2D g) {
+    public void render(Graphics2D g) {
+        g.setFont(new Font("SansSerif", Font.BOLD, 32));
+        //FontMetrics fm = g.getFontMetrics(g.getFont());
+        if (cell != null) {
+            Virus occupant = cell.getOccupant();
+            if (occupant != null) {
+                Color light = occupant.getPlayer().getColor();
+                Color dark = light.darker();
+                g.setColor(light);
+                g.fillPolygon(hexagon);
+                g.setColor(dark);
+                double circleRadius = (occupant.getEnergy() / (double) GameClient.MAX_ENERGY) *
+                        (HexagonConstants.RADIUS * 0.7);
+                int circleDiameter = (int) (circleRadius * 2);
+                int x = (int) (HexagonConstants.RADIUS - circleRadius);
+                int y = (int) (HexagonConstants.TRI_HEIGHT - circleRadius);
+                g.fillOval(x, y, circleDiameter, circleDiameter);
+            } else {
+                if (cell instanceof DeadCell) {
+                    g.setColor(Color.BLACK);
+                } else {
+                    g.setColor(color);
+                }
+                g.fillPolygon(hexagon);
+            }
+        } else {
+            g.setColor(color);
+            g.fillPolygon(hexagon);
+        }
 
-    	if (space != null && space instanceof DeadCell) {
-    		g.setColor(Color.BLACK);;
-    	} 
-    	else {
-    		g.setColor(color);
-    	}
-        g.fillPolygon(hexagon);
         g.setStroke(new BasicStroke(4));
-        g.setColor(new Color(17, 17, 17));
+        g.setColor(new Color(25, 25, 25));
         g.drawPolygon(hexagon);
         g.setColor(Color.BLACK);
-        //g.drawString(loc.getX()+","+ loc.getY(), 100, 100);
-        if (space != null && space.getOccupant() != null) {
-        	g.drawString(""+ space.getOccupant().getEnergy(), 100, 100);
-        }
+        //int x = (int) (HexagonConstants.RADIUS - fm.stringWidth(loc.toString()) / 2);
+        //int y = (int) (HexagonConstants.TRI_HEIGHT);
+        //g.drawString(loc.toString(), x, y);
+
     }
 
 }

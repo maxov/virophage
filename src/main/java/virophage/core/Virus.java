@@ -2,8 +2,8 @@ package virophage.core;
 
 public class Virus {
 
-    public Player player;
-    public int energy;
+    private Player player;
+    private int energy;
 
     public Virus(Player player, int energy) {
         this.player = player;
@@ -12,10 +12,10 @@ public class Virus {
     }
 
     public Player getPlayer() {
-    	return player;
+        return player;
     }
-    
+
     public int getEnergy() {
-    	return energy;
+        return energy;
     }
 }

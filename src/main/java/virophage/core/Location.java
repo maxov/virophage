@@ -23,13 +23,13 @@ public class Location {
             -HexagonConstants.TRI_HEIGHT
     );
 
+    public static final int[][] NEIGHBORS = {
+            {-1, 0}, {-1, +1}, {0, -1}, {0, +1}, {+1, -1}, {+1, 0}
+    };
+
     public final int x;
     public final int y;
     public final int z;
-    
-    public final int[][] neighbors = {
-    		{-1,  0}, {-1, +1}, { 0, -1}, {0,  +1}, {+1, -1}, {+1, 0}
-    };
 
     public Location(int x, int y) {
         this.x = x;
@@ -48,32 +48,37 @@ public class Location {
         return X_VECTOR.scale(x).add(Y_VECTOR.scale(y));
     }
 
-    public boolean isValidLoc() {
-    	return (Math.abs(x+y) <= GameClient.N);
+    public boolean inHexagon(int n) {
+        return Math.abs(x) <= n && Math.abs(y) <= n;
     }
-    
+
     public boolean equals(Location other) {
-    	return (this.x == other.x && this.y == other.y); 
+        return (this.x == other.x && this.y == other.y);
     }
-    
+
     public int getX() {
-    	return x;
+        return x;
     }
-    
+
     public int getY() {
-    	return y;
+        return y;
     }
-    
+
     public ArrayList<Location> getNeighbors() {
-    	ArrayList<Location> list = new ArrayList<Location>();
-    
-    	for (int i = 0; i < neighbors.length; i++) {
-    			Location l = new Location(this.x + neighbors[i][0], this.y + neighbors[i][1]);
-    			if (l.isValidLoc() && !l.equals(this)) {
-    				list.add(l);
-    			}
-    	}
-    	
-    	return list;
+        ArrayList<Location> list = new ArrayList<Location>();
+
+        for (int i = 0; i < NEIGHBORS.length; i++) {
+            Location l = new Location(this.x + NEIGHBORS[i][0], this.y + NEIGHBORS[i][1]);
+            if (l.inHexagon(GameClient.N) && !l.equals(this)) {
+                list.add(l);
+            }
+        }
+
+        return list;
     }
+
+    public String toString() {
+        return "(" + x + ", " + y + ")";
+    }
+
 }

@@ -11,6 +11,6 @@ public class Cell {
     }
 
     public Virus getOccupant() {
-    	return occupant;
+        return occupant;
     }
 }

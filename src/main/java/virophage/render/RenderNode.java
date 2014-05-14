@@ -15,7 +15,7 @@ public abstract class RenderNode {
 
     public abstract Shape getCollision();
 
-    public abstract void paint(Graphics2D g);
+    public abstract void render(Graphics2D g);
 
     public void onClick(MouseEvent e) {
     }

@@ -41,26 +41,26 @@ public class RenderTree extends JComponent {
     }
 
     public void setTissue(Tissue t) {
-    	tissue = t;
+        tissue = t;
     }
-    
+
     public Tissue getTissue() {
-    	return tissue;
+        return tissue;
     }
-    
+
     public void saveCellInNode(Cell c, int xPos, int yPos) {
-    	Location other = new Location(xPos, yPos);
-    	for (RenderNode node : nodes) {
-    		if (((HexagonNode)node).getLocation().equals(other)) {
-    			((HexagonNode)node).saveCell(c);
-    			Virus v = c.getOccupant();
-    			if (v != null) {
-    				((HexagonNode)node).setColor(v.getPlayer().getColor());
-    			}
-    		}
-    	}
+        Location other = new Location(xPos, yPos);
+        for (RenderNode node : nodes) {
+            if (((HexagonNode) node).getLocation().equals(other)) {
+                ((HexagonNode) node).setCell(c);
+                Virus v = c.getOccupant();
+                if (v != null) {
+                    ((HexagonNode) node).setColor(v.getPlayer().getColor());
+                }
+            }
+        }
     }
-    
+
     @Override
     public void paintComponent(Graphics g) {
         AffineTransform at = new AffineTransform();
@@ -75,7 +75,7 @@ public class RenderTree extends JComponent {
 
                 Graphics2D nodeGraphics = (Graphics2D) g.create();
                 nodeGraphics.transform(nodeTransform);
-                node.paint(nodeGraphics);
+                node.render(nodeGraphics);
             }
         }
     }

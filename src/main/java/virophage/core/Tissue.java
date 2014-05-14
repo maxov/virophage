@@ -28,6 +28,6 @@ public class Tissue {
     }
 
     public void setCell(Location loc, Cell c) {
-    	cells[loc.y + cells.length / 2][loc.x + cells[0].length / 2] = c;
+        cells[loc.y + cells.length / 2][loc.x + cells[0].length / 2] = c;
     }
 }
