@@ -1,7 +1,9 @@
 package virophage.gui;
 
 import java.awt.*;
+
 import javax.swing.*;
+
 import java.awt.event.*;
 
 
@@ -11,10 +13,11 @@ public class OptionPanel extends JPanel implements ActionListener {
    
     public OptionPanel(GameClient w) {
         this.w = w;
+        setLayout(new BorderLayout());
      	  	
-	  	JButton button = new JButton("Press to Start the Virophage Game!");
+	  	JButton button = new JButton("Press to Start!");
         button.addActionListener(this);
-        add(button);
+        add(button, BorderLayout.SOUTH);
     }
 
     public void paintComponent(Graphics g)
@@ -24,7 +27,7 @@ public class OptionPanel extends JPanel implements ActionListener {
     	// Draw the Game Title
     	Font f = new Font ("arial", Font.BOLD, 30);
       	g.setFont(f);
-      	g.drawString ("Welcome to Virophage", 480, 160);
+      	g.drawString ("Virophage", 550, 160);
       	
         //Draw the Instructions
       	f = new Font ("courier", Font.PLAIN, 16);

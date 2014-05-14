@@ -18,7 +18,7 @@ import java.awt.*;
 public class GameClient extends JFrame {
 
     public static final Dimension SIZE = new Dimension(1280, 720);
-    public static final int DEAD_CELL_NUM = 80;
+    public static final int DEAD_CELL_NUM = 100;
     public static final int N = 10; // max location coordinate
     public static final int MAX_ENERGY = 30;
     JPanel cardPanel;
@@ -75,47 +75,48 @@ public class GameClient extends JFrame {
     public void gameStart() {
     	Start.log.info("Game Started!");
     	
-    	// First place dead cells in the tree
-    	DeadCell dc = new DeadCell();
     	int i = 0;
+    	
+    	//creates two players
+    	for (i = 0; i < players.length; i++) {
+    		players[i] = new Player(new Color(200 + i * 50, 250 - i * 50, 200));
+    	}	
+    	
+    	// adds some viruses for both players
+    	for (i = -1; i <= 1; i++) {
+    		for (int j = -1; j <= 1; j++) {
+    			for (int k = -1; k <= 1; k++) {
+    				if (i + j + k == 0) {
+			    		Location loc1 = new Location(i - 9, j);
+			    		Location loc2 = new Location(i + 9, j);
+			    		Virus v1 = new Virus(players[0], (int)(Math.random() * MAX_ENERGY));
+			    		Cell c1 = new Cell(v1);
+			    		Virus v2 = new Virus(players[1], (int)(Math.random() * MAX_ENERGY));
+			    		Cell c2 = new Cell(v2);
+			    		tree.getTissue().setCell(loc1, c1);
+			    		tree.saveCellInNode(c1, loc1.getX(), loc1.getY());
+			    		tree.getTissue().setCell(loc2, c2);
+			    		tree.saveCellInNode(c2, loc2.getX(), loc2.getY());
+    				}
+    			}
+    		}
+    	}    	
+    	
+    	//place dead cells in the tree
+    	DeadCell dc = new DeadCell();
+    	i = 0;
     	while (i < DEAD_CELL_NUM) {
     		int xPos = (int)(Math.random() * N * 2 + 1) - N;
-    		if (xPos == -N) {
-    			xPos++;
-    		}
-    		if (xPos == N) {
-    			xPos--;
-    		}
     		int yPos = (int)(Math.random() * N * 2 + 1) - N;
     		
     		Location loc = new Location(xPos, yPos);
-    		if (loc.isValidLoc()) {
+    		if (loc.isValidLoc() && tree.getTissue().getCell(loc) == null) {
     			if (tree.getTissue().getCell(loc) == null) {
     				tree.getTissue().setCell(loc, dc);
     				tree.saveCellInNode(dc, xPos, yPos);
     				i++;
     			}
     		}
-    	}
-    	
-    	// Second create two players
-    	for (i = 0; i < players.length; i++) {
-    		players[i] = new Player(new Color(200 + i * 50, 250 - i * 50, 200));
-    	}
-    	
-    	
-    	// Third add some viruses for both players
-    	for (i = 0; i <= N; i++) {
-    		Location loc1 = new Location(-N, i);
-    		Location loc2 = new Location(N, -i);
-    		Virus v1 = new Virus(players[0], (int)(Math.random() * MAX_ENERGY));
-    		Cell c1 = new Cell(v1);
-    		Virus v2 = new Virus(players[1], (int)(Math.random() * MAX_ENERGY));
-    		Cell c2 = new Cell(v2);
-    		tree.getTissue().setCell(loc1, c1);
-    		tree.saveCellInNode(c1, loc1.getX(), loc1.getY());
-    		tree.getTissue().setCell(loc2, c2);
-    		tree.saveCellInNode(c2, loc2.getX(), loc2.getY());
     	}
     }
 }

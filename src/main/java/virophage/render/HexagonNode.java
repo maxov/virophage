@@ -79,9 +79,9 @@ public class HexagonNode extends RenderNode {
         g.setColor(new Color(17, 17, 17));
         g.drawPolygon(hexagon);
         g.setColor(Color.BLACK);
-        //g.drawString(loc.getX()+","+ loc.getY(), 100, 100);
+        g.drawString(loc.getX()+","+ loc.getY(), 100, 100);
         if (space != null && space.getOccupant() != null) {
-        	g.drawString(""+ space.getOccupant().getEnergy(), 100, 100);
+//        	g.drawString(""+ space.getOccupant().getEnergy(), 100, 100);
         }
     }
 
