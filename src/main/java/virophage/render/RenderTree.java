@@ -10,9 +10,13 @@ import virophage.util.Vector;
 import javax.swing.*;
 
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.geom.AffineTransform;
+import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * A <code>RenderTree</code> contains an array of renderNodes, it is also a GUI componet.
@@ -20,33 +24,36 @@ import java.util.ArrayList;
  * @version     1.0 (Alpha)
  * @since       2014-05-6
  */
-public class RenderTree extends JComponent {
+public class RenderTree extends Canvas implements Runnable {
 
     public double zoom = 1;
-    private Vector displacement = new Vector(0, 0);
+    public Vector displacement = new Vector(0, 0);
     private Tissue tissue;
 
-    private ArrayList<RenderNode> nodes = new ArrayList<RenderNode>();
+    public ArrayList<RenderNode> nodes = new ArrayList<RenderNode>();
 
     /**
      * Constructs a RenderTree and adds the listeners.
      */
     public RenderTree() {
+        setIgnoreRepaint(true);
         setFocusable(true);
         requestFocus();
 
-        KListener k = new KListener();
-        addKeyListener(k);
+        TreeListener listener = new TreeListener(this);
 
-        MListener m = new MListener();
-        addMouseListener(m);
-        addMouseMotionListener(m);
-        addMouseWheelListener(m);
+
+        addKeyListener(listener);
+
+        addMouseListener(listener);
+        addMouseMotionListener(listener);
+        addMouseWheelListener(listener);
     }
 
     public void add(RenderNode node) {
         nodes.add(node);
         node.setRenderTree(this);
+        Collections.sort(nodes);
     }
 
     public void setTissue(Tissue t) {
@@ -76,11 +83,16 @@ public class RenderTree extends JComponent {
         }
     }
 
-    @Override
-    public void paintComponent(Graphics g) {
+    public void render(Graphics gr) {
+        long t1 = System.nanoTime();
+        Graphics2D g = (Graphics2D) gr;
+        // makes the game look really nice, but also really slow
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         AffineTransform at = new AffineTransform();
         at.translate(displacement.x * zoom, displacement.y * zoom);
         at.scale(zoom, zoom);
+        g.setColor(new Color(230, 230, 230));
+        g.fillRect(0, 0, getWidth(), getHeight());
 
         if (nodes != null) {
             for (RenderNode node : nodes) {
@@ -90,104 +102,25 @@ public class RenderTree extends JComponent {
 
                 Graphics2D nodeGraphics = (Graphics2D) g.create();
                 nodeGraphics.transform(nodeTransform);
+
+
                 node.render(nodeGraphics);
             }
         }
+        Start.log.info("TIME " + ((System.nanoTime() - t1) / 1000000d));
     }
 
-    private class MListener implements MouseListener, MouseMotionListener, MouseWheelListener {
+    @Override
+    public void run() {
+        this.createBufferStrategy(2);
+        BufferStrategy strategy = this.getBufferStrategy();
+        while(true) {
 
-        private Vector prevPos;
 
-        @Override
-        public void mousePressed(MouseEvent e) {
-            prevPos = new Vector(e.getPoint());
-        }
-
-        @Override
-        public void mouseDragged(MouseEvent e) {
-            if (e.isControlDown()) {
-                Vector newPos = new Vector(e.getPoint());
-                displacement = displacement.add(newPos.subtract(prevPos).scale(1 / zoom));
-                Start.log.info("DRAG " + displacement.x + " " + displacement.y);
-                prevPos = newPos;
-                repaint();
-            }
-        }
-
-        @Override
-        public void mouseWheelMoved(MouseWheelEvent e) {
-            double rot = e.getPreciseWheelRotation();
-            if ((0.2 < zoom && zoom < 5) ||
-                    (zoom <= 0.2 && rot < 0) ||
-                    (zoom >= 5 && rot > 0)) {
-                zoom = zoom / Math.pow(1.15, rot);
-            }
-            Start.log.info("ZOOM " + zoom);
-            repaint();
-        }
-
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            AffineTransform at = new AffineTransform();
-            at.translate(displacement.x * zoom, displacement.y * zoom);
-            at.scale(zoom, zoom);
-
-            for (RenderNode node : nodes) {
-                Vector vec = node.getPosition();
-                AffineTransform nodeTransform = new AffineTransform(at);
-                nodeTransform.translate(vec.x, vec.y);
-                Shape col = nodeTransform.createTransformedShape(node.getCollision());
-                if (col.contains(e.getPoint())) {
-                    node.onClick(e);
-                    repaint();
-                    break;
-                }
-            }
-
-        }
-
-        public void mouseReleased(MouseEvent e) {
-        }
-
-        public void mouseEntered(MouseEvent e) {
-        }
-
-        public void mouseExited(MouseEvent e) {
-        }
-
-        public void mouseMoved(MouseEvent e) {
+            Graphics gr = strategy.getDrawGraphics();
+            render(gr);
+            gr.dispose();
+            strategy.show();
         }
     }
-
-    private class KListener implements KeyListener {
-
-        @Override
-        public void keyTyped(KeyEvent e) {
-        }
-
-        @Override
-        public void keyPressed(KeyEvent e) {
-            int code = e.getKeyCode();
-            if (code == KeyEvent.VK_LEFT) {
-                displacement = displacement.add(Vector.i.scale(50 / zoom));
-            }
-            if (code == KeyEvent.VK_RIGHT) {
-                displacement = displacement.add(Vector.i.scale(-50 / zoom));
-            }
-            if (code == KeyEvent.VK_UP) {
-                displacement = displacement.add(Vector.j.scale(50 / zoom));
-            }
-            if (code == KeyEvent.VK_DOWN) {
-                displacement = displacement.add(Vector.j.scale(-50 / zoom));
-            }
-            repaint();
-        }
-
-        @Override
-        public void keyReleased(KeyEvent e) {
-        }
-
-    }
-
 }

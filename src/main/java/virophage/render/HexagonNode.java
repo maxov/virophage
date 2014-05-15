@@ -126,8 +126,8 @@ public class HexagonNode extends RenderNode {
             g.fillPolygon(hexagon);
         }
 
-        g.setStroke(new BasicStroke(4));
-        g.setColor(new Color(25, 25, 25));
+        //g.setStroke(new BasicStroke(4));
+        g.setColor(new Color(32, 32, 32));
         g.drawPolygon(hexagon);
         g.setColor(Color.BLACK);
         //int x = (int) (HexagonConstants.RADIUS - fm.stringWidth(loc.toString()) / 2);

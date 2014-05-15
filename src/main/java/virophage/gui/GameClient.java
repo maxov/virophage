@@ -1,12 +1,8 @@
 package virophage.gui;
 
 import virophage.Start;
-import virophage.core.Cell;
-import virophage.core.DeadCell;
-import virophage.core.Location;
-import virophage.core.Player;
-import virophage.core.Tissue;
-import virophage.core.Virus;
+import virophage.core.*;
+import virophage.render.ChannelNode;
 import virophage.render.HexagonNode;
 import virophage.render.RenderTree;
 
@@ -82,6 +78,7 @@ public class GameClient extends JFrame {
      */
     public void changePanel() {
         ((CardLayout) cardPanel.getLayout()).next(cardPanel);
+        (new Thread(renderTree)).start();
         requestFocus();
     }
 
@@ -135,5 +132,10 @@ public class GameClient extends JFrame {
                 }
             }
         }
+
+        Channel channel = new Channel(new Location(-8, -1), new Location(-7, -2), players[0]);
+        channel.createVirus();
+        channel.virus.setEnergy(3);
+        renderTree.add(new ChannelNode(channel));
     }
 }

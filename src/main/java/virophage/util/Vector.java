@@ -57,6 +57,28 @@ public class Vector {
         return this.add(that.negate());
     }
 
+    public double direction() {
+        if(x > 0) {
+            return Math.atan(y / x);
+        } else if (x < 0) {
+            return Math.atan(y / x) + Math.PI;
+        } else {
+            if(y > 0) {
+                return Math.PI / 2;
+            } else if(y < 0) {
+                return 3 * Math.PI / 2;
+            } else {
+                throw new ArithmeticException("A zero vector has no direction");
+            }
+        }
+    }
+
+    public Vector rotate(double theta) {
+        double newTheta = theta + direction();
+        double magnitude = magnitude();
+        return new Vector(Math.cos(newTheta) * magnitude, Math.sin(newTheta) * magnitude);
+    }
+
     public Vector scale(double scalar) {
         return new Vector(x * scalar, y * scalar);
     }

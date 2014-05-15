@@ -9,6 +9,11 @@ package virophage.core;
 public class Virus {
 
     private Player player;
+
+    public void setEnergy(int energy) {
+        this.energy = energy;
+    }
+
     private int energy;
     
     /**

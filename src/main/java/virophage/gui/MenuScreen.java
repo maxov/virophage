@@ -19,6 +19,7 @@ public class MenuScreen extends JPanel implements ActionListener {
     public MenuScreen(GameClient w) {
         this.w = w;
         setLayout(new BorderLayout());
+        setBackground(Color.WHITE);
 
         JButton button = new JButton("Press to Start!");
         button.addActionListener(this);

@@ -65,6 +65,10 @@ public class Location {
         return X_VECTOR.scale(x).add(Y_VECTOR.scale(y));
     }
 
+    public double getDirectionTowards(Location that) {
+        return that.asCoordinates().subtract(asCoordinates()).direction();
+    }
+
     public boolean inHexagon(int n) {
         return Math.abs(x) <= n && Math.abs(y) <= n;
     }

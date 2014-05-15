@@ -12,6 +12,8 @@ public class Channel {
     public Location from;
     public Location to;
     public Player player;
+    public Virus virus;
+
     
 	/**
 	 * Constructs a Channel for a player between two locations. 
@@ -23,6 +25,15 @@ public class Channel {
         this.from = from;
         this.to = to;
         this.player = player;
+        virus = null;
+    }
+
+    public void createVirus() {
+        this.virus = new Virus(player, 0);
+    }
+
+    public boolean hasVirus() {
+        return virus != null;
     }
 
 }
