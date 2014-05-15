@@ -38,8 +38,8 @@ public class MenuScreen extends JPanel implements ActionListener {
         f = new Font("courier", Font.PLAIN, 16);
         g.setFont(f);
         g.drawString("Instructions", 194, 240);
-        g.drawString("1. Click the hexagon", 213, 280);
-        g.drawString("2. Do something", 213, 320);
+        g.drawString("1. Click with LMB for red cell, SHIFT + LMB for green cell", 213, 280);
+        g.drawString("2. Scroll to zoom, CTRL + LMB to pan", 213, 320);
 
     }
 
