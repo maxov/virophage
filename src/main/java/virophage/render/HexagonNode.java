@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.awt.geom.Ellipse2D;
 
 /**
+ * A <code>HexagonNode</code> is a graphical representation of a cell. It can be scaled.
  * @author      Max Ovsiankin and Leon Ren
  * @version     1.0 (Alpha)
  * @since       2014-05-6
@@ -26,6 +27,10 @@ public class HexagonNode extends RenderNode {
     private Color color;
     private Polygon hexagon;
 
+    /**
+     * Constructs a <code>HexagonNode</code> at the Location loc.
+     * @param loc The locaiton this node is supposed to represent.
+     */
     public HexagonNode(Location loc) {
         this.loc = loc;
 
@@ -88,6 +93,9 @@ public class HexagonNode extends RenderNode {
         }
     }
 
+    /**
+     * The "drawing" of the hexagons with colors.
+     */
     public void render(Graphics2D g) {
         g.setFont(new Font("SansSerif", Font.BOLD, 32));
         //FontMetrics fm = g.getFontMetrics(g.getFont());

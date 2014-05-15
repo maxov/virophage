@@ -16,6 +16,7 @@ import java.awt.*;
 import java.util.Random;
 
 /**
+ * A <code>GameClient</code> is responsible for (among other things), the GUI of the game.
  * @author      Max Ovsiankin and Leon Ren
  * @version     1.0 (Alpha)
  * @since       2014-05-6
@@ -31,6 +32,9 @@ public class GameClient extends JFrame {
     private MenuScreen menuScreen;
     private Player players[];
 
+    /**
+     * Constructs a GameClient.
+     */
     public GameClient() {
 
         setTitle("virophage");
@@ -73,11 +77,17 @@ public class GameClient extends JFrame {
     }
 
 
+    /**
+     * Changes the Panel
+     */
     public void changePanel() {
         ((CardLayout) cardPanel.getLayout()).next(cardPanel);
         requestFocus();
     }
 
+    /**
+     * Starts the game by placing the players and dead cells.
+     */
     public void gameStart() {
         Start.log.info("Game Started!");
 

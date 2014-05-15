@@ -7,6 +7,7 @@ import virophage.util.HexagonConstants;
 import virophage.util.Vector;
 
 /**
+ * A <code>Location</code> represents the x & y coordinates of a cell.
  * @author      Max Ovsiankin and Leon Ren
  * @version     1.0 (Alpha)
  * @since       2014-05-6
@@ -36,6 +37,11 @@ public class Location {
     public final int y;
     public final int z;
 
+    /**
+     * Constructs a new Location at (x,y)
+     * @param x the xCoordinate
+     * @param y the yCoordinate
+     */
     public Location(int x, int y) {
         this.x = x;
         this.y = y;
@@ -43,6 +49,12 @@ public class Location {
         this.z = -(x + y);
     }
 
+    /**
+     * Constructs a new Location at (x,y)
+     * @param x the xCoordinate
+     * @param y the yCoordinate
+     * @param z an internal parameter
+     */
     public Location(int x, int y, int z) {
         this.x = x;
         this.y = y;
@@ -69,6 +81,10 @@ public class Location {
         return y;
     }
 
+    /**
+     * Gets the neighbors of this Location.
+     * @return the list of neighbors for this locaiton
+     */
     public ArrayList<Location> getNeighbors() {
         ArrayList<Location> list = new ArrayList<Location>();
 

@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 
 /**
+ * A <code>RenderNode</code> is a componet of a RenderTree to assist in scaling/panning.
  * @author      Max Ovsiankin and Leon Ren
  * @version     1.0 (Alpha)
  * @since       2014-05-6

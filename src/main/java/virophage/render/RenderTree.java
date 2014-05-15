@@ -15,6 +15,7 @@ import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 
 /**
+ * A <code>RenderTree</code> contains an array of renderNodes, it is also a GUI componet.
  * @author      Max Ovsiankin and Leon Ren
  * @version     1.0 (Alpha)
  * @since       2014-05-6
@@ -27,6 +28,9 @@ public class RenderTree extends JComponent {
 
     private ArrayList<RenderNode> nodes = new ArrayList<RenderNode>();
 
+    /**
+     * Constructs a RenderTree and adds the listeners.
+     */
     public RenderTree() {
         setFocusable(true);
         requestFocus();
@@ -53,6 +57,12 @@ public class RenderTree extends JComponent {
         return tissue;
     }
 
+    /**
+     * Establishes a connection between a cell and a RenderNode.
+     * @param c the cell to be saved in the HexagonNode
+     * @param xPos the x Coordinate of the node
+     * @param yPos the y Coordinate of the node
+     */
     public void saveCellInNode(Cell c, int xPos, int yPos) {
         Location other = new Location(xPos, yPos);
         for (RenderNode node : nodes) {

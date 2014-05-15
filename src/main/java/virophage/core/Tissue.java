@@ -3,6 +3,7 @@ package virophage.core;
 import virophage.render.RenderTree;
 
 /**
+ * <code>Tissue</code> represents an array of cells that are corresponding to the GUI tree.
  * @author      Max Ovsiankin and Leon Ren
  * @version     1.0 (Alpha)
  * @since       2014-05-6
@@ -12,6 +13,11 @@ public class Tissue {
     private Cell[][] cells;
     private RenderTree tree;
 
+    /**
+     * Constructs tissue that contains cells and points to the tree (t).
+     * @param start the array of Cells
+     * @param t the RenderTree to be pointed to
+     */
     public Tissue(Cell[][] start, RenderTree t) {
         cells = start;
         tree = t;
