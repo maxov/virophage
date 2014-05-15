@@ -10,7 +10,7 @@ import virophage.render.RenderTree;
  */
 public class Tissue {
 
-    private Cell[][] cells;
+    public Cell[][] cells;
     private RenderTree tree;
 
     /**

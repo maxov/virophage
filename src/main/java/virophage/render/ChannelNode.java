@@ -42,7 +42,7 @@ public class ChannelNode extends RenderNode {
     public void render(Graphics2D g) {
 
         // loop caluclations
-        int rad = (int) (HexagonConstants.RADIUS * 2 * 0.7);
+        int rad = (int) (HexagonConstants.RADIUS * 2 * 0.80);
         int pos = rad / -2;
         Vector endpoint = new Vector(HexagonConstants.TRI_HEIGHT * 2, 0)
                 .rotate(channel.from.getDirectionTowards(channel.to));

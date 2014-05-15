@@ -101,6 +101,15 @@ public class Location {
 
         return list;
     }
+    
+    public boolean isNeighbor(Location loc) {
+    	for(Location neighbor: getNeighbors()) {
+    		if(neighbor.equals(loc)) {
+    			return true;
+    		}
+    	}
+    	return false;
+    }
 
     public String toString() {
         return "(" + x + ", " + y + ")";

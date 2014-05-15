@@ -34,4 +34,12 @@ public class Player {
     public void addChannel(Channel c) {
         channels.add(c);
     }
+    
+    public boolean hasChannelBetween(Location from, Location to) {
+    	for(Channel channel: channels) {
+    		if(channel.from.equals(from) && channel.to.equals(to)) return true;
+    	}
+    	return false;
+    }
+    
 }

@@ -11,8 +11,8 @@ public class DeadCell extends Cell {
 	/**
 	 * Constructs a dead cell.
 	 */
-    public DeadCell() {
-        super(null);
+    public DeadCell(Tissue tissue) {
+        super(tissue, null);
     }
 
 }

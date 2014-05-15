@@ -9,6 +9,8 @@ import virophage.util.Vector;
 
 import javax.swing.*;
 
+import java.util.Timer;
+
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -29,6 +31,8 @@ public class RenderTree extends Canvas implements Runnable {
     public double zoom = 1;
     public Vector displacement = new Vector(0, 0);
     private Tissue tissue;
+    
+    public static Timer timer = new Timer();
 
     public ArrayList<RenderNode> nodes = new ArrayList<RenderNode>();
 
@@ -50,7 +54,7 @@ public class RenderTree extends Canvas implements Runnable {
         addMouseWheelListener(listener);
     }
 
-    public void add(RenderNode node) {
+    public synchronized void add(RenderNode node) {
         nodes.add(node);
         node.setRenderTree(this);
         Collections.sort(nodes);
@@ -75,15 +79,11 @@ public class RenderTree extends Canvas implements Runnable {
         for (RenderNode node : nodes) {
             if (((HexagonNode) node).getLocation().equals(other)) {
                 ((HexagonNode) node).setCell(c);
-                Virus v = c.getOccupant();
-                if (v != null) {
-                    ((HexagonNode) node).setColor(v.getPlayer().getColor());
-                }
             }
         }
     }
 
-    public void render(Graphics gr) {
+    public synchronized void render(Graphics gr) {
         long t1 = System.nanoTime();
         Graphics2D g = (Graphics2D) gr;
         // makes the game look really nice, but also really slow
@@ -107,7 +107,7 @@ public class RenderTree extends Canvas implements Runnable {
                 node.render(nodeGraphics);
             }
         }
-        Start.log.info("TIME " + ((System.nanoTime() - t1) / 1000000d));
+        //Start.log.info("TIME " + ((System.nanoTime() - t1) / 1000000d));
     }
 
     @Override

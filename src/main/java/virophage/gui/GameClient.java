@@ -78,7 +78,7 @@ public class GameClient extends JFrame {
      */
     public void changePanel() {
         ((CardLayout) cardPanel.getLayout()).next(cardPanel);
-        (new Thread(renderTree)).start();
+        
         requestFocus();
     }
 
@@ -94,6 +94,21 @@ public class GameClient extends JFrame {
         for (i = 0; i < players.length; i++) {
             players[i] = new Player(new Color(200 + i * 50, 250 - i * 50, 200));
         }
+        
+        Tissue tissue = renderTree.getTissue();
+        
+        for (int x = -N; x <= N; x++) {
+            for (int y = -N; y <= N; y++) {
+                for (int z = -N; z <= N; z++) {
+                    if (x + y + z == 0) {
+                    	Cell c = new Cell(tissue);
+                    	renderTree.saveCellInNode(c, x, y);
+                    	tissue.setCell(new Location(x, y), c);
+                    }
+                }
+            }
+        }
+        
 
         // adds some viruses for both players
         for (i = -1; i <= 1; i++) {
@@ -103,9 +118,9 @@ public class GameClient extends JFrame {
                         Location loc1 = new Location(i - 9, j);
                         Location loc2 = new Location(i + 9, j);
                         Virus v1 = new Virus(players[0], (int) (Math.random() * MAX_ENERGY));
-                        Cell c1 = new Cell(v1);
+                        Cell c1 = new Cell(tissue, v1);
                         Virus v2 = new Virus(players[1], (int) (Math.random() * MAX_ENERGY));
-                        Cell c2 = new Cell(v2);
+                        Cell c2 = new Cell(tissue, v2);
                         renderTree.getTissue().setCell(loc1, c1);
                         renderTree.saveCellInNode(c1, loc1.getX(), loc1.getY());
                         renderTree.getTissue().setCell(loc2, c2);
@@ -116,7 +131,7 @@ public class GameClient extends JFrame {
         }
 
         //place dead cells in the renderTree
-        DeadCell dc = new DeadCell();
+        DeadCell dc = new DeadCell(tissue);
         i = 0;
         while (i < DEAD_CELL_NUM) {
             Random rand = new Random();
@@ -124,18 +139,13 @@ public class GameClient extends JFrame {
             int yPos = rand.nextInt(N * 2 + 1) - N;
 
             Location loc = new Location(xPos, yPos);
-            if (renderTree.getTissue().getCell(loc) == null) {
-                if (renderTree.getTissue().getCell(loc) == null) {
-                    renderTree.getTissue().setCell(loc, dc);
-                    renderTree.saveCellInNode(dc, xPos, yPos);
-                    i++;
-                }
+            if (renderTree.getTissue().getCell(loc) == null ||
+            		renderTree.getTissue().getCell(loc).occupant == null) {
+                renderTree.getTissue().setCell(loc, dc);
+                renderTree.saveCellInNode(dc, xPos, yPos);
+                i++;
             }
         }
-
-        Channel channel = new Channel(new Location(-8, -1), new Location(-7, -2), players[0]);
-        channel.createVirus();
-        channel.virus.setEnergy(3);
-        renderTree.add(new ChannelNode(channel));
+        (new Thread(renderTree)).start();
     }
 }

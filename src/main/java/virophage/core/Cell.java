@@ -11,14 +11,21 @@ import virophage.core.Virus;
  */
 public class Cell {
 
+	public Tissue tissue;
     public Virus occupant;
 
     /**
      * Constructs a cell with a <code>Virus</code> occupant
      * @param occupant
      */
-    public Cell(Virus occupant) {
+    public Cell(Tissue tissue, Virus occupant) {
+    	this.tissue = tissue;
         this.occupant = occupant;
+    }
+    
+    public Cell(Tissue tissue) {
+    	this.tissue = tissue;
+    	this.occupant = null;
     }
 
     public Virus getOccupant() {

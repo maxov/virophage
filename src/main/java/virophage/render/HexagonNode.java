@@ -1,10 +1,13 @@
 package virophage.render;
 
 import virophage.core.Cell;
+import virophage.core.Channel;
 import virophage.core.DeadCell;
 import virophage.core.Location;
+import virophage.core.Player;
 import virophage.core.Virus;
 import virophage.gui.GameClient;
+import virophage.gui.Selection;
 import virophage.util.HexagonConstants;
 import virophage.util.Vector;
 
@@ -22,10 +25,41 @@ import java.awt.geom.Ellipse2D;
 public class HexagonNode extends RenderNode {
 
     private Location loc;
-    private Cell cell;
+    public Location getLoc() {
+		return loc;
+	}
 
-    private Color color;
+	public void setLoc(Location loc) {
+		this.loc = loc;
+	}
+
+	private Cell cell;
+
+    public Cell getCell() {
+		return cell;
+	}
+
     private Polygon hexagon;
+    private boolean selected = false;
+    public boolean isSelected() {
+		return selected;
+	}
+
+	public void setSelected(boolean selected) {
+		this.selected = selected;
+	}
+
+	public boolean isPossible() {
+		return possible;
+	}
+
+	public void setPossible(boolean possible) {
+		this.possible = possible;
+	}
+
+	private boolean possible = false;
+    
+    private static Selection selection;
 
     /**
      * Constructs a <code>HexagonNode</code> at the Location loc.
@@ -34,7 +68,6 @@ public class HexagonNode extends RenderNode {
     public HexagonNode(Location loc) {
         this.loc = loc;
 
-        color = Color.WHITE;
         hexagon = new Polygon(new int[]{
                 (int) (HexagonConstants.RADIUS / 2),
                 (int) (HexagonConstants.RADIUS * 3 / 2),
@@ -58,15 +91,6 @@ public class HexagonNode extends RenderNode {
 
     public void setCell(Cell c) {
         cell = c;
-        if (cell != null && cell instanceof DeadCell) {
-            color = Color.BLACK;
-        } else {
-            color = Color.WHITE;
-        }
-    }
-
-    public void setColor(Color c) {
-        color = c;
     }
 
     public Vector getPosition() {
@@ -78,19 +102,36 @@ public class HexagonNode extends RenderNode {
     }
 
     public void onClick(MouseEvent e) {
-        if (cell != null && cell instanceof DeadCell) {
-            return;
-        }
-
-        if (cell == null) {
-            ArrayList<Location> listOfNeighborLocs = loc.getNeighbors();
-        }
-
-        if (e.isShiftDown()) {
-            color = new Color(200, 250, 200);
-        } else {
-            color = new Color(250, 200, 200);
-        }
+		if (cell instanceof DeadCell) {
+			return;
+		} else {
+			if ((selection == null || selection.hasTo()) && cell.occupant != null) {
+				selection = new Selection(this);
+				selection.select(this);
+			} else if(selection != null) {
+				HexagonNode from = selection.getFrom();
+				
+				Player p = from.getCell().getOccupant().getPlayer();
+				if(from != this && getLoc().isNeighbor(from.getLoc()) && !p.hasChannelBetween(from.getLoc(), getLoc())) {
+					selection.setTo(this);
+    				
+    				Channel c = new Channel(
+    						getRenderTree().getTissue(),
+    						from.getLoc(), 
+    						getLoc(), 
+    						p);
+    				p.addChannel(c);
+    				getRenderTree().add(new ChannelNode(c));
+    				selection.deselect(from);
+    				selection = null;
+				} else {
+					selection.deselect(from);
+    				selection = null;
+				}
+				
+			}
+		}
+        
     }
 
     /**
@@ -99,30 +140,36 @@ public class HexagonNode extends RenderNode {
     public void render(Graphics2D g) {
         g.setFont(new Font("SansSerif", Font.BOLD, 32));
         //FontMetrics fm = g.getFontMetrics(g.getFont());
-        if (cell != null) {
-            Virus occupant = cell.getOccupant();
-            if (occupant != null) {
-                Color light = occupant.getPlayer().getColor();
-                Color dark = light.darker();
-                g.setColor(light);
-                g.fillPolygon(hexagon);
-                g.setColor(dark);
-                double circleRadius = (occupant.getEnergy() / (double) GameClient.MAX_ENERGY) *
-                        (HexagonConstants.RADIUS * 0.7);
-                int circleDiameter = (int) (circleRadius * 2);
-                int x = (int) (HexagonConstants.RADIUS - circleRadius);
-                int y = (int) (HexagonConstants.TRI_HEIGHT - circleRadius);
-                g.fillOval(x, y, circleDiameter, circleDiameter);
-            } else {
-                if (cell instanceof DeadCell) {
-                    g.setColor(Color.BLACK);
-                } else {
-                    g.setColor(color);
-                }
-                g.fillPolygon(hexagon);
+        Virus occupant = cell.getOccupant();
+        if (occupant != null) {
+            Color light = occupant.getPlayer().getColor();
+            Color dark = light.darker();
+            if(selected) {
+            	light = Color.DARK_GRAY;
+            } else if(possible) {
+            	light = Color.LIGHT_GRAY;
             }
+            g.setColor(light);
+            g.fillPolygon(hexagon);
+            g.setColor(dark);
+            double circleRadius = (occupant.getEnergy() / (double) GameClient.MAX_ENERGY) *
+                    (HexagonConstants.RADIUS * 0.7);
+            int circleDiameter = (int) (circleRadius * 2);
+            int x = (int) (HexagonConstants.RADIUS - circleRadius);
+            int y = (int) (HexagonConstants.TRI_HEIGHT - circleRadius);
+            g.fillOval(x, y, circleDiameter, circleDiameter);
         } else {
-            g.setColor(color);
+            if (cell instanceof DeadCell) {
+                g.setColor(Color.BLACK);
+            } else {
+            	if(selected) {
+                	g.setColor(Color.DARK_GRAY);
+                } else if(possible) {
+                	g.setColor(Color.LIGHT_GRAY);
+                } else {
+                	g.setColor(Color.WHITE);
+                }
+            }
             g.fillPolygon(hexagon);
         }
 
