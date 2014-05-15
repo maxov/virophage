@@ -6,6 +6,11 @@ import virophage.gui.GameClient;
 import virophage.util.HexagonConstants;
 import virophage.util.Vector;
 
+/**
+ * @author      Max Ovsiankin and Leon Ren
+ * @version     1.0 (Alpha)
+ * @since       2014-05-6
+ */
 public class Location {
 
     public static final Vector X_VECTOR = new Vector(

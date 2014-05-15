@@ -15,10 +15,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Random;
 
+/**
+ * @author      Max Ovsiankin and Leon Ren
+ * @version     1.0 (Alpha)
+ * @since       2014-05-6
+ */
 public class GameClient extends JFrame {
 
     public static final Dimension SIZE = new Dimension(1280, 720);
-    public static final int DEAD_CELL_NUM = 100;
+    public static final int DEAD_CELL_NUM = 120;
     public static final int N = 10; // max location coordinate
     public static final int MAX_ENERGY = 10;
     private JPanel cardPanel;

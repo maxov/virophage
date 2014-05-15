@@ -6,7 +6,11 @@ import javax.swing.*;
 
 import java.awt.event.*;
 
-
+/**
+ * @author      Max Ovsiankin and Leon Ren
+ * @version     1.0 (Alpha)
+ * @since       2014-05-6
+ */
 public class MenuScreen extends JPanel implements ActionListener {
 
     private GameClient w;

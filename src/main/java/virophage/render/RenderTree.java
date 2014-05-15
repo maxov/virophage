@@ -14,6 +14,11 @@ import java.awt.event.*;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 
+/**
+ * @author      Max Ovsiankin and Leon Ren
+ * @version     1.0 (Alpha)
+ * @since       2014-05-6
+ */
 public class RenderTree extends JComponent {
 
     public double zoom = 1;

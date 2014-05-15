@@ -13,6 +13,11 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.awt.geom.Ellipse2D;
 
+/**
+ * @author      Max Ovsiankin and Leon Ren
+ * @version     1.0 (Alpha)
+ * @since       2014-05-6
+ */
 public class HexagonNode extends RenderNode {
 
     private Location loc;
