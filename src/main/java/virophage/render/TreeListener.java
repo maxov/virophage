@@ -1,6 +1,5 @@
 package virophage.render;
 
-import virophage.Start;
 import virophage.util.Vector;
 
 import java.awt.*;
@@ -14,6 +13,23 @@ class TreeListener implements KeyListener, MouseListener, MouseMotionListener, M
 
     public TreeListener(RenderTree renderTree) {
         this.renderTree = renderTree;
+    }
+
+    private RenderNode getNodeAround(MouseEvent e) {
+        AffineTransform at = new AffineTransform();
+        at.translate(renderTree.displacement.x * renderTree.zoom, renderTree.displacement.y * renderTree.zoom);
+        at.scale(renderTree.zoom, renderTree.zoom);
+
+        for (RenderNode node : renderTree.nodes) {
+            Vector vec = node.getPosition();
+            AffineTransform nodeTransform = new AffineTransform(at);
+            nodeTransform.translate(vec.x, vec.y);
+            Shape col = nodeTransform.createTransformedShape(node.getCollision());
+            if (col.contains(e.getPoint())) {
+                return node;
+            }
+        }
+        return null;
     }
 
     @Override
@@ -45,6 +61,8 @@ class TreeListener implements KeyListener, MouseListener, MouseMotionListener, M
     @Override
     public void mousePressed(MouseEvent e) {
         prevPos = new Vector(e.getPoint());
+        RenderNode node = getNodeAround(e);
+        node.onPress(e);
     }
 
     @Override
@@ -72,25 +90,13 @@ class TreeListener implements KeyListener, MouseListener, MouseMotionListener, M
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        AffineTransform at = new AffineTransform();
-        at.translate(renderTree.displacement.x * renderTree.zoom, renderTree.displacement.y * renderTree.zoom);
-        at.scale(renderTree.zoom, renderTree.zoom);
-
-        for (RenderNode node : renderTree.nodes) {
-            Vector vec = node.getPosition();
-            AffineTransform nodeTransform = new AffineTransform(at);
-            nodeTransform.translate(vec.x, vec.y);
-            Shape col = nodeTransform.createTransformedShape(node.getCollision());
-            if (col.contains(e.getPoint())) {
-                node.onClick(e);
-                renderTree.repaint();
-                break;
-            }
-        }
-
+        RenderNode node = getNodeAround(e);
+        if(node != null) node.onClick(e);
     }
 
     public void mouseReleased(MouseEvent e) {
+        RenderNode node = getNodeAround(e);
+        if(node != null) node.onRelease(e);
     }
 
     public void mouseEntered(MouseEvent e) {

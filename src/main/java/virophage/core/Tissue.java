@@ -1,26 +1,26 @@
 package virophage.core;
 
-import virophage.render.RenderTree;
+import virophage.util.Location;
+
+import java.util.ArrayList;
 
 /**
- * <code>Tissue</code> represents an array of cells that are corresponding to the GUI tree.
- * @author      Max Ovsiankin and Leon Ren
- * @version     1.0 (Alpha)
- * @since       2014-05-6
+ * A <code>Tissue</code> represents a collection of related cells that are modified by players.
+ *
+ * @author Max Ovsiankin, Leon Ren
+ * @since 2014-05-6
  */
 public class Tissue {
 
     public Cell[][] cells;
-    private RenderTree tree;
+    private ArrayList<Player> players = new ArrayList<Player>();
 
     /**
-     * Constructs tissue that contains cells and points to the tree (t).
+     * Constructs tissue that contains cells.
      * @param start the array of Cells
-     * @param t the RenderTree to be pointed to
      */
-    public Tissue(Cell[][] start, RenderTree t) {
+    public Tissue(Cell[][] start) {
         cells = start;
-        tree = t;
 
         // Initialize cells
         /*for(Cell[] arr: cells){
@@ -41,4 +41,13 @@ public class Tissue {
     public void setCell(Location loc, Cell c) {
         cells[loc.y + cells.length / 2][loc.x + cells[0].length / 2] = c;
     }
+
+    public void addPlayer(Player player) {
+        players.add(player);
+    }
+
+    public Player[] getPlayers() {
+        return players.toArray(new Player[players.size()]);
+    }
+
 }

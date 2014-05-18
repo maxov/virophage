@@ -1,22 +1,15 @@
 package virophage.render;
 
-import virophage.Start;
 import virophage.core.Cell;
-import virophage.core.Location;
+import virophage.util.Location;
 import virophage.core.Tissue;
-import virophage.core.Virus;
 import virophage.util.Vector;
-
-import javax.swing.*;
 
 import java.util.Timer;
 
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -83,7 +76,7 @@ public class RenderTree extends Canvas implements Runnable {
         }
     }
 
-    public synchronized void render(Graphics gr) {
+    public void render(Graphics gr) {
         long t1 = System.nanoTime();
         Graphics2D g = (Graphics2D) gr;
         // makes the game look really nice, but also really slow
@@ -95,7 +88,9 @@ public class RenderTree extends Canvas implements Runnable {
         g.fillRect(0, 0, getWidth(), getHeight());
 
         if (nodes != null) {
-            for (RenderNode node : nodes) {
+            int i = 0;
+            while (i < nodes.size()) {
+                RenderNode node = nodes.get(i);
                 Vector vec = node.getPosition();
                 AffineTransform nodeTransform = new AffineTransform(at);
                 nodeTransform.translate(vec.x, vec.y);
@@ -103,8 +98,8 @@ public class RenderTree extends Canvas implements Runnable {
                 Graphics2D nodeGraphics = (Graphics2D) g.create();
                 nodeGraphics.transform(nodeTransform);
 
-
                 node.render(nodeGraphics);
+                i++;
             }
         }
         //Start.log.info("TIME " + ((System.nanoTime() - t1) / 1000000d));
@@ -115,12 +110,15 @@ public class RenderTree extends Canvas implements Runnable {
         this.createBufferStrategy(2);
         BufferStrategy strategy = this.getBufferStrategy();
         while(true) {
+            do {
+                do {
+                    Graphics gr = strategy.getDrawGraphics();
+                    render(gr);
+                    gr.dispose();
+                } while (strategy.contentsRestored());
 
-
-            Graphics gr = strategy.getDrawGraphics();
-            render(gr);
-            gr.dispose();
-            strategy.show();
+                strategy.show();
+            } while (strategy.contentsLost());
         }
     }
 }

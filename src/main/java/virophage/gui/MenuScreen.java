@@ -8,9 +8,9 @@ import java.awt.event.*;
 
 /**
  * A <code>MenuScree</code> presents a user with the instructions and an option to start.
- * @author      Max Ovsiankin and Leon Ren
- * @version     1.0 (Alpha)
- * @since       2014-05-6
+ *
+ * @author Leon Ren
+ * @since 2014-05-6
  */
 public class MenuScreen extends JPanel implements ActionListener {
 

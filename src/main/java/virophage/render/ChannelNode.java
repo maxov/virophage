@@ -1,7 +1,6 @@
 package virophage.render;
 
 import virophage.core.Channel;
-import virophage.core.Location;
 import virophage.core.Virus;
 import virophage.gui.GameClient;
 import virophage.util.HexagonConstants;

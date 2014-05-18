@@ -2,9 +2,9 @@ package virophage.gui;
 
 import virophage.Start;
 import virophage.core.*;
-import virophage.render.ChannelNode;
 import virophage.render.HexagonNode;
 import virophage.render.RenderTree;
+import virophage.util.Location;
 
 import javax.swing.*;
 
@@ -13,16 +13,15 @@ import java.util.Random;
 
 /**
  * A <code>GameClient</code> is responsible for (among other things), the GUI of the game.
- * @author      Max Ovsiankin and Leon Ren
- * @version     1.0 (Alpha)
- * @since       2014-05-6
+ * @author Max Ovsiankin and Leon Ren
+ * @since 2014-05-6
  */
 public class GameClient extends JFrame {
 
     public static final Dimension SIZE = new Dimension(1280, 720);
     public static final int DEAD_CELL_NUM = 120;
     public static final int N = 10; // max location coordinate
-    public static final int MAX_ENERGY = 10;
+    public static final int MAX_ENERGY = 8;
     private JPanel cardPanel;
     private RenderTree renderTree;
     private MenuScreen menuScreen;
@@ -66,7 +65,7 @@ public class GameClient extends JFrame {
 
         //create tissue here
         Cell[][] cells = new Cell[2 * N + 1][2 * N + 1];
-        Tissue tissue = new Tissue(cells, renderTree);
+        Tissue tissue = new Tissue(cells);
         renderTree.setTissue(tissue);
 
         players = new Player[2];
@@ -90,12 +89,12 @@ public class GameClient extends JFrame {
 
         int i = 0;
 
+        Tissue tissue = renderTree.getTissue();
+
         //creates two players
         for (i = 0; i < players.length; i++) {
-            players[i] = new Player(new Color(200 + i * 50, 250 - i * 50, 200));
+            players[i] = new Player(new Color(200 + i * 50, 250 - i * 50, 200), tissue);
         }
-        
-        Tissue tissue = renderTree.getTissue();
         
         for (int x = -N; x <= N; x++) {
             for (int y = -N; y <= N; y++) {
@@ -108,7 +107,6 @@ public class GameClient extends JFrame {
                 }
             }
         }
-        
 
         // adds some viruses for both players
         for (i = -1; i <= 1; i++) {
@@ -117,9 +115,11 @@ public class GameClient extends JFrame {
                     if (i + j + k == 0) {
                         Location loc1 = new Location(i - 9, j);
                         Location loc2 = new Location(i + 9, j);
-                        Virus v1 = new Virus(players[0], (int) (Math.random() * MAX_ENERGY));
+                        Virus v1 = new Virus(players[0], 4);
+                        v1.schedule();
                         Cell c1 = new Cell(tissue, v1);
-                        Virus v2 = new Virus(players[1], (int) (Math.random() * MAX_ENERGY));
+                        Virus v2 = new Virus(players[1], 4);
+                        v2.schedule();
                         Cell c2 = new Cell(tissue, v2);
                         renderTree.getTissue().setCell(loc1, c1);
                         renderTree.saveCellInNode(c1, loc1.getX(), loc1.getY());

@@ -3,26 +3,24 @@ package virophage.core;
 import java.util.Date;
 import java.util.TimerTask;
 
-import virophage.Start;
 import virophage.gui.GameClient;
-import virophage.gui.Selection;
 import virophage.render.RenderTree;
+import virophage.util.Location;
 
 /**
- * A <code>Channel</code> represents a bridge between two cells. 
- * @author      Max Ovsiankin and Leon Ren
- * @version     1.0 (Alpha)
- * @since       2014-05-6
+ * A <code>Channel</code> represents a bridge between two cells.
+ *
+ * @author Max Ovsiankin, Leon Ren
+ * @since 2014-05-6
  * 
  */
-public class Channel {
+public class Channel implements Cloneable {
 
 	public Tissue tissue;
     public Location from;
     public Location to;
     public Player player;
     public Virus virus;
-
     
 	/**
 	 * Constructs a Channel for a player between two locations. 
@@ -47,7 +45,7 @@ public class Channel {
 				if(v != null && v.getEnergy() > 1) {
 					if(v1 != null) {
 						if(v.getPlayer() == v1.getPlayer() ) {
-							if(v1.getEnergy() <= GameClient.MAX_ENERGY) {
+							if(v1.getEnergy() < GameClient.MAX_ENERGY) {
 								v1.setEnergy(v1.getEnergy() + 1);
 								v.setEnergy(v.getEnergy() - 1);
 							}
@@ -56,11 +54,12 @@ public class Channel {
 								createVirus();
 							}
 							Virus my = getVirus();
-							if(my.getEnergy() <= GameClient.MAX_ENERGY) {
+							if(my.getEnergy() < GameClient.MAX_ENERGY) {
 								my.setEnergy(my.getEnergy() + 1);
 								v.setEnergy(v.getEnergy() - 1);
-								if(my.getEnergy() > v1.getEnergy()) {
+								if(my.getEnergy() >= v1.getEnergy()) {
 									t.occupant = my;
+									my.schedule();
 									setVirus(null);
 								}
 							}
@@ -68,11 +67,12 @@ public class Channel {
 						}
 					} else {
 						t.occupant = new Virus(v.getPlayer(), 0);
+						t.occupant.schedule();
 						v.setEnergy(v.getEnergy() - 1);
 					}
 				}
 			}
-		}, new Date(), 1000);
+		}, new Date(System.currentTimeMillis()), 2000);
     }
 
     public void createVirus() {
@@ -89,6 +89,12 @@ public class Channel {
     
     public void setVirus(Virus virus) {
     	this.virus = virus;
+    }
+
+    public Channel clone() throws CloneNotSupportedException {
+        Channel c = (Channel) super.clone();
+        if(virus != null) c.virus = virus.clone();
+        return c;
     }
 
 }

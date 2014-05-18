@@ -3,7 +3,7 @@ package virophage.render;
 import virophage.core.Cell;
 import virophage.core.Channel;
 import virophage.core.DeadCell;
-import virophage.core.Location;
+import virophage.util.Location;
 import virophage.core.Player;
 import virophage.core.Virus;
 import virophage.gui.GameClient;
@@ -13,8 +13,6 @@ import virophage.util.Vector;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.awt.geom.Ellipse2D;
 
 /**
  * A <code>HexagonNode</code> is a graphical representation of a cell. It can be scaled.
@@ -101,13 +99,13 @@ public class HexagonNode extends RenderNode {
         return new Polygon(hexagon.xpoints, hexagon.ypoints, hexagon.npoints);
     }
 
-    public void onClick(MouseEvent e) {
+    public void onClick(MouseEvent e) {/*
 		if (cell instanceof DeadCell) {
 			return;
 		} else {
 			if ((selection == null || selection.hasTo()) && cell.occupant != null) {
 				selection = new Selection(this);
-				selection.select(this);
+				selection.select();
 			} else if(selection != null) {
 				HexagonNode from = selection.getFrom();
 				
@@ -122,16 +120,50 @@ public class HexagonNode extends RenderNode {
     						p);
     				p.addChannel(c);
     				getRenderTree().add(new ChannelNode(c));
-    				selection.deselect(from);
+    				selection.deselect();
     				selection = null;
 				} else {
-					selection.deselect(from);
+					selection.deselect();
     				selection = null;
 				}
 				
 			}
-		}
+		}*/
         
+    }
+
+    public void onPress(MouseEvent e) {
+        if(!(cell instanceof DeadCell) &&
+                (selection == null || selection.isCompleted()) &&
+                cell.occupant != null &&
+                !e.isControlDown()) {
+            selection = new Selection(this);
+            selection.select();
+        }
+    }
+
+    public void onRelease(MouseEvent e) {
+        if(!(cell instanceof DeadCell) && selection != null) {
+            HexagonNode from = selection.getFrom();
+
+            Player p = from.getCell().getOccupant().getPlayer();
+            if(from != this && getLoc().isNeighbor(from.getLoc()) && !p.hasChannelBetween(from.getLoc(), getLoc())) {
+                selection.setTo(this);
+
+                Channel c = new Channel(
+                        getRenderTree().getTissue(),
+                        from.getLoc(),
+                        getLoc(),
+                        p);
+                p.addChannel(c);
+                getRenderTree().add(new ChannelNode(c));
+                selection.deselect();
+                selection = null;
+            } else {
+                selection.deselect();
+                selection = null;
+            }
+        }
     }
 
     /**

@@ -3,10 +3,11 @@ package virophage.util;
 import java.awt.*;
 
 /**
- * @author      Max Ovsiankin and Leon Ren
- * @version     1.0 (Alpha)
+ * A <code>Vector</code> represents a mathematical vector, with its many properties.
+ *
+ * @author      Max Ovsiankin, Leon Ren
  * @since       2014-05-6
- * Class for representing vector operations.
+ *
  */
 public class Vector {
 
@@ -57,6 +58,10 @@ public class Vector {
         return this.add(that.negate());
     }
 
+    public double dot(Vector that) {
+        return x * that.x + y * that.y;
+    }
+
     public double direction() {
         if(x > 0) {
             return Math.atan(y / x);
@@ -75,8 +80,7 @@ public class Vector {
 
     public Vector rotate(double theta) {
         double newTheta = theta + direction();
-        double magnitude = magnitude();
-        return new Vector(Math.cos(newTheta) * magnitude, Math.sin(newTheta) * magnitude);
+        return new Vector(Math.cos(newTheta), Math.sin(newTheta)).scale(magnitude());
     }
 
     public Vector scale(double scalar) {

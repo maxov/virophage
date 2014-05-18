@@ -29,6 +29,14 @@ public abstract class RenderNode implements Comparable<RenderNode> {
     public void onClick(MouseEvent e) {
     }
 
+    public void onPress(MouseEvent e) {
+
+    }
+
+    public void onRelease(MouseEvent e) {
+
+    }
+
     public int getPriority() {
         return 0;
     }
