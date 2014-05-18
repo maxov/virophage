@@ -1,15 +1,15 @@
 package virophage;
 
-import org.lwjgl.LWJGLException;
-import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.DisplayMode;
-import static org.lwjgl.opengl.GL11.*;
-
-import org.lwjgl.opengl.GL15;
-import org.lwjgl.opengl.GL40;
-import org.lwjgl.util.glu.GLU;
-import org.newdawn.slick.opengl.Texture;
-import org.newdawn.slick.opengl.TextureLoader;
+//import org.lwjgl.LWJGLException;
+//import org.lwjgl.opengl.Display;
+//import org.lwjgl.opengl.DisplayMode;
+//import static org.lwjgl.opengl.GL11.*;
+//
+//import org.lwjgl.opengl.GL15;
+//import org.lwjgl.opengl.GL40;
+//import org.lwjgl.util.glu.GLU;
+//import org.newdawn.slick.opengl.Texture;
+//import org.newdawn.slick.opengl.TextureLoader;
 import virophage.gui.GameClient;
 
 import java.io.File;

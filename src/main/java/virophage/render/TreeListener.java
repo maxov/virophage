@@ -1,5 +1,6 @@
 package virophage.render;
 
+import virophage.Start;
 import virophage.util.Vector;
 
 import java.awt.*;
@@ -10,9 +11,11 @@ class TreeListener implements KeyListener, MouseListener, MouseMotionListener, M
 
     private RenderTree renderTree;
     private Vector prevPos;
+    private double zoomFactor;
 
     public TreeListener(RenderTree renderTree) {
         this.renderTree = renderTree;
+        zoomFactor = 1;
     }
 
     private RenderNode getNodeAround(MouseEvent e) {
@@ -79,12 +82,31 @@ class TreeListener implements KeyListener, MouseListener, MouseMotionListener, M
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
         double rot = e.getPreciseWheelRotation();
+        Vector offset;
+        
+        int x = renderTree.getWidth();
+        int y = renderTree.getHeight();
+        
         if ((0.2 < renderTree.zoom && renderTree.zoom < 5) ||
                 (renderTree.zoom <= 0.2 && rot < 0) ||
                 (renderTree.zoom >= 5 && rot > 0)) {
             renderTree.zoom = renderTree.zoom / Math.pow(1.15, rot);
+            
+            zoomFactor /= renderTree.zoom;
+            if (renderTree.zoom > 1) {
+            	zoomFactor *= 2;
+            }
+            
+            double ratio = ((renderTree.zoom > 1)? renderTree.zoom : -renderTree.zoom);
+            ratio = (ratio > 0) ? (ratio - 1) : (-1 - ratio);
+            Start.log.info("ZOOM " + renderTree.zoom + " ratio " + ratio);
+            Start.log.info("Before: X " + renderTree.displacement.getX() + " Y " + renderTree.displacement.getY());
+            offset = new Vector (x * ratio / zoomFactor, y * ratio / zoomFactor);
+         
+            renderTree.displacement = renderTree.displacement.subtract(offset);
+            Start.log.info("After: X " + renderTree.displacement.getX() + " Y " + renderTree.displacement.getY());
         }
-        //Start.log.info("ZOOM " + renderTree.zoom);
+        
         renderTree.repaint();
     }
 

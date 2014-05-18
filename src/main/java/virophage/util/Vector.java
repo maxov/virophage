@@ -95,4 +95,11 @@ public class Vector {
         return new Dimension((int) x, (int) y);
     }
 
+    public double getX() {
+    	return x;
+    }
+    
+    public double getY() {
+    	return y;
+    }
 }
