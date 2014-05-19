@@ -16,13 +16,12 @@ import virophage.render.RenderTree;
 public class Virus implements Cloneable {
 
     private Player player;
+    private int energy;
 
     public void setEnergy(int energy) {
         this.energy = energy;
     }
 
-    private int energy;
-    
     /**
      * Constructs a virus belonging to a certain player containing a given amount of energy.
      * @param player The player this virus belongs to.

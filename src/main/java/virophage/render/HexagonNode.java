@@ -23,6 +23,12 @@ import java.awt.event.MouseEvent;
 public class HexagonNode extends RenderNode {
 
     private Location loc;
+    private boolean possible = false;
+    private static Selection selection;
+    private Polygon hexagon;
+    private boolean selected = false;
+    private Cell cell;
+
     public Location getLoc() {
 		return loc;
 	}
@@ -31,14 +37,10 @@ public class HexagonNode extends RenderNode {
 		this.loc = loc;
 	}
 
-	private Cell cell;
-
     public Cell getCell() {
 		return cell;
 	}
-
-    private Polygon hexagon;
-    private boolean selected = false;
+    
     public boolean isSelected() {
 		return selected;
 	}
@@ -54,10 +56,6 @@ public class HexagonNode extends RenderNode {
 	public void setPossible(boolean possible) {
 		this.possible = possible;
 	}
-
-	private boolean possible = false;
-    
-    private static Selection selection;
 
     /**
      * Constructs a <code>HexagonNode</code> at the Location loc.
@@ -212,6 +210,11 @@ public class HexagonNode extends RenderNode {
         //int x = (int) (HexagonConstants.RADIUS - fm.stringWidth(loc.toString()) / 2);
         //int y = (int) (HexagonConstants.TRI_HEIGHT);
         //g.drawString(loc.toString(), x, y);
+        if (cell != null && cell.getOccupant() != null) {
+        	Virus tempV = cell.getOccupant();
+        	g.drawString(""+ tempV.getEnergy(), 100, 100);
+        }
+        
 
     }
 

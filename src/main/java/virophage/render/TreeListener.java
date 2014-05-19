@@ -65,7 +65,8 @@ class TreeListener implements KeyListener, MouseListener, MouseMotionListener, M
     public void mousePressed(MouseEvent e) {
         prevPos = new Vector(e.getPoint());
         RenderNode node = getNodeAround(e);
-        node.onPress(e);
+        if (node != null)
+        	node.onPress(e);
     }
 
     @Override
@@ -99,12 +100,12 @@ class TreeListener implements KeyListener, MouseListener, MouseMotionListener, M
             
             double ratio = ((renderTree.zoom > 1)? renderTree.zoom : -renderTree.zoom);
             ratio = (ratio > 0) ? (ratio - 1) : (-1 - ratio);
-            Start.log.info("ZOOM " + renderTree.zoom + " ratio " + ratio);
-            Start.log.info("Before: X " + renderTree.displacement.getX() + " Y " + renderTree.displacement.getY());
+            //Start.log.info("ZOOM " + renderTree.zoom + " ratio " + ratio);
+            //Start.log.info("Before: X " + renderTree.displacement.getX() + " Y " + renderTree.displacement.getY());
             offset = new Vector (x * ratio / zoomFactor, y * ratio / zoomFactor);
          
             renderTree.displacement = renderTree.displacement.subtract(offset);
-            Start.log.info("After: X " + renderTree.displacement.getX() + " Y " + renderTree.displacement.getY());
+            //Start.log.info("After: X " + renderTree.displacement.getX() + " Y " + renderTree.displacement.getY());
         }
         
         renderTree.repaint();
