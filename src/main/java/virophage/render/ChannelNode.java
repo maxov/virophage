@@ -12,7 +12,15 @@ public class ChannelNode extends RenderNode {
 
     private Channel channel;
 
-    public ChannelNode(Channel channel) {
+    public Channel getChannel() {
+		return channel;
+	}
+
+	public void setChannel(Channel channel) {
+		this.channel = channel;
+	}
+
+	public ChannelNode(Channel channel) {
         this.channel = channel;
     }
 

@@ -4,6 +4,7 @@ import virophage.util.Location;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * A <code>Player</code> represents a player that is a user in this game.
@@ -42,6 +43,30 @@ public class Player {
     
     public ArrayList<Virus> getViruses(){
     	return viruses;
+    }
+    
+    public ArrayList<Channel> getChannels() {
+    	return channels;
+    }
+    
+    public void removeChannel(Channel c) {
+    	Iterator<Channel> cs = channels.iterator();
+    	while(cs.hasNext()) {
+    		Channel q = cs.next();
+    		if(q.equals(c)) {
+    			cs.remove();
+    		}
+    	}
+    }
+    
+    public void removeVirus(Virus v) {
+    	Iterator<Virus> vs = viruses.iterator();
+    	while(vs.hasNext()) {
+    		Virus q = vs.next();
+    		if(q.equals(v)) {
+    			vs.remove();
+    		}
+    	}
     }
     
     public boolean hasChannelBetween(Location from, Location to) {

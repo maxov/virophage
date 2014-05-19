@@ -1,5 +1,6 @@
 package virophage.core;
 
+import virophage.render.RenderTree;
 import virophage.util.Location;
 
 import java.util.ArrayList;
@@ -14,12 +15,13 @@ public class Tissue {
 
     public Cell[][] cells;
     private ArrayList<Player> players = new ArrayList<Player>();
+    public RenderTree tree;
 
     /**
      * Constructs tissue that contains cells.
      * @param start the array of Cells
      */
-    public Tissue(Cell[][] start) {
+    public Tissue(Cell[][] start, RenderTree tree) {
         cells = start;
 
         // Initialize cells
@@ -31,7 +33,7 @@ public class Tissue {
                 }
             }
         }*/
-
+        this.tree = tree;
     }
 
     public Cell getCell(Location loc) {

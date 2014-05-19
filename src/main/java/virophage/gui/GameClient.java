@@ -65,7 +65,7 @@ public class GameClient extends JFrame {
 
         //create tissue here
         Cell[][] cells = new Cell[2 * N + 1][2 * N + 1];
-        Tissue tissue = new Tissue(cells);
+        Tissue tissue = new Tissue(cells, renderTree);
         renderTree.setTissue(tissue);
 
         players = new Player[2];
@@ -116,8 +116,8 @@ public class GameClient extends JFrame {
             for (int j = -1; j <= 1; j++) {
                 for (int k = -1; k <= 1; k++) {
                     if (i + j + k == 0) {
-                        Location loc1 = new Location(i - 9, j);
-                        Location loc2 = new Location(i + 9, j);
+                        Location loc1 = new Location(i - 3, j);
+                        Location loc2 = new Location(i + 3, j);
                         Virus v1 = new Virus(players[0], 4);
                         v1.schedule();
                         Cell c1 = new Cell(tissue, v1);

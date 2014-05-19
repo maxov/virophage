@@ -17,6 +17,16 @@ public class Virus implements Cloneable {
 
     private Player player;
     private int energy;
+    
+    private TimerTask task = new TimerTask() {
+		
+		@Override
+		public void run() {
+			if(getEnergy() < GameClient.MAX_ENERGY) {
+				setEnergy(getEnergy() + 1);
+			}
+		}
+	};
 
     public void setEnergy(int energy) {
         this.energy = energy;
@@ -34,15 +44,11 @@ public class Virus implements Cloneable {
     }
     
     public void schedule() {
-    	RenderTree.timer.schedule(new TimerTask() {
-				
-				@Override
-				public void run() {
-					if(getEnergy() < GameClient.MAX_ENERGY) {
-						setEnergy(getEnergy() + 1);
-					}
-				}
-			}, new Date(System.currentTimeMillis()), 10000);
+    	RenderTree.timer.schedule(task, new Date(System.currentTimeMillis()), 10000);
+    }
+    
+    public void destroy() {
+    	task.cancel();
     }
 
     public Player getPlayer() {

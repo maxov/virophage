@@ -1,6 +1,7 @@
 package virophage.render;
 
 import virophage.core.Cell;
+import virophage.core.Channel;
 import virophage.core.Player;
 import virophage.util.Location;
 import virophage.core.Tissue;
@@ -12,6 +13,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 
 /**
  * A <code>RenderTree</code> contains an array of renderNodes, it is also a GUI componet.
@@ -52,7 +54,23 @@ public class RenderTree extends Canvas implements Runnable {
         node.setRenderTree(this);
         Collections.sort(nodes);
     }
+    
+    public synchronized void removeChannelNodes(ArrayList<Channel> channels) {
+    	Iterator<RenderNode> n = nodes.iterator();
+    	while(n.hasNext()) {
+    		RenderNode r = n.next();
+    		if(r instanceof ChannelNode) {
+    			ChannelNode c = (ChannelNode) r;
+    			for(Channel ch: channels) {
+    				if(c.getChannel().equals(ch)) {
+    					n.remove();
+    				}
+    			}
+    		}
+    	}
+    }
 
+    
     public void setTissue(Tissue t) {
         tissue = t;
     }
