@@ -90,7 +90,7 @@ public class GameClient extends JFrame {
         int i = 0;
 
         Tissue tissue = renderTree.getTissue();
-
+        int count = 0;
         //creates two players
         for (i = 0; i < players.length; i++) {
             players[i] = new Player(new Color(200 + i * 50, 250 - i * 50, 200), tissue);
@@ -101,12 +101,15 @@ public class GameClient extends JFrame {
                 for (int z = -N; z <= N; z++) {
                     if (x + y + z == 0) {
                     	Cell c = new Cell(tissue);
+                    	count ++;
                     	renderTree.saveCellInNode(c, x, y);
                     	tissue.setCell(new Location(x, y), c);
                     }
                 }
             }
         }
+        
+//        Start.log.info("Number of Cells: " + count);
 
         // adds some viruses for both players
         for (i = -1; i <= 1; i++) {
@@ -148,4 +151,5 @@ public class GameClient extends JFrame {
         }
         (new Thread(renderTree)).start();
     }
+
 }

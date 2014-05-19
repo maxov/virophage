@@ -48,10 +48,11 @@ public class ChannelNode extends RenderNode {
         double mult = (rad / 2 + 5) / endpoint.magnitude();
         Vector startpoint = endpoint.scale(mult);
 
-        // draw line
+        // draw line with masking circle at end
         g.setColor(channel.player.getColor().darker().darker());
         g.setStroke(new BasicStroke(10));
         g.drawLine((int) startpoint.x, (int) startpoint.y, (int) endpoint.x, (int) endpoint.y);
+        g.fillOval((int) endpoint.x - 7, (int) endpoint.y - 7, 14, 14);
 
         // draw loop
         g.setColor(channel.player.getColor().darker().darker().darker().darker());

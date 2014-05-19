@@ -40,6 +40,10 @@ public class Player {
         channels.add(c);
     }
     
+    public ArrayList<Virus> getViruses(){
+    	return viruses;
+    }
+    
     public boolean hasChannelBetween(Location from, Location to) {
     	for(Channel channel: channels) {
     		if(channel.from.equals(from) && channel.to.equals(to)) return true;
