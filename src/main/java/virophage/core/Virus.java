@@ -30,12 +30,13 @@ public class Virus implements Cloneable {
 				setEnergy(getEnergy() + 1);
 			}
 			
-			if (cell != null && player instanceof MachinePlayer && cell.getNode() != null) {
+			if (cell != null && !(cell instanceof DeadCell) && player instanceof MachinePlayer && cell.getNode() != null) {
 				Tissue tissue = cell.getTissue();
   				// spawn a virus in empty neighbor
   				ArrayList<Location> locations = cell.getNode().getLocation().getNeighbors();
+  				Start.log.info("size:" + locations.size());
   				for (Location loc: locations) {
-  					if (tissue.getCell(loc).getOccupant() == null) {
+  					if (tissue.getCell(loc).getOccupant() == null && !(cell instanceof DeadCell)) {
   					
   						Virus virus = new Virus(player, 1);
                         

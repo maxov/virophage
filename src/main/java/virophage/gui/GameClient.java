@@ -147,8 +147,8 @@ public class GameClient extends JFrame {
                         
                         Cell c2 = new Cell(tissue, v2);
                         v2.setCell(c2);
-                        v1.schedule();
-                        v2.schedule();
+//                        v1.schedule();
+//                        v2.schedule();
                         renderTree.getTissue().setCell(loc1, c1);
                         renderTree.saveCellInNode(c1, loc1.getX(), loc1.getY());
                         renderTree.getTissue().setCell(loc2, c2);
@@ -172,6 +172,26 @@ public class GameClient extends JFrame {
                 renderTree.getTissue().setCell(loc, dc);
                 renderTree.saveCellInNode(dc, xPos, yPos);
                 i++;
+            }
+            
+        }
+        
+        for (i = -1; i <= 1; i++) {
+            for (int j = -1; j <= 1; j++) {
+                for (int k = -1; k <= 1; k++) {
+                    if (i + j + k == 0) {
+                    	Location loc1 = new Location(i - 3, j);
+                        Location loc2 = new Location(i + 3, j);
+                        Cell c1 = renderTree.getTissue().getCell(loc1); 
+                        Virus v1 = c1.getOccupant();
+                        if (v1 != null)
+                        	v1.schedule();
+                        Cell c2 = renderTree.getTissue().getCell(loc2); 
+                        Virus v2 = c2.getOccupant();
+                        if (v2 != null)
+                        	v2.schedule();
+                    }
+                }
             }
         }
         (new Thread(renderTree)).start();
