@@ -1,6 +1,15 @@
 package virophage.core;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.TimerTask;
+
+import virophage.Start;
 import virophage.core.Virus;
+import virophage.gui.GameClient;
+import virophage.render.HexagonNode;
+import virophage.render.RenderTree;
+import virophage.util.Location;
 
 /**
  * A <code>Cell</code> is an area that can contain a virus.
@@ -12,6 +21,7 @@ public class Cell implements Cloneable {
 
 	public Tissue tissue;
     public Virus occupant;
+    private HexagonNode node;
 
     /**
      * Constructs a cell with a <code>Virus</code> occupant
@@ -24,9 +34,9 @@ public class Cell implements Cloneable {
     
     public Cell(Tissue tissue) {
     	this.tissue = tissue;
-    	this.occupant = null;
+    	this.occupant = null;	
     }
-
+  	
     public Virus getOccupant() {
         return occupant;
     }
@@ -41,4 +51,15 @@ public class Cell implements Cloneable {
         return c;
     }
 
+    public void setNode(HexagonNode n) {
+    	node = n;
+    }
+    
+    public HexagonNode getNode() {
+    	return node;
+    }
+    
+    public Tissue getTissue() {
+    	return tissue;
+    }
 }

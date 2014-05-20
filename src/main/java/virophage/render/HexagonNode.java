@@ -3,6 +3,7 @@ package virophage.render;
 import virophage.core.Cell;
 import virophage.core.Channel;
 import virophage.core.DeadCell;
+import virophage.core.MachinePlayer;
 import virophage.util.Location;
 import virophage.core.Player;
 import virophage.core.Virus;
@@ -87,6 +88,7 @@ public class HexagonNode extends RenderNode {
 
     public void setCell(Cell c) {
         cell = c;
+        cell.setNode(this);
     }
 
     public Vector getPosition() {
@@ -212,7 +214,14 @@ public class HexagonNode extends RenderNode {
         //g.drawString(loc.toString(), x, y);
         if (cell != null && cell.getOccupant() != null) {
         	Virus tempV = cell.getOccupant();
-        	g.drawString(""+ tempV.getEnergy(), 100, 100);
+        	String s;
+        	if (tempV.getPlayer() instanceof MachinePlayer) {
+        		s = "M";
+        	}
+        	else {
+        		s = "S";
+        	}
+        	g.drawString(s, 100, 100);
         }
         
 

@@ -123,14 +123,20 @@ public class RenderTree extends Canvas implements Runnable {
         //Start.log.info("TIME " + ((System.nanoTime() - t1) / 1000000d));
         int x = this.getWidth();
         int y = this.getHeight();
-        g.setColor(Color.GREEN);
-        Font f = new Font("arial", Font.BOLD, 30);
+        
+        Font f = new Font("arial", Font.BOLD, 20);
         g.setFont(f);
         Player[] p = tissue.getPlayers();
-        g.drawString(p[0].getViruses().size() + "", 10, y - 20);
+        g.setColor(Color.GRAY);
+        g.fillRect(0, y - 40, x, y);
+        g.setColor(Color.GREEN);
+        g.drawString("Green: #cells - " + p[0].getViruses().size() + "", 10, y - 10);
         g.setColor(Color.RED);
         int virusSize = p[1].getViruses().size();
-        g.drawString(virusSize + "", x - 40, y - 20);
+        String vSize = virusSize + "";
+        g.drawString("Red: #cells - " + virusSize + "", x - 128 - 15 * vSize.length(), y - 10);
+        
+        
     }
 
     @Override

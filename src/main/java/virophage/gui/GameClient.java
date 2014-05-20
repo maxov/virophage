@@ -70,7 +70,18 @@ public class GameClient extends JFrame {
 
         players = new Player[2];
     }
-
+    
+    public void setPlayer(int i, Player p){
+    	players[i] = p;
+    }
+    
+    public Player getPlayer(int i) {
+    	return players[i];
+    }
+    
+    public RenderTree getTree(){
+    	return renderTree;
+    }
 
     /**
      * Changes the Panel
@@ -93,7 +104,16 @@ public class GameClient extends JFrame {
         int count = 0;
         //creates two players
         for (i = 0; i < players.length; i++) {
-            players[i] = new Player(new Color(200 + i * 50, 250 - i * 50, 200), tissue);
+        	if (i == 1) {
+        		if ( players[i] != null){
+        			continue;
+        		}
+        		else {
+        			players[i] = new MachinePlayer(new Color(200 + i * 50, 250 - i * 50, 200), tissue);
+        		}
+        	} else {
+        		players[i] = new Player(new Color(200 + i * 50, 250 - i * 50, 200), tissue);
+        	}
         }
         
         for (int x = -N; x <= N; x++) {
@@ -104,6 +124,7 @@ public class GameClient extends JFrame {
                     	count ++;
                     	renderTree.saveCellInNode(c, x, y);
                     	tissue.setCell(new Location(x, y), c);
+
                     }
                 }
             }
@@ -119,11 +140,15 @@ public class GameClient extends JFrame {
                         Location loc1 = new Location(i - 3, j);
                         Location loc2 = new Location(i + 3, j);
                         Virus v1 = new Virus(players[0], 4);
-                        v1.schedule();
-                        Cell c1 = new Cell(tissue, v1);
+                       
+                        Cell c1 = new Cell(tissue, v1);  
+                        v1.setCell(c1);
                         Virus v2 = new Virus(players[1], 4);
-                        v2.schedule();
+                        
                         Cell c2 = new Cell(tissue, v2);
+                        v2.setCell(c2);
+                        v1.schedule();
+                        v2.schedule();
                         renderTree.getTissue().setCell(loc1, c1);
                         renderTree.saveCellInNode(c1, loc1.getX(), loc1.getY());
                         renderTree.getTissue().setCell(loc2, c2);

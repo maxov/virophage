@@ -51,5 +51,9 @@ public class Tissue {
     public Player[] getPlayers() {
         return players.toArray(new Player[players.size()]);
     }
+    
+    public RenderTree getTree() {
+    	return tree;
+    }
 
 }

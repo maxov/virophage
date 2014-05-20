@@ -1,10 +1,13 @@
 package virophage.core;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.TimerTask;
 
+import virophage.Start;
 import virophage.gui.GameClient;
 import virophage.render.RenderTree;
+import virophage.util.Location;
 
 /**
  * A <code>Virus</code> represents an occupant of a cell that belongs to a player and has a given amount of energy.
@@ -17,6 +20,7 @@ public class Virus implements Cloneable {
 
     private Player player;
     private int energy;
+    private Cell cell;
     
     private TimerTask task = new TimerTask() {
 		
@@ -25,6 +29,23 @@ public class Virus implements Cloneable {
 			if(getEnergy() < GameClient.MAX_ENERGY) {
 				setEnergy(getEnergy() + 1);
 			}
+			
+			if (cell != null && player instanceof MachinePlayer && cell.getNode() != null) {
+				Tissue tissue = cell.getTissue();
+  				// spawn a virus in empty neighbor
+  				ArrayList<Location> locations = cell.getNode().getLocation().getNeighbors();
+  				for (Location loc: locations) {
+  					if (tissue.getCell(loc).getOccupant() == null) {
+  					
+  						Virus virus = new Virus(player, 1);
+                        
+                        tissue.getCell(loc).setOccupant(virus);
+                        virus.schedule();
+                        
+                        break;
+  					}
+  				}
+  			}
 		}
 	};
 
@@ -35,7 +56,7 @@ public class Virus implements Cloneable {
     /**
      * Constructs a virus belonging to a certain player containing a given amount of energy.
      * @param player The player this virus belongs to.
-     * @param energy The intial energy of this virus
+     * @param energy The initial energy of this virus
      */
     public Virus(Player player, int energy) {
         this.player = player;
@@ -68,4 +89,11 @@ public class Virus implements Cloneable {
         return v;
     }
 
+    public void setCell(Cell c) {
+    	cell = c;
+    }
+    
+    public Cell getCell() {
+    	return cell;
+    }
 }
