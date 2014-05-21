@@ -44,12 +44,12 @@ public class PlayScreen extends JPanel{
 		buttonContinue.addActionListener(new RegularButtonHandler());    
         add(buttonContinue);
         		
-        f = new Font("Courier", Font.BOLD, 26);
+        f = new Font("arial", Font.BOLD, 26);
 		group = new ButtonGroup();
-		b1 = new JRadioButton("Single Player");
+		b1 = new JRadioButton(" Single Player");
 		b1.setFont(f);
 		b1.addActionListener(new RadioButtonHandler());
-		b2 = new JRadioButton("Multi-Player (with networking)");
+		b2 = new JRadioButton(" Multi-Player (with networking)");
 		b2.addActionListener(new RadioButtonHandler());
 		b2.setFont(f);
 		group.add(b1);

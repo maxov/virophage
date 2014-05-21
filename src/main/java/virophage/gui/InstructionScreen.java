@@ -53,7 +53,7 @@ public class InstructionScreen extends TextScreen {
         g.drawString("4. Energy will automatically be transferred through a channel from a higher energy cell to a lower energy cell.", x/8, y/4 + 3*y/15+ 2*y/9);
         g.drawString("5. The energy of all cells will increase by 1 after every 10 seconds.", x/8, y/4 + 4*y/15+ 2*y/9);
         g.drawString("6. To infect an enemy cell, create a channel to it. Once the energy in the channel is greater than the energy of the cell, it is yours!", x/8, y/4 + 5*y/15+ 2*y/9);
-        
+        g.drawString("7. In order to win, you must wipe out all enemy cells. Good luck!", x/8, y/4 + 6*y/15+ 2*y/9);
 
     }
 

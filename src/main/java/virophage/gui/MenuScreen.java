@@ -19,6 +19,7 @@ public class MenuScreen extends JPanel implements ActionListener {
     private JButton playButton;
     private JButton instrButton;
     private JButton credButton;
+    private ImageIcon icon = new ImageIcon("Viro-Background.jpg");
 
     public MenuScreen(GameClient w) {
         this.w = w;
@@ -48,17 +49,20 @@ public class MenuScreen extends JPanel implements ActionListener {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         
+        
         int x = this.getWidth();
         int y = this.getHeight();
-        playButton.setBounds(x*2/5, y/3, 200, 60);
-        instrButton.setBounds(x *2/5, y/3 + y /10, 200, 60);
-        credButton.setBounds(x*2/5, y/3 + y/5, 200, 60);
+        g.drawImage(icon.getImage(), 0, 0, x, y, this);
+        playButton.setBounds(x*2/5 + x/ 43, y/3, 200, 60);
+        instrButton.setBounds(x *2/5 + x/ 43, y/3 + y /10, 200, 60);
+        credButton.setBounds(x*2/5 + x/ 43, y/3 + y/5, 200, 60);
         y-= 90;
         
         // Draw the Game Title
         Font f = new Font("arial", Font.BOLD, 30);
         g.setFont(f);
-        g.drawString("Virophage", x / 3 + x/10 , y / 4);
+        g.setColor(Color.WHITE);
+        g.drawString("Virophage", x / 3 + (int)(x/9.7) , y / 4);
     }
     
     public void actionPerformed(ActionEvent e) {
