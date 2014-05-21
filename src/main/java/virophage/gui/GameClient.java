@@ -25,6 +25,10 @@ public class GameClient extends JFrame {
     private JPanel cardPanel;
     private RenderTree renderTree;
     private MenuScreen menuScreen;
+    private PlayScreen playScreen;
+    private InstructionScreen instructionPanel;
+    private CreditsScreen creditsPanel;
+    private MultiPlayerScreen multiPlayerPanel;
     private Player players[];
 
     /**
@@ -36,7 +40,7 @@ public class GameClient extends JFrame {
         setSize(SIZE);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        renderTree = new RenderTree();
+        renderTree = new RenderTree(this);
 
         for (int x = -N; x <= N; x++) {
             for (int y = -N; y <= N; y++) {
@@ -55,9 +59,18 @@ public class GameClient extends JFrame {
         cardPanel.setLayout(cl);
 
         menuScreen = new MenuScreen(this);
+        playScreen = new PlayScreen(this);
+        instructionPanel = new InstructionScreen(this);
+        creditsPanel = new CreditsScreen(this);
+        multiPlayerPanel = new MultiPlayerScreen(this);
+        
 
-        cardPanel.add(menuScreen, "menuScreen");
+        cardPanel.add(menuScreen, "menuScreen"); 
+        cardPanel.add(playScreen, "playScreen");
         cardPanel.add(renderTree, "renderTree");
+        cardPanel.add(instructionPanel, "instructionScreen");
+        cardPanel.add(creditsPanel, "creditsScreen");
+        cardPanel.add(multiPlayerPanel, "multiplayerScreen");
 
         add(cardPanel);
 
@@ -86,11 +99,10 @@ public class GameClient extends JFrame {
     /**
      * Changes the Panel
      */
-    public void changePanel() {
-        ((CardLayout) cardPanel.getLayout()).next(cardPanel);
-        
-        requestFocus();
-    }
+	public void changePanel(String s) {
+		((CardLayout)cardPanel.getLayout()).show(cardPanel, s);
+		requestFocus();
+	}
 
     /**
      * Starts the game by placing the players and dead cells.
@@ -147,8 +159,8 @@ public class GameClient extends JFrame {
                         
                         Cell c2 = new Cell(tissue, v2);
                         v2.setCell(c2);
-//                        v1.schedule();
-//                        v2.schedule();
+//                       v1.schedule();
+//                       v2.schedule();
                         renderTree.getTissue().setCell(loc1, c1);
                         renderTree.saveCellInNode(c1, loc1.getX(), loc1.getY());
                         renderTree.getTissue().setCell(loc2, c2);

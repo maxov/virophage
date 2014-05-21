@@ -5,6 +5,7 @@ import virophage.core.Channel;
 import virophage.core.Player;
 import virophage.util.Location;
 import virophage.core.Tissue;
+import virophage.gui.GameClient;
 import virophage.util.Vector;
 
 import java.util.Timer;
@@ -26,6 +27,7 @@ public class RenderTree extends Canvas implements Runnable {
     public double zoom = 1;
     public Vector displacement = new Vector(0, 0);
     private Tissue tissue;
+    private GameClient w;
     
     public static Timer timer = new Timer();
 
@@ -34,7 +36,8 @@ public class RenderTree extends Canvas implements Runnable {
     /**
      * Constructs a RenderTree and adds the listeners.
      */
-    public RenderTree() {
+    public RenderTree(GameClient g) {
+    	w = g;
         setIgnoreRepaint(true);
         setFocusable(true);
         requestFocus();
@@ -70,6 +73,9 @@ public class RenderTree extends Canvas implements Runnable {
     	}
     }
 
+    public GameClient getGameClient() {
+    	return w; 	
+    }
     
     public void setTissue(Tissue t) {
         tissue = t;

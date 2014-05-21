@@ -18,14 +18,14 @@ By Max Ovsiankin & Leon Ren - Period 1, 5/7/14
          2. Each player starts with some number of energy on every cell
          3. To take an empty cell, the player must move at least one energy to that cell
          4. >= 2 players
-         5. Can choose to be multiplayer or single AI, or AI vs AI
+         5. Can choose to be multiplayer or single vs AI.
    1. What problems does it solve?
       1. Our program solves the problem of boredom or lack of entertainment.
    1. Rules?
-      1. There is a hexagonal grid with 2 different players.
+      (IF there is a hexagonal grid with 2 different players)
       2. Each player will control an army of “virophages”, or viruses that can infect other viruses.
       3. Each player will start with 7 viruses on opposite corners (northwest and southeast) of the hexagonal flat-topped grid.
-      4. The objective is to eliminate all viruses of the opposing player. The detailed mechanisms of movement and “infection” are described in sections 3 - instructions.
+      4. The objective is to eliminate all viruses of the opposing player. The detailed mechanisms of movement and “infection” are described in section 2 - instructions.
    1. Target market?
       1. Young or middle aged users looking for some entertainment.
    1. Primary features?
@@ -33,15 +33,13 @@ By Max Ovsiankin & Leon Ren - Period 1, 5/7/14
 2. Instructions
    1. There is a flat topped hexagonal grid with 2 different players.
    2. Each player will control an army of “virophages”, or viruses that can infect other viruses.
-   3. Each player will start of with 3 viruses on opposite (west & east) sides of the grid.
+   3. Each player will start of with 7 viruses on opposite (west & east) corners of the grid.
    4. Each virus occupies a cell. Every virus has an amount of energy used to move and kill other viruses.
-   5. Each player starts with occupying some number of cells
-   6. Each player starts with some number of energy on every cell
-   7. Click on the start button to start the game
-   8. Click on another grid to construct a channel between him.
-   9. Each player can make as many movements/transfers of energy as needed in a turn. 
-   10. The opposing player acts in real time.
-   11. When a player has eliminated all viruses of the opposing player, he/she has won.
+   5. Choose singlePlayer/multiPlayer, then click on the start button to start the game
+   6. Click and drag from this cell to another cell in order
+   7. Each player can make as many movements/transfers of energy as needed in a turn. 
+   8. The opposing player acts in real time.
+   9. When a player has eliminated all viruses of the opposing player, he/she has won.
 3. Features List
    1. Must-Haves
       1. ‘Stupid’ AI
@@ -57,6 +55,8 @@ By Max Ovsiankin & Leon Ren - Period 1, 5/7/14
    3. Stretch Features
       1. Multiplayer over a network
 4. Class List
+   (Main) - Start
+   (Core)
    1. Tissue - the game board
    2. Virus - a virus, which can occupy one tile at a time
    3. Player - a player, or a collection of viruses working together
@@ -68,9 +68,7 @@ By Max Ovsiankin & Leon Ren - Period 1, 5/7/14
    1. Main - Leon
    2. GameClient - Leon
    3. Energy System - Leon
-   4. Art - Leon
    5. GUI - ALL
-   6. Sounds - Leon
    7. Networking - Max
    8. AI - Max
    9. Core Gameplay - Max

@@ -19,6 +19,9 @@ public class Player {
     public ArrayList<Channel> channels = new ArrayList<Channel>();
     public ArrayList<Virus> viruses = new ArrayList<Virus>();
 
+    public Player() {
+    	color = Color.blue;
+    }
     /**
      * Constructs a player with the given Color c
      * @param color the color

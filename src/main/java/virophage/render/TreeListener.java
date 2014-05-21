@@ -54,6 +54,10 @@ class TreeListener implements KeyListener, MouseListener, MouseMotionListener, M
         if (code == KeyEvent.VK_DOWN) {
             renderTree.displacement = renderTree.displacement.add(Vector.j.scale(-50 / renderTree.zoom));
         }
+        if (code == KeyEvent.VK_ESCAPE) {
+        	// how to stop all thread's timer? and clean up the game?
+        	renderTree.getGameClient().changePanel("menuScreen");
+        }
         renderTree.repaint();
     }
 

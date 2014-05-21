@@ -16,27 +16,63 @@ import java.awt.event.*;
 public class MenuScreen extends JPanel implements ActionListener {
 
     private GameClient w;
-
+    private JButton playButton;
+    private JButton instrButton;
+    private JButton credButton;
 
     public MenuScreen(GameClient w) {
         this.w = w;
-        this.setLayout(new BorderLayout());
-        setBackground(Color.WHITE);
-
-        JPanel instructionPanel = new InstructionScreen(w);
-        add(instructionPanel);
-     
+        setBackground(Color.LIGHT_GRAY);
+        this.setLayout(null);
+        int x = w.getWidth();
+        int y = w.getHeight();
 		
-		JButton startButton = new JButton("Press to Start!");
-		startButton.addActionListener(this);
-        add(startButton, BorderLayout.SOUTH);
+		playButton = new JButton("Play");
+		Font f = new Font("Verdana", Font.BOLD, 16);
+        playButton.setFont(f);
+		playButton.addActionListener(this);		
+        add(playButton);
+        
+        instrButton = new JButton("Instructions");
+        instrButton.setFont(f);
+		instrButton.addActionListener(this);		
+        add(instrButton);
+        
+        credButton = new JButton("Credits");
+        credButton.setFont(f);
+		credButton.addActionListener(this);		
+        add(credButton);
         
     }
 
-
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        
+        int x = this.getWidth();
+        int y = this.getHeight();
+        playButton.setBounds(x*2/5, y/3, 200, 60);
+        instrButton.setBounds(x *2/5, y/3 + y /10, 200, 60);
+        credButton.setBounds(x*2/5, y/3 + y/5, 200, 60);
+        y-= 90;
+        
+        // Draw the Game Title
+        Font f = new Font("arial", Font.BOLD, 30);
+        g.setFont(f);
+        g.drawString("Virophage", x / 3 + x/10 , y / 4);
+    }
+    
     public void actionPerformed(ActionEvent e) {
-        w.gameStart();
-        w.changePanel();
+    	Object x = e.getSource();
+		if(x == playButton){		
+			w.changePanel("playScreen");			
+		}
+		else if (x == instrButton){
+			w.changePanel("instructionScreen");
+		}
+		else if (x == credButton){
+			w.changePanel("creditsScreen");
+		}
+        
     }
 
 }
