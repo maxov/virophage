@@ -2,6 +2,11 @@ package virophage.game;
 
 import java.util.ArrayList;
 
+/**
+*
+* @author Max Ovsiankin
+* @since 2014-05-16
+*/
 public class Scheduler {
 
     private int tick;

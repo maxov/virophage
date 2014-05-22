@@ -24,6 +24,10 @@ public class Player implements Serializable {
     public Player() {
     	color = Color.red;
     }
+    /**
+     * Constructs a player with a given name.
+     * @param s
+     */
     public Player(String s) {
     	color = Color.blue;
     	name = s;

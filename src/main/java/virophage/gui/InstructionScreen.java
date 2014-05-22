@@ -16,7 +16,7 @@ import javax.swing.JRadioButton;
 import virophage.core.MachinePlayer;
 
 /**
- * @author Max Ovsiankin and Leon Ren
+ * @author Leon Ren
  * @since 2014-05-6
  */
 public class InstructionScreen extends TextScreen {

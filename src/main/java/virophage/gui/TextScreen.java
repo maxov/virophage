@@ -16,7 +16,7 @@ import javax.swing.JRadioButton;
 import virophage.core.MachinePlayer;
 
 /**
- * @author Max Ovsiankin and Leon Ren
+ * @author Leon Ren
  * @since 2014-05-6
  */
 public class TextScreen extends JPanel implements ActionListener {
@@ -24,6 +24,10 @@ public class TextScreen extends JPanel implements ActionListener {
 	public JButton buttonBack;
     private GameClient w;
 	
+    /**
+     * Constructs a TextScreen with a single back button.
+     * @param g
+     */
 	public TextScreen(GameClient g) {
 		w = g;
 		setBackground(Color.LIGHT_GRAY);

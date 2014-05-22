@@ -24,7 +24,9 @@ public class Virus implements Serializable {
     private Cell cell;
     
     private TimerTask task = new TimerTask() {
-		
+    	/**
+		 * Spawns new cells.
+		 */
 		@Override
 		public void run() {
 			if(getEnergy() < GameClient.MAX_ENERGY) {
@@ -66,10 +68,16 @@ public class Virus implements Serializable {
         player.addVirus(this);
     }
     
+    /**
+     * Schedules this task.
+     */
     public void schedule() {
     	RenderTree.timer.schedule(task, new Date(System.currentTimeMillis()), 10000);
     }
     
+    /**
+     * Cancels this task.
+     */
     public void destroy() {
     	task.cancel();
     }

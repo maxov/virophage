@@ -66,6 +66,11 @@ public class RenderTree extends Canvas implements Runnable {
     	return tissue;
     }
     
+    /**
+     * Draws a channel between two cells
+     * @param channel
+     * @param g
+     */
     public void drawChannel(Channel channel, Graphics2D g) {
     	 // loop caluclations
         int rad = (int) (HexagonConstants.RADIUS * 2 * 0.80);

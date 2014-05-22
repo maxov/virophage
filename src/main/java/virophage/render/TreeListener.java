@@ -6,6 +6,12 @@ import virophage.util.Vector;
 
 import java.awt.event.*;
 
+/**
+*
+* @author Max Ovsiankin and Leon Ren
+* @since 2014-05-16
+*/
+
 class TreeListener implements KeyListener, MouseListener, MouseMotionListener, MouseWheelListener {
 
     private RenderTree renderTree;

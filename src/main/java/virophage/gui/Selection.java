@@ -7,6 +7,9 @@ import virophage.core.Cell;
 import virophage.core.DeadCell;
 
 /**
+ * @author Max Ovsiankin
+ * @since 2014-05-16
+ *
  * A <code>Selection</code> represents the active selection a user has.
  */
 public class Selection {

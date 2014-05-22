@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * A <code>GameClient</code> is responsible for (among other things), the GUI of the game.
- * @author Max Ovsiankin and Leon Ren
+ * <code>GameClient</code> is responsible for (among other things), the GUI of the game.
+ * @author Leon Ren
  * @since 2014-05-6
  */
 public class GameClient extends JFrame {
@@ -124,6 +124,7 @@ public class GameClient extends JFrame {
         		}
         		else {
         			players[i] = new MachinePlayer(new Color(200 + i * 50, 250 - i * 50, 200), tissue);
+        			players[i].setName("MachinePlayer");
         		}
         	} else {
         		players[i] = humanPlayers.get(i);

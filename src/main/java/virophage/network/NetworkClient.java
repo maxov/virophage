@@ -5,6 +5,11 @@ import virophage.util.Listening;
 import java.io.IOException;
 import java.net.Socket;
 
+/**
+*
+* @author Max Ovsiankin
+* @since 2014-05-16
+*/
 public class NetworkClient extends Listening {
 
 	private int port;

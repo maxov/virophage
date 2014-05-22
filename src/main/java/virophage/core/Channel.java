@@ -25,7 +25,10 @@ public class Channel implements Serializable {
     public Virus virus;
     
     private TimerTask task = new TimerTask() {
-		
+		/**
+		 * Timer - Timeout Method.
+		 * Transfers energy and removes channel when "conquered" by opponent.
+		 */
 		@Override
 		public void run() {
 			Cell f = tissue.getCell(from);
@@ -92,10 +95,16 @@ public class Channel implements Serializable {
         RenderTree.timer.schedule(task, new Date(System.currentTimeMillis()), 2000);
     }
     
+    /**
+     * Destroys this cell.
+     */
     public void destroy() {
     	task.cancel();
     }
 
+    /**
+     * Creates a new virus.
+     */
     public void createVirus() {
         this.virus = new Virus(player, 0);
     }

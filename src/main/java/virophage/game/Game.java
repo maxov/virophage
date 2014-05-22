@@ -3,6 +3,12 @@ package virophage.game;
 import virophage.core.Tissue;
 import virophage.util.Listening;
 
+/**
+*
+* @author Max Ovsiankin
+* @since 2014-05-16
+*/
+
 public class Game extends Listening implements Runnable {
 
     private Scheduler scheduler;

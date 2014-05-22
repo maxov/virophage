@@ -22,7 +22,7 @@ import java.util.logging.Logger;
  * Main Class - Starts the game, and also hosts the logger.
  *
  * @author      Max Ovsiankin, Leon Ren
- * @since       2014-05-6
+ * @since       2014-05-21
  */
 public class Start {
 

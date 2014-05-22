@@ -5,6 +5,12 @@ import virophage.network.NetworkServer;
 
 import java.util.ArrayList;
 
+/**
+ * Main Class - Starts the game, and also creates a network server. 
+ *
+ * @author      Max Ovsiankin, Leon Ren
+ * @since       2014-05-21
+ */
 public class TestClientServer {
 
     public static void main(String[] args) {

@@ -26,7 +26,7 @@ import virophage.core.MachinePlayer;
 import virophage.core.Player;
 
 /**
- * @author Max Ovsiankin and Leon Ren
+ * @author Leon Ren
  * @since 2014-05-6
  */
 public class MultiPlayerScreen extends JPanel implements ActionListener, ListSelectionListener{
@@ -43,7 +43,10 @@ public class MultiPlayerScreen extends JPanel implements ActionListener, ListSel
     private ArrayList<Player> humanPlayers;
     private boolean isNetworkedGame;
     
-	
+	/**
+	 * Constructs a screen in which the user can add or remove players.
+	 * @param g
+	 */
 	public MultiPlayerScreen(GameClient g) {
 		w = g;
 		isNetworkedGame = false;

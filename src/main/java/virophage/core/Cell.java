@@ -18,7 +18,9 @@ public class Cell implements Serializable {
 
     /**
      * Constructs a cell with a <code>Virus</code> occupant
-     * @param occupant
+     * @param occupant the occupant of the cell
+     * @param tissue the "gameboard" that will contain the cell
+     * @param loc the location of the cell
      */
     public Cell(Tissue tissue, Location loc, Virus occupant) {
     	this.tissue = tissue;
@@ -26,6 +28,11 @@ public class Cell implements Serializable {
         this.occupant = occupant;
     }
     
+    /**
+     * Constructs an empty cell.
+     * @param tissue the "gameboard" that will contain the cell
+     * @param loc the location of the cell
+     */
     public Cell(Tissue tissue, Location loc) {
     	this(tissue, loc, null);
     }

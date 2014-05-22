@@ -13,7 +13,9 @@ import java.io.Serializable;
 public class DeadCell extends Cell implements Serializable {
 
 	/**
-	 * Constructs a dead cell.
+	 * Constructs a dead cell that cannot be occupied.
+	 * @param tissue the gameboard that will contain this cell.
+	 * @param loc the location of the DeadCell
 	 */
     public DeadCell(Tissue tissue, Location loc) {
         super(tissue, loc, null);
