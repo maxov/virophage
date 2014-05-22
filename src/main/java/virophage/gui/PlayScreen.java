@@ -99,7 +99,7 @@ public class PlayScreen extends JPanel{
 				w.changePanel("menuScreen");
 			} else if (x == buttonContinue && singlePlayerSelected) {
 				w.changePanel("renderTree");
-				w.gameStart();
+				w.gameStart(null);
 			}
 			else if (x == buttonContinue && !singlePlayerSelected) {
 				w.changePanel("multiplayerScreen");

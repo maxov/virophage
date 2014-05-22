@@ -16,13 +16,26 @@ import java.util.Iterator;
 public class Player implements Serializable {
 
     private Color color;
+    private String name;
     private Tissue tissue;
     public ArrayList<Channel> channels = new ArrayList<Channel>();
     public ArrayList<Virus> viruses = new ArrayList<Virus>();
 
     public Player() {
-    	color = Color.blue;
+    	color = Color.red;
     }
+    public Player(String s) {
+    	color = Color.blue;
+    	name = s;
+    }
+    
+    public String getName() {
+    	return name;
+    }
+    public void setName(String s) {
+    	name = s;
+    }
+    
     /**
      * Constructs a player with the given Color c
      * @param color the color

@@ -8,6 +8,7 @@ import virophage.render.RenderTree;
 import javax.swing.*;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -29,6 +30,7 @@ public class GameClient extends JFrame {
     private CreditsScreen creditsPanel;
     private MultiPlayerScreen multiPlayerPanel;
     private Player players[];
+    public final static int TOTAL_NUM_PLAYERS = 10;
 
     /**
      * Constructs a GameClient.
@@ -81,7 +83,7 @@ public class GameClient extends JFrame {
         }
         renderTree.setTissue(tissue);
 
-        players = new Player[2];
+        players = new Player[TOTAL_NUM_PLAYERS + 1];
     }
     
     public void setPlayer(int i, Player p){
@@ -107,7 +109,7 @@ public class GameClient extends JFrame {
     /**
      * Starts the game by placing the players and dead cells.
      */
-    public void gameStart() {
+    public void gameStart(ArrayList<Player> humanPlayers) {
         Start.log.info("Game Started!");
 
         int i = 0;
@@ -115,8 +117,8 @@ public class GameClient extends JFrame {
         Tissue tissue = renderTree.getTissue();
         int count = 0;
         //creates two players
-        for (i = 0; i < players.length; i++) {
-        	if (i == 1) {
+        for (i = 0; i <= humanPlayers.size(); i++) {
+        	if (i == humanPlayers.size()) {
         		if ( players[i] != null){
         			continue;
         		}
@@ -124,7 +126,7 @@ public class GameClient extends JFrame {
         			players[i] = new MachinePlayer(new Color(200 + i * 50, 250 - i * 50, 200), tissue);
         		}
         	} else {
-        		players[i] = new Player(new Color(200 + i * 50, 250 - i * 50, 200), tissue);
+        		players[i] = humanPlayers.get(i);
         	}
         }
         

@@ -68,7 +68,7 @@ public class MenuScreen extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
     	Object x = e.getSource();
 		if(x == playButton){		
-			w.changePanel("playScreen");			
+			w.changePanel("multiplayerScreen");			
 		}
 		else if (x == instrButton){
 			w.changePanel("instructionScreen");
