@@ -6,21 +6,29 @@ import java.io.IOException;
 import java.net.Socket;
 
 /**
-*
-* @author Max Ovsiankin
-* @since 2014-05-16
-*/
+ * Represents a client on the network.
+ *
+ * @author Max Ovsiankin
+ * @since 2014-05-16
+ */
 public class NetworkClient extends Listening {
 
-	private int port;
-	private String host;
+    private int port;
+    private String host;
     private Socket socket;
-	
-	public NetworkClient(String host, int port) {
-		this.port = port;
-		this.host = host;
-	}
 
+    public PacketStream stream;
+
+    public NetworkClient(String host, int port) {
+        this.port = port;
+        this.host = host;
+    }
+
+    /**
+     * Attempt to connect with the given socket information.
+     *
+     * @return whether the connection attempt was successful
+     */
     public boolean connect() {
         try {
             socket = new Socket(host, port);
@@ -32,10 +40,11 @@ public class NetworkClient extends Listening {
         return true;
     }
 
-	public void start() {
-        EventStream stream = new EventStream(socket);
-        stream.write("Hello how are you");
-        stream.write("I'm doing pretty swell");
+    /**
+     * Begin listening on this socket.
+     */
+    public void start() {
+        stream = new PacketStream(socket);
     }
 
 }

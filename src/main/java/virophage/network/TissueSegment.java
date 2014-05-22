@@ -7,6 +7,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
+ * Because Virophage is a mutable game with constantly updating positions, it requires some sort of
+ * serialization. Instead of passing a whole Tissue around, a TissueSegment is a fragment of the tissue
+ * with some changes from the original tissue.
  *
  * @author Max Ovsiankin
  * @since 2014-05-16
@@ -17,19 +20,25 @@ public class TissueSegment implements Serializable {
     private final Location[] locs;
     private final Channel[] channels;
 
-    public TissueSegment(Tissue tissue, ArrayList<Location> locations) throws CloneNotSupportedException {
+    /**
+     * Construct a TissueSegment from a tissue and some locations to use.
+     *
+     * @param tissue the tissue
+     * @param locations locations to use
+     */
+    public TissueSegment(Tissue tissue, ArrayList<Location> locations) {
         locs = locations.toArray(new Location[locations.size()]);
         cells = new Cell[locations.size()];
         ArrayList<Channel> channels = new ArrayList<Channel>();
 
-        for(int i = 0; i < locations.size(); i++) {
+        for (int i = 0; i < locations.size(); i++) {
             cells[i] = tissue.getCell(locations.get(i));
         }
 
-        for(Player player: tissue.getPlayers()) {
-            for(Channel channel: player.channels) {
-                for(Location loc: locations) {
-                    if(loc.equals(channel.from) || loc.equals(channel.to)) {
+        for (Player player : tissue.getPlayers()) {
+            for (Channel channel : player.channels) {
+                for (Location loc : locations) {
+                    if (loc.equals(channel.from) || loc.equals(channel.to)) {
                         channels.add(channel);
                     }
                 }

@@ -7,8 +7,8 @@ import virophage.gui.GameClient;
 /**
  * A <code>Location</code> represents the x & y coordinates of a cell.
  *
- * @author      Max Ovsiankin, Leon Ren
- * @since       2014-05-6
+ * @author Max Ovsiankin, Leon Ren
+ * @since 2014-05-6
  */
 public class Location {
 
@@ -30,17 +30,6 @@ public class Location {
     public static final int[][] NEIGHBORS = {
             {-1, 0}, {-1, +1}, {0, -1}, {0, +1}, {+1, -1}, {+1, 0}
     };
-    
-    public static final double[][] MULT_MATRIX = {
-    	{0.666667/HexagonConstants.RADIUS, -0.333333/HexagonConstants.RADIUS},
-    	{0, 0.57735/HexagonConstants.RADIUS}
-    };
-    
-    public static Location mfind(Vector pos) {
-    	return new Location(
-    			(int) (pos.x *MULT_MATRIX[0][0] + pos.y * MULT_MATRIX[0][1]), 
-    			(int) (pos.x *MULT_MATRIX[1][0] + pos.y * MULT_MATRIX[1][1]));
-    }
 
     public final int x;
     public final int y;
@@ -48,6 +37,7 @@ public class Location {
 
     /**
      * Constructs a new Location at (x,y)
+     *
      * @param x the xCoordinate
      * @param y the yCoordinate
      */
@@ -60,6 +50,7 @@ public class Location {
 
     /**
      * Constructs a new Location at (x,y)
+     *
      * @param x the xCoordinate
      * @param y the yCoordinate
      * @param z an internal parameter
@@ -78,6 +69,12 @@ public class Location {
         return that.asCoordinates().subtract(asCoordinates()).direction();
     }
 
+    /**
+     * Check if this Location is within a hexagon of a size n.
+     *
+     * @param n the size of the hexagon(radius)
+     * @return a boolean
+     */
     public boolean inHexagon(int n) {
         return Math.abs(x) <= n && Math.abs(y) <= n;
     }
@@ -96,6 +93,7 @@ public class Location {
 
     /**
      * Gets the neighbors of this Location.
+     *
      * @return the list of neighbors for this locaiton
      */
     public ArrayList<Location> getNeighbors() {
@@ -110,18 +108,29 @@ public class Location {
 
         return list;
     }
-    
+
+    /**
+     * Check if the given location is a neighbor.
+     *
+     * @param loc a Location
+     * @return a boolean
+     */
     public boolean isNeighbor(Location loc) {
-    	for(Location neighbor: getNeighbors()) {
-    		if(neighbor.equals(loc)) {
-    			return true;
-    		}
-    	}
-    	return false;
+        for (Location neighbor : getNeighbors()) {
+            if (neighbor.equals(loc)) {
+                return true;
+            }
+        }
+        return false;
     }
 
+    /**
+     * A string representation of this location.
+     *
+     * @return a String
+     */
     public String toString() {
-        return "(" + x + ", " + y + ")";
+        return "(" + x + ", " + y + ", (" + z + "))";
     }
 
 }

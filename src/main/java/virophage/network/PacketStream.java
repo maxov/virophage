@@ -5,42 +5,61 @@ import virophage.Start;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 /**
-*
-* @author Max Ovsiankin
-* @since 2014-05-16
-*/
-public class EventStream {
+ * Represents a continuous stream of Packet objects, abstracting away the Network client and server.
+ * This object does not block, see {@link virophage.TestClientServer} for an example.
+ *
+ * @author Max Ovsiankin
+ * @since 2014-05-16
+ */
+public class PacketStream {
 
     private Socket socket;
-    private EventReader eventReader;
-    private EventWriter eventWriter;
+    private PacketWriter packetWriter;
+    private PacketReader eventWriter;
 
-    private ArrayList<Object> write = new ArrayList<Object>();
-    private ArrayList<Object> read = new ArrayList<Object>();
+    private List<Object> write = Collections.synchronizedList(new ArrayList<Object>());
 
-    public EventStream(Socket socket) {
+    private ArrayList<EventListener> listeners = new ArrayList<EventListener>();
+
+    /**
+     * Create a duplex PacketStream from a socket.
+     *
+     * @param socket the socket
+     */
+    public PacketStream(Socket socket) {
         this.socket = socket;
-        this.eventReader = new EventReader();
-        this.eventWriter = new EventWriter();
+        this.packetWriter = new PacketWriter();
+        this.eventWriter = new PacketReader();
     }
 
+    /**
+     * Queue an object for writing on this stream.
+     *
+     * @param obj an object for writing.
+     */
     public void write(Object obj) {
         write.add(obj);
     }
 
-    public ArrayList<Object> read() {
-        ArrayList<Object> temp = read;
-        read = new ArrayList<Object>();
-        return temp;
+    /**
+     * Add a listener on this stream for whenever an object is recieved.
+     *
+     * @param listener an object for listening.
+     */
+    public void addListener(EventListener listener) {
+        listeners.add(listener);
     }
 
-    private class EventReader implements Runnable {
+    private class PacketWriter implements Runnable {
 
         private ObjectInputStream in;
 
-        private EventReader() {
+        private PacketWriter() {
             new Thread(this).start();
         }
 
@@ -52,11 +71,14 @@ public class EventStream {
                 Start.log.warning("Error on creating input stream to socket");
                 e.printStackTrace();
             }
-            while(socket.isConnected()) {
+            while (socket.isConnected()) {
                 Serializable data;
                 try {
                     data = (Serializable) in.readObject();
-                    read.add(data);
+                    System.out.println("read: " + data);
+                    for (EventListener listener : listeners) {
+                        listener.onEvent(data);
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (ClassNotFoundException e) {
@@ -65,7 +87,7 @@ public class EventStream {
             }
             try {
                 in.close();
-                if(!socket.isClosed()) {
+                if (!socket.isClosed()) {
                     socket.close();
                 }
             } catch (IOException e) {
@@ -76,11 +98,11 @@ public class EventStream {
 
     }
 
-    private class EventWriter implements Runnable {
+    private class PacketReader implements Runnable {
 
         private ObjectOutputStream out;
 
-        private EventWriter() {
+        private PacketReader() {
             new Thread(this).start();
         }
 
@@ -92,12 +114,16 @@ public class EventStream {
                 Start.log.warning("Error on creating output stream to socket");
                 e.printStackTrace();
             }
-            while(socket.isConnected()) {
+            while (socket.isConnected()) {
                 try {
-                    ArrayList<Object> toWrite = write;
-                    write = new ArrayList<Object>();
-                    for(Object obj: toWrite) {
-                        out.writeObject(obj);
+                    Iterator<Object> it = write.iterator();
+                    while (it.hasNext()) {
+                        Object obj = it.next();
+                        if (obj != null) {
+                            System.out.println("wrote: " + obj);
+                            out.writeObject(obj);
+                        }
+                        it.remove();
                     }
                     out.flush();
                     out.reset();
@@ -107,7 +133,7 @@ public class EventStream {
             }
             try {
                 out.close();
-                if(!socket.isClosed()) {
+                if (!socket.isClosed()) {
                     socket.close();
                 }
             } catch (IOException e) {

@@ -16,67 +16,83 @@ import java.awt.event.*;
 public class MenuScreen extends JPanel implements ActionListener {
 
     private GameClient w;
-    private JButton playButton;
+    private JButton startGameButton;
+    private JButton joinGameButton;
     private JButton instrButton;
     private JButton credButton;
     private ImageIcon icon = new ImageIcon("Viro-Background.jpg");
 
+    /**
+     * Construct a MenuScreen.
+     *
+     * @param w a GameScreen
+     */
     public MenuScreen(GameClient w) {
         this.w = w;
         setBackground(Color.LIGHT_GRAY);
         this.setLayout(null);
         int x = w.getWidth();
         int y = w.getHeight();
-		
-		playButton = new JButton("Play");
-		Font f = new Font("Verdana", Font.BOLD, 16);
-        playButton.setFont(f);
-		playButton.addActionListener(this);		
-        add(playButton);
-        
+
+        Font f = new Font("Verdana", Font.BOLD, 16);
+
+        startGameButton = new JButton("Start Game");
+        startGameButton.setFont(f);
+        startGameButton.addActionListener(this);
+        add(startGameButton);
+
+        joinGameButton = new JButton("Join Game");
+        joinGameButton.setFont(f);
+        joinGameButton.addActionListener(this);
+        add(joinGameButton);
+
         instrButton = new JButton("Instructions");
         instrButton.setFont(f);
-		instrButton.addActionListener(this);		
+        instrButton.addActionListener(this);
         add(instrButton);
-        
+
         credButton = new JButton("Credits");
         credButton.setFont(f);
-		credButton.addActionListener(this);		
+        credButton.addActionListener(this);
         add(credButton);
-        
+
     }
 
+    /**
+     * Paint this screen.
+     *
+     * @param g a Graphics object
+     */
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        
-        
+
+
         int x = this.getWidth();
         int y = this.getHeight();
         g.drawImage(icon.getImage(), 0, 0, x, y, this);
-        playButton.setBounds(x*2/5 + x/ 43, y/3, 200, 60);
-        instrButton.setBounds(x *2/5 + x/ 43, y/3 + y /10, 200, 60);
-        credButton.setBounds(x*2/5 + x/ 43, y/3 + y/5, 200, 60);
-        y-= 90;
-        
+        startGameButton.setBounds(x * 2 / 5 + x / 43, y / 3, 200, 60);
+        joinGameButton.setBounds(x * 2 / 5 + x / 43, y / 3 + y / 10, 200, 60);
+        instrButton.setBounds(x * 2 / 5 + x / 43, y / 3 + y / 5, 200, 60);
+        credButton.setBounds(x * 2 / 5 + x / 43, y / 3 + 3 * y / 10, 200, 60);
+        y -= 90;
+
         // Draw the Game Title
         Font f = new Font("arial", Font.BOLD, 30);
         g.setFont(f);
         g.setColor(Color.WHITE);
-        g.drawString("Virophage", x / 3 + (int)(x/9.7) , y / 4);
+        g.drawString("Virophage", x / 3 + (int) (x / 9.7), y / 4);
     }
-    
+
     public void actionPerformed(ActionEvent e) {
-    	Object x = e.getSource();
-		if(x == playButton){		
-			w.changePanel("multiplayerScreen");			
-		}
-		else if (x == instrButton){
-			w.changePanel("instructionScreen");
-		}
-		else if (x == credButton){
-			w.changePanel("creditsScreen");
-		}
-        
+        Object x = e.getSource();
+        if (x == startGameButton) {
+            w.changePanel("multiplayerScreen");
+        } else if (x == instrButton) {
+            w.changePanel("instructionScreen");
+        } else if (x == credButton) {
+            w.changePanel("creditsScreen");
+        }
+
     }
 
 }
