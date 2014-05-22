@@ -2,6 +2,7 @@ package virophage.game;
 
 public interface Timeable {
 
-    public void act(int turn);
+    public abstract void act(int tick);
+    public abstract boolean shouldAct(int tick);
 
 }

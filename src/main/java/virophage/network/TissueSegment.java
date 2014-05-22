@@ -1,7 +1,7 @@
 package virophage.network;
 
 import virophage.core.*;
-import virophage.math.Location;
+import virophage.util.Location;
 
 import java.io.Serializable;
 import java.util.ArrayList;

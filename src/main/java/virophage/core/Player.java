@@ -1,8 +1,9 @@
 package virophage.core;
 
-import virophage.math.Location;
+import virophage.util.Location;
 
 import java.awt.Color;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -12,7 +13,7 @@ import java.util.Iterator;
  * @author  Max Ovsiankin and Leon Ren
  * @since 2014-05-6
  */
-public class Player {
+public class Player implements Serializable {
 
     private Color color;
     private Tissue tissue;

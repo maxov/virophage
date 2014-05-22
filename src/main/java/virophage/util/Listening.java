@@ -1,4 +1,4 @@
-package virophage.network;
+package virophage.util;
 
 public class Listening {
 

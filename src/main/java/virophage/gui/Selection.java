@@ -2,10 +2,9 @@ package virophage.gui;
 
 import java.util.ArrayList;
 
-import virophage.math.Location;
+import virophage.util.Location;
 import virophage.core.Cell;
 import virophage.core.DeadCell;
-import virophage.core.Tissue;
 
 /**
  * A <code>Selection</code> represents the active selection a user has.

@@ -2,7 +2,7 @@ package virophage.gui;
 
 import virophage.Start;
 import virophage.core.*;
-import virophage.math.Location;
+import virophage.util.Location;
 import virophage.render.RenderTree;
 
 import javax.swing.*;

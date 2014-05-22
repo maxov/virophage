@@ -1,12 +1,13 @@
 package virophage.core;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.TimerTask;
 
 import virophage.Start;
 import virophage.gui.GameClient;
-import virophage.math.Location;
+import virophage.util.Location;
 import virophage.render.RenderTree;
 
 /**
@@ -16,7 +17,7 @@ import virophage.render.RenderTree;
  * @version 1.0 (Alpha)
  * @since 2014-05-6
  */
-public class Virus {
+public class Virus implements Serializable {
 
     private Player player;
     private int energy;

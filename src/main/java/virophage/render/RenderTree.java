@@ -9,9 +9,9 @@ import virophage.core.Virus;
 import virophage.core.Tissue;
 import virophage.gui.GameClient;
 import virophage.gui.Selection;
-import virophage.math.HexagonConstants;
-import virophage.math.Location;
-import virophage.math.Vector;
+import virophage.util.HexagonConstants;
+import virophage.util.Location;
+import virophage.util.Vector;
 
 import java.util.Timer;
 import java.awt.*;
@@ -179,13 +179,12 @@ public class RenderTree extends Canvas implements Runnable {
     public void render(Graphics gr) {
         Graphics2D g = (Graphics2D) gr;
         // makes the game look really nice, but also really slow
-        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        //g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         
         g.setColor(new Color(230, 230, 230));
         g.fillRect(0, 0, getWidth(), getHeight());
         
         AffineTransform at = new AffineTransform();
-        
         at.scale(zoom, zoom);
         at.translate(displacement.x, displacement.y);
         g.setTransform(at);

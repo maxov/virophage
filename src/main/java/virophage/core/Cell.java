@@ -1,14 +1,8 @@
 package virophage.core;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.TimerTask;
+import virophage.util.Location;
 
-import virophage.Start;
-import virophage.core.Virus;
-import virophage.gui.GameClient;
-import virophage.math.Location;
-import virophage.render.RenderTree;
+import java.io.Serializable;
 
 /**
  * A <code>Cell</code> is an area that can contain a virus.
@@ -16,7 +10,7 @@ import virophage.render.RenderTree;
  * @author Leon Ren
  * @since 2014-05-6
  */
-public class Cell {
+public class Cell implements Serializable {
 
 	public Tissue tissue;
     public Virus occupant;

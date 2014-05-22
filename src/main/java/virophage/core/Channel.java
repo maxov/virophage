@@ -1,13 +1,12 @@
 package virophage.core;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.TimerTask;
 
-import sun.security.krb5.internal.ccache.CCacheInputStream;
 import virophage.gui.GameClient;
-import virophage.math.Location;
+import virophage.util.Location;
 import virophage.render.RenderTree;
 
 /**
@@ -17,7 +16,7 @@ import virophage.render.RenderTree;
  * @since 2014-05-6
  * 
  */
-public class Channel {
+public class Channel implements Serializable {
 
 	public Tissue tissue;
     public Location from;

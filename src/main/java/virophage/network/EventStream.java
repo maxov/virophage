@@ -9,16 +9,16 @@ import java.util.ArrayList;
 public class EventStream {
 
     private Socket socket;
-    private Reader reader;
-    private Writer writer;
+    private EventReader eventReader;
+    private EventWriter eventWriter;
 
     private ArrayList<Object> write = new ArrayList<Object>();
     private ArrayList<Object> read = new ArrayList<Object>();
 
     public EventStream(Socket socket) {
         this.socket = socket;
-        this.reader = new Reader();
-        this.writer = new Writer();
+        this.eventReader = new EventReader();
+        this.eventWriter = new EventWriter();
     }
 
     public void write(Object obj) {
@@ -31,24 +31,24 @@ public class EventStream {
         return temp;
     }
 
-    private class Reader implements Runnable {
+    private class EventReader implements Runnable {
 
         private ObjectInputStream in;
 
-        private Reader() {
-            try {
-                in = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
-                new Thread(this).start();
-            } catch (IOException e) {
-                Start.log.warning("Error on creating input stream to socket");
-                e.printStackTrace();
-            }
+        private EventReader() {
+            new Thread(this).start();
         }
 
         @Override
         public void run() {
+            try {
+                in = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
+            } catch (IOException e) {
+                Start.log.warning("Error on creating input stream to socket");
+                e.printStackTrace();
+            }
             while(socket.isConnected()) {
-                Serializable data = null;
+                Serializable data;
                 try {
                     data = (Serializable) in.readObject();
                     read.add(data);
@@ -71,22 +71,22 @@ public class EventStream {
 
     }
 
-    private class Writer implements Runnable {
+    private class EventWriter implements Runnable {
 
         private ObjectOutputStream out;
 
-        private Writer() {
-            try {
-                out = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
-                new Thread(this).start();
-            } catch (IOException e) {
-                Start.log.warning("Error on creating input stream to socket");
-                e.printStackTrace();
-            }
+        private EventWriter() {
+            new Thread(this).start();
         }
 
         @Override
         public void run() {
+            try {
+                out = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+            } catch (IOException e) {
+                Start.log.warning("Error on creating output stream to socket");
+                e.printStackTrace();
+            }
             while(socket.isConnected()) {
                 try {
                     ArrayList<Object> toWrite = write;

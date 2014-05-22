@@ -1,13 +1,10 @@
 package virophage.render;
 
-import virophage.Start;
 import virophage.core.Cell;
-import virophage.math.Location;
-import virophage.math.Vector;
+import virophage.util.Location;
+import virophage.util.Vector;
 
-import java.awt.*;
 import java.awt.event.*;
-import java.awt.geom.AffineTransform;
 
 class TreeListener implements KeyListener, MouseListener, MouseMotionListener, MouseWheelListener {
 

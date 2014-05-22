@@ -1,8 +1,9 @@
 package virophage.core;
 
-import virophage.math.Location;
+import virophage.util.Location;
 import virophage.render.RenderTree;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -11,7 +12,7 @@ import java.util.ArrayList;
  * @author Max Ovsiankin, Leon Ren
  * @since 2014-05-6
  */
-public class Tissue {
+public class Tissue implements Serializable {
 
     public Cell[][] cells;
     private ArrayList<Player> players = new ArrayList<Player>();
