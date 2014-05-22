@@ -1,5 +1,7 @@
 package virophage.core;
 
+import virophage.math.Location;
+
 /**
  * A <code>DeadCell</code> is a space that no virus can "infect".
  *
@@ -11,8 +13,8 @@ public class DeadCell extends Cell {
 	/**
 	 * Constructs a dead cell.
 	 */
-    public DeadCell(Tissue tissue) {
-        super(tissue, null);
+    public DeadCell(Tissue tissue, Location loc) {
+        super(tissue, loc, null);
     }
 
 }

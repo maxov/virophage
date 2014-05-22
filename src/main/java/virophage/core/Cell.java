@@ -7,9 +7,8 @@ import java.util.TimerTask;
 import virophage.Start;
 import virophage.core.Virus;
 import virophage.gui.GameClient;
-import virophage.render.HexagonNode;
+import virophage.math.Location;
 import virophage.render.RenderTree;
-import virophage.util.Location;
 
 /**
  * A <code>Cell</code> is an area that can contain a virus.
@@ -17,24 +16,24 @@ import virophage.util.Location;
  * @author Leon Ren
  * @since 2014-05-6
  */
-public class Cell implements Cloneable {
+public class Cell {
 
 	public Tissue tissue;
     public Virus occupant;
-    private HexagonNode node;
+    public Location location;
 
     /**
      * Constructs a cell with a <code>Virus</code> occupant
      * @param occupant
      */
-    public Cell(Tissue tissue, Virus occupant) {
+    public Cell(Tissue tissue, Location loc, Virus occupant) {
     	this.tissue = tissue;
+    	this.location = loc;
         this.occupant = occupant;
     }
     
-    public Cell(Tissue tissue) {
-    	this.tissue = tissue;
-    	this.occupant = null;	
+    public Cell(Tissue tissue, Location loc) {
+    	this(tissue, loc, null);
     }
   	
     public Virus getOccupant() {
@@ -43,20 +42,6 @@ public class Cell implements Cloneable {
 
     public void setOccupant(Virus occupant) {
         this.occupant = occupant;
-    }
-
-    public Cell clone() throws CloneNotSupportedException {
-        Cell c = (Cell) super.clone();
-        c.setOccupant(occupant);
-        return c;
-    }
-
-    public void setNode(HexagonNode n) {
-    	node = n;
-    }
-    
-    public HexagonNode getNode() {
-    	return node;
     }
     
     public Tissue getTissue() {

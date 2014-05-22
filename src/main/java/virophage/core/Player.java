@@ -1,6 +1,6 @@
 package virophage.core;
 
-import virophage.util.Location;
+import virophage.math.Location;
 
 import java.awt.Color;
 import java.util.ArrayList;

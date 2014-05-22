@@ -2,9 +2,8 @@ package virophage.gui;
 
 import virophage.Start;
 import virophage.core.*;
-import virophage.render.HexagonNode;
+import virophage.math.Location;
 import virophage.render.RenderTree;
-import virophage.util.Location;
 
 import javax.swing.*;
 
@@ -42,15 +41,6 @@ public class GameClient extends JFrame {
 
         renderTree = new RenderTree(this);
 
-        for (int x = -N; x <= N; x++) {
-            for (int y = -N; y <= N; y++) {
-                for (int z = -N; z <= N; z++) {
-                    if (x + y + z == 0)
-                        renderTree.add(new HexagonNode(new Location(x, y)));
-                }
-            }
-        }
-
         add(renderTree, BorderLayout.CENTER);
 
         Start.log.info("Setting frame visible");
@@ -79,6 +69,16 @@ public class GameClient extends JFrame {
         //create tissue here
         Cell[][] cells = new Cell[2 * N + 1][2 * N + 1];
         Tissue tissue = new Tissue(cells, renderTree);
+        for(int i = -N; i <= N; i++) {
+        	for(int j = -N; j <= N; j++) {
+        		for(int k = -N; k <= N; k++) {
+                	if(i + j + k == 0) {
+                		Location loc = new Location(i, j);
+                		tissue.setCell(loc, new Cell(tissue, loc));
+                	}
+                }
+            }
+        }
         renderTree.setTissue(tissue);
 
         players = new Player[2];
@@ -128,20 +128,6 @@ public class GameClient extends JFrame {
         	}
         }
         
-        for (int x = -N; x <= N; x++) {
-            for (int y = -N; y <= N; y++) {
-                for (int z = -N; z <= N; z++) {
-                    if (x + y + z == 0) {
-                    	Cell c = new Cell(tissue);
-                    	count ++;
-                    	renderTree.saveCellInNode(c, x, y);
-                    	tissue.setCell(new Location(x, y), c);
-
-                    }
-                }
-            }
-        }
-        
 //        Start.log.info("Number of Cells: " + count);
 
         // adds some viruses for both players
@@ -150,28 +136,19 @@ public class GameClient extends JFrame {
                 for (int k = -1; k <= 1; k++) {
                     if (i + j + k == 0) {
                         Location loc1 = new Location(i - 3, j);
-                        Location loc2 = new Location(i + 3, j);
                         Virus v1 = new Virus(players[0], 4);
-                       
-                        Cell c1 = new Cell(tissue, v1);  
-                        v1.setCell(c1);
-                        Virus v2 = new Virus(players[1], 4);
+                        tissue.getCell(loc1).setOccupant(v1);
+                        v1.setCell(tissue.getCell(loc1));
                         
-                        Cell c2 = new Cell(tissue, v2);
-                        v2.setCell(c2);
-//                       v1.schedule();
-//                       v2.schedule();
-                        renderTree.getTissue().setCell(loc1, c1);
-                        renderTree.saveCellInNode(c1, loc1.getX(), loc1.getY());
-                        renderTree.getTissue().setCell(loc2, c2);
-                        renderTree.saveCellInNode(c2, loc2.getX(), loc2.getY());
+                        Location loc2 = new Location(i + 3, j);
+                        Virus v2 = new Virus(players[1], 4);
+                        tissue.getCell(loc2).setOccupant(v2);
                     }
                 }
             }
         }
 
         //place dead cells in the renderTree
-        DeadCell dc = new DeadCell(tissue);
         i = 0;
         while (i < DEAD_CELL_NUM) {
             Random rand = new Random();
@@ -181,8 +158,7 @@ public class GameClient extends JFrame {
             Location loc = new Location(xPos, yPos);
             if (renderTree.getTissue().getCell(loc) == null ||
             		renderTree.getTissue().getCell(loc).occupant == null) {
-                renderTree.getTissue().setCell(loc, dc);
-                renderTree.saveCellInNode(dc, xPos, yPos);
+                renderTree.getTissue().setCell(loc, new DeadCell(tissue, loc));
                 i++;
             }
             

@@ -2,19 +2,22 @@ package virophage.render;
 
 import virophage.core.Cell;
 import virophage.core.Channel;
+import virophage.core.DeadCell;
+import virophage.core.MachinePlayer;
 import virophage.core.Player;
-import virophage.util.Location;
+import virophage.core.Virus;
 import virophage.core.Tissue;
 import virophage.gui.GameClient;
-import virophage.util.Vector;
+import virophage.gui.Selection;
+import virophage.math.HexagonConstants;
+import virophage.math.Location;
+import virophage.math.Vector;
 
 import java.util.Timer;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferStrategy;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
 
 /**
  * A <code>RenderTree</code> contains an array of renderNodes, it is also a GUI componet.
@@ -30,8 +33,7 @@ public class RenderTree extends Canvas implements Runnable {
     private GameClient w;
     
     public static Timer timer = new Timer();
-
-    public ArrayList<RenderNode> nodes = new ArrayList<RenderNode>();
+    public static Selection selection = new Selection(null);
 
     /**
      * Constructs a RenderTree and adds the listeners.
@@ -52,87 +54,164 @@ public class RenderTree extends Canvas implements Runnable {
         addMouseWheelListener(listener);
     }
 
-    public synchronized void add(RenderNode node) {
-        nodes.add(node);
-        node.setRenderTree(this);
-        Collections.sort(nodes);
-    }
-    
-    public synchronized void removeChannelNodes(ArrayList<Channel> channels) {
-    	Iterator<RenderNode> n = nodes.iterator();
-    	while(n.hasNext()) {
-    		RenderNode r = n.next();
-    		if(r instanceof ChannelNode) {
-    			ChannelNode c = (ChannelNode) r;
-    			for(Channel ch: channels) {
-    				if(c.getChannel().equals(ch)) {
-    					n.remove();
-    				}
-    			}
-    		}
-    	}
-    }
-
     public GameClient getGameClient() {
     	return w; 	
     }
     
     public void setTissue(Tissue t) {
-        tissue = t;
+    	tissue = t;
     }
-
+    
     public Tissue getTissue() {
-        return tissue;
+    	return tissue;
     }
+    
+    public void drawChannel(Channel channel, Graphics2D g) {
+    	 // loop caluclations
+        int rad = (int) (HexagonConstants.RADIUS * 2 * 0.80);
+        int pos = rad / -2;
+        Vector endpoint = new Vector(HexagonConstants.TRI_HEIGHT * 2, 0)
+                .rotate(channel.from.getDirectionTowards(channel.to));
+        double mult = (rad / 2 + 5) / endpoint.magnitude();
+        Vector startpoint = endpoint.scale(mult);
 
-    /**
-     * Establishes a connection between a cell and a RenderNode.
-     * @param c the cell to be saved in the HexagonNode
-     * @param xPos the x Coordinate of the node
-     * @param yPos the y Coordinate of the node
-     */
-    public void saveCellInNode(Cell c, int xPos, int yPos) {
-        Location other = new Location(xPos, yPos);
-        for (RenderNode node : nodes) {
-            if (((HexagonNode) node).getLocation().equals(other)) {
-                ((HexagonNode) node).setCell(c);
-            }
+        // draw line with masking circle at end
+        g.setColor(channel.player.getColor().darker().darker());
+        g.setStroke(new BasicStroke(10));
+        g.drawLine((int) startpoint.x, (int) startpoint.y, (int) endpoint.x, (int) endpoint.y);
+        g.fillOval((int) endpoint.x - 7, (int) endpoint.y - 7, 14, 14);
+
+        // draw loop
+        g.setColor(channel.player.getColor().darker().darker().darker().darker());
+        g.setStroke(new BasicStroke(3));
+        g.drawOval(pos, pos, rad, rad);
+
+        // draw endpoint
+        g.setColor(channel.player.getColor().darker().darker());
+        g.setStroke(new BasicStroke());
+        if(channel.hasVirus()) {
+            Virus v = channel.virus;
+            double circleRadius = (v.getEnergy() / (double) GameClient.MAX_ENERGY) *
+                    (HexagonConstants.RADIUS * 0.7);
+            int circleDiameter = (int) (circleRadius * 2);
+            int x = (int) (endpoint.x - circleRadius);
+            int y = (int) (endpoint.y - circleRadius);
+            g.fillOval(x, y, circleDiameter, circleDiameter);
         }
+    }
+    
+    public void drawCell(Location loc, Cell cell, Graphics2D g) {
+    	Polygon hexagon = new Polygon(new int[]{
+                (int) (HexagonConstants.RADIUS / 2),
+                (int) (HexagonConstants.RADIUS * 3 / 2),
+                (int) (HexagonConstants.RADIUS * 2),
+                (int) (HexagonConstants.RADIUS * 3 / 2),
+                (int) (HexagonConstants.RADIUS / 2),
+                0
+        }, new int[]{
+                0,
+                0,
+                (int) HexagonConstants.TRI_HEIGHT,
+                (int) (HexagonConstants.TRI_HEIGHT * 2),
+                (int) (HexagonConstants.TRI_HEIGHT * 2),
+                (int) HexagonConstants.TRI_HEIGHT
+        }, 6);
+    	
+    	g.setFont(new Font("SansSerif", Font.BOLD, 32));
+        //FontMetrics fm = g.getFontMetrics(g.getFont());
+        Virus occupant = cell.getOccupant();
+        if (occupant != null) {
+            Color light = occupant.getPlayer().getColor();
+            Color dark = light.darker();
+            if(cell.equals(selection.getFrom())) {
+            	dark = Color.GRAY;
+            }
+            g.setColor(light);
+            g.fillPolygon(hexagon);
+            g.setColor(dark);
+            double circleRadius = (occupant.getEnergy() / (double) GameClient.MAX_ENERGY) *
+                    (HexagonConstants.RADIUS * 0.7);
+            int circleDiameter = (int) (circleRadius * 2);
+            int x = (int) (HexagonConstants.RADIUS - circleRadius);
+            int y = (int) (HexagonConstants.TRI_HEIGHT - circleRadius);
+            Ellipse2D ellipse = new Ellipse2D.Double(x, y, circleDiameter, circleDiameter);
+            g.fill(ellipse);
+        } else {
+            if (cell instanceof DeadCell) {
+                g.setColor(Color.BLACK);
+            } else {
+            	if(cell.equals(selection.getFrom())) {
+                	g.setColor(Color.GRAY);
+                } else {
+                	g.setColor(Color.WHITE);
+                }
+            }
+            g.fillPolygon(hexagon);
+        }
+
+        //g.setStroke(new BasicStroke(4));
+        g.setColor(new Color(32, 32, 32));
+        g.drawPolygon(hexagon);
+        g.setColor(Color.BLACK);
+        //int x = (int) (HexagonConstants.RADIUS - fm.stringWidth(loc.toString()) / 2);
+        //int y = (int) (HexagonConstants.TRI_HEIGHT);
+        //g.drawString(loc.toString(), x, y);
+        if (cell != null && cell.getOccupant() != null) {
+        	Virus tempV = cell.getOccupant();
+        	String s;
+        	if (tempV.getPlayer() instanceof MachinePlayer) {
+        		s = "M";
+        	}
+        	else {
+        		s = "S";
+        	}
+        	g.drawString(s, 100, 100);
+        }
+    }
+    
+    private Graphics2D createGraphics(Graphics g, Vector transform) {
+    	Point point = transform.toPoint();
+		Graphics2D gNew = (Graphics2D) g.create();
+		gNew.translate(point.x, point.y);
+		return gNew;
     }
 
     public void render(Graphics gr) {
-        long t1 = System.nanoTime();
         Graphics2D g = (Graphics2D) gr;
         // makes the game look really nice, but also really slow
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        AffineTransform at = new AffineTransform();
-        at.translate(displacement.x * zoom, displacement.y * zoom);
-        at.scale(zoom, zoom);
+        
         g.setColor(new Color(230, 230, 230));
         g.fillRect(0, 0, getWidth(), getHeight());
+        
+        AffineTransform at = new AffineTransform();
+        
+        at.scale(zoom, zoom);
+        at.translate(displacement.x, displacement.y);
+        g.setTransform(at);
 
-        if (nodes != null) {
-            int i = 0;
-            while (i < nodes.size()) {
-                RenderNode node = nodes.get(i);
-                Vector vec = node.getPosition();
-                AffineTransform nodeTransform = new AffineTransform(at);
-                nodeTransform.translate(vec.x, vec.y);
-
-                Graphics2D nodeGraphics = (Graphics2D) g.create();
-                nodeGraphics.transform(nodeTransform);
-
-                node.render(nodeGraphics);
-                i++;
-            }
+        for(int x = -GameClient.N; x <= GameClient.N; x++) {
+        	for(int y = -GameClient.N; y <= GameClient.N; y++) {
+        		for(int z = -GameClient.N; z <= GameClient.N; z++) {
+        			if(x + y + z == 0) {
+        				Location loc = new Location(x, y);
+        				drawCell(loc, tissue.getCell(loc), createGraphics(g, loc.asCoordinates()));
+        			}
+        		}
+        	}
         }
-        //Start.log.info("TIME " + ((System.nanoTime() - t1) / 1000000d));
+        
+        for(Channel c: tissue.getChannels()) {
+        	drawChannel(c, createGraphics(g, c.from.asCoordinates()));
+        }
+        
         int x = this.getWidth();
         int y = this.getHeight();
         
         Font f = new Font("arial", Font.BOLD, 20);
         g.setFont(f);
         Player[] p = tissue.getPlayers();
+        g.setTransform(new AffineTransform());
         g.setColor(Color.GRAY);
         g.fillRect(0, y - 40, x, y);
         g.setColor(Color.GREEN);

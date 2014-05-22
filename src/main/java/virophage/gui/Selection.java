@@ -2,73 +2,43 @@ package virophage.gui;
 
 import java.util.ArrayList;
 
-import virophage.util.Location;
+import virophage.math.Location;
+import virophage.core.Cell;
+import virophage.core.DeadCell;
 import virophage.core.Tissue;
-import virophage.render.HexagonNode;
-import virophage.render.RenderNode;
 
 /**
  * A <code>Selection</code> represents the active selection a user has.
  */
 public class Selection {
 	
-	private HexagonNode from;
-	private HexagonNode to;
+	private Cell from;
 	
-	public Selection(HexagonNode from) {
+	public Selection(Cell from) {
 		this.setFrom(from);
 	}
 	
-	public HexagonNode getFrom() {
+	public boolean hasFrom() {
+		return from != null;
+	}
+	
+	public Cell getFrom() {
 		return from;
 	}
-	
-	public synchronized void select() {
-		from.setSelected(true);
-		Tissue tissue = from.getRenderTree().getTissue();
-		ArrayList<Location> neighbors = from.getLoc().getNeighbors();
-		for(Location loc: neighbors) {
-			for(RenderNode n: from.getRenderTree().nodes) {
-				if(n instanceof HexagonNode) {
-					HexagonNode hn = (HexagonNode) n;
-					if(hn.getLoc().equals(loc)) {
-						hn.setPossible(true);
-					}
-				}
-			}
-		}
-	}
-	
-	public synchronized void deselect() {
-		from.setSelected(false);
-		Tissue tissue = from.getRenderTree().getTissue();
-		ArrayList<Location> neighbors = from.getLoc().getNeighbors();
-		for(Location loc: neighbors) {
-			for(RenderNode n: from.getRenderTree().nodes) {
-				if(n instanceof HexagonNode) {
-					HexagonNode hn = (HexagonNode) n;
-					if(hn.getLoc().equals(loc)) {
-						hn.setPossible(false);
-					}
-				}
-			}
-		}
-	}
 
-	public void setFrom(HexagonNode from) {
+	public void setFrom(Cell from) {
 		this.from = from;
 	}
-
-    public boolean isCompleted() {
-        return to != null && from != null;
-    }
-
-	public HexagonNode getTo() {
-		return to;
+	
+	public ArrayList<Cell> possible() {
+		ArrayList<Cell> possible = new ArrayList<Cell>();
+		for(Location loc: from.location.getNeighbors()) {
+			Cell c = from.tissue.getCell(loc);
+			if(!(c instanceof DeadCell)) {
+				possible.add(c);
+			}
+		}
+		return possible;
 	}
-
-	public void setTo(HexagonNode to) {
-		this.to = to;
-	}
-
+	
 }

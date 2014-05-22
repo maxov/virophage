@@ -1,7 +1,7 @@
 package virophage.core;
 
+import virophage.math.Location;
 import virophage.render.RenderTree;
-import virophage.util.Location;
 
 import java.util.ArrayList;
 
@@ -25,14 +25,6 @@ public class Tissue {
         cells = start;
 
         // Initialize cells
-        /*for(Cell[] arr: cells){
-            for(int i = 0; i < arr.length; i++) {
-                Cell c = arr[i];
-                if(c == null) {
-                    arr[i] = new Cell();
-                }
-            }
-        }*/
         this.tree = tree;
     }
 
@@ -42,6 +34,14 @@ public class Tissue {
 
     public void setCell(Location loc, Cell c) {
         cells[loc.y + cells.length / 2][loc.x + cells[0].length / 2] = c;
+    }
+    
+    public ArrayList<Channel> getChannels() {
+    	ArrayList<Channel> channels = new ArrayList<Channel>();
+    	for(Player p: players) {
+    		channels.addAll(p.channels);
+    	}
+    	return channels;
     }
 
     public void addPlayer(Player player) {

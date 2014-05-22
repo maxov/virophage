@@ -1,6 +1,6 @@
 package virophage.network;
 
-public class NetworkClient implements Runnable {
+public class NetworkClient extends Listening implements Runnable {
 
 	private int port;
 	private String host;

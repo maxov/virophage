@@ -7,8 +7,8 @@ import java.util.TimerTask;
 
 import sun.security.krb5.internal.ccache.CCacheInputStream;
 import virophage.gui.GameClient;
+import virophage.math.Location;
 import virophage.render.RenderTree;
-import virophage.util.Location;
 
 /**
  * A <code>Channel</code> represents a bridge between two cells.
@@ -17,7 +17,7 @@ import virophage.util.Location;
  * @since 2014-05-6
  * 
  */
-public class Channel implements Cloneable {
+public class Channel {
 
 	public Tissue tissue;
     public Location from;
@@ -51,17 +51,14 @@ public class Channel implements Cloneable {
 							if(my.getEnergy() >= v1.getEnergy()) {
 								Player p = t.occupant.getPlayer();
 								Iterator<Channel> channels = p.getChannels().iterator();
-								ArrayList<Channel> channelsToRemove = new ArrayList<Channel>();
 								while(channels.hasNext()) {
 									Channel c = channels.next();
 									if(c.from.equals(to) || c.to.equals(to)) {
 										channels.remove();
 										p.removeChannel(c);
 										c.destroy();
-										channelsToRemove.add(c);
 									}
 								}
-								tissue.tree.removeChannelNodes(channelsToRemove);
 								t.occupant.destroy();
 								p.removeVirus(t.occupant);
 								t.occupant = my;
@@ -114,12 +111,6 @@ public class Channel implements Cloneable {
     
     public void setVirus(Virus virus) {
     	this.virus = virus;
-    }
-
-    public Channel clone() throws CloneNotSupportedException {
-        Channel c = (Channel) super.clone();
-        if(virus != null) c.virus = virus.clone();
-        return c;
     }
 
 }
