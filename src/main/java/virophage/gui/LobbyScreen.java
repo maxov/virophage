@@ -6,6 +6,9 @@ import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Vector;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -20,6 +23,7 @@ import javax.swing.event.ListSelectionListener;
 import virophage.Start;
 import virophage.core.AIPlayer;
 import virophage.core.Player;
+import virophage.util.GameConstants;
 
 /**
  * A screen that holds a 'lobby', or a listing of players.
@@ -35,10 +39,9 @@ public class LobbyScreen extends JPanel implements ActionListener, ListSelection
     private JCheckBox c1;
     private JList list;
     private JTextField playerName;
-    private DefaultListModel listModel;
+    private Vector<Player> players = new Vector<Player>();
     private JButton buttonBack, buttonContinue;
     private GameClient w;
-    private ArrayList<Player> players;
     private boolean isNetworkedGame;
 
     public static final Color[] colors = new Color[] {
@@ -59,9 +62,6 @@ public class LobbyScreen extends JPanel implements ActionListener, ListSelection
     public LobbyScreen(GameClient g) {
         w = g;
         isNetworkedGame = false;
-        listModel = new DefaultListModel();
-        players = new ArrayList<Player>();
-        players.add(new Player(colors[players.size()], null));
         this.setLayout(null);
 
         buttonBack = new JButton("Back");
@@ -96,7 +96,7 @@ public class LobbyScreen extends JPanel implements ActionListener, ListSelection
         playerName = new JTextField("Player Name ", 20);
         add(playerName);
 
-        list = new JList(listModel);
+        list = new JList<Player>(players);
         list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         list.setLayoutOrientation(JList.VERTICAL_WRAP);
         list.setVisibleRowCount(-1);
@@ -130,7 +130,7 @@ public class LobbyScreen extends JPanel implements ActionListener, ListSelection
 
 
     private boolean alreadyInList(String name) {
-        return listModel.contains(name);
+        return players.contains(name);
     }
 
     @Override
@@ -147,10 +147,10 @@ public class LobbyScreen extends JPanel implements ActionListener, ListSelection
 
             } else {
                 w.changePanel("renderTree");
-                w.gameStart(players);
+                w.gameStart(Arrays.asList(players.toArray(new Player[players.size()])));
             }
         } else if (x == b2) {
-            if (players.size() >= w.TOTAL_NUM_PLAYERS) {
+            if (players.size() >= GameConstants.TOTAL_NUM_PLAYERS) {
                 return;
             }
             String name = playerName.getText();
@@ -169,7 +169,9 @@ public class LobbyScreen extends JPanel implements ActionListener, ListSelection
                 index++;
             }
 
-            listModel.insertElementAt(playerName.getText(), index);
+            Player another = new AIPlayer(new Color(200 + index * 50, 250 - index * 50, 200), null);
+            another.setName(name);
+            players.add(index, another);
             //If we just wanted to add to the end, we'd do this:
             //listModel.addElement(employeeName.getText());
 
@@ -180,16 +182,14 @@ public class LobbyScreen extends JPanel implements ActionListener, ListSelection
             //Select the new item and make it visible.
             list.setSelectedIndex(index);
             list.ensureIndexIsVisible(index);
-            Player another = new AIPlayer(new Color(200 + index * 50, 250 - index * 50, 200), null);
-            another.setName(name);
-            players.add(another);
         } else if (x == b3) {
+        	// TODO fix this
             int index = list.getSelectedIndex();
             boolean found = false;
-            String name = (String) listModel.getElementAt(index);
+            String name = players.get(index).getName();
             int i;
             for (i = 0; i < players.size(); i++) {
-                if (players.get(i).getName().equals(name)) {
+                if (players.get(i).getName() != null && players.get(i).getName().equals(name)) {
                     found = true;
                     break;
                 }
@@ -197,10 +197,9 @@ public class LobbyScreen extends JPanel implements ActionListener, ListSelection
             if (found == false) {
                 return;
             }
-            players.remove(i);
-            listModel.remove(index);
+            players.remove(index);
 
-            int size = listModel.getSize();
+            int size = players.size();
 
             if (size == 0) { //Nobody's left, disable firing.
                 b3.setEnabled(false);
@@ -208,7 +207,7 @@ public class LobbyScreen extends JPanel implements ActionListener, ListSelection
             } else {
 
                 //Select an index.
-                if (index == listModel.getSize()) {
+                if (index == players.size()) {
                     //removed item in last position
                     index--;
                 }

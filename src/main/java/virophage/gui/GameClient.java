@@ -3,12 +3,14 @@ package virophage.gui;
 import virophage.Start;
 import virophage.core.*;
 import virophage.game.Game;
+import virophage.util.GameConstants;
 import virophage.util.Location;
 
 import javax.swing.*;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -20,22 +22,14 @@ import java.util.Random;
 public class GameClient extends JFrame {
 
     public static final Dimension SIZE = new Dimension(1280, 720);
-    public static final int DEAD_CELL_NUM = 60;
-    public static final int N = 10; // max location coordinate
-    public static final int MAX_ENERGY = 8;
     private int count = 0;
+    
     private JPanel cardPanel;
+    private CardLayout cardLayout;
+    
     private GameScreen gameScreen;
-    private MenuScreen menuScreen;
-    private InstructionScreen instructionPanel;
-    private CreditsScreen creditsPanel;
-    private LobbyScreen multiPlayerPanel;
-    private WinScreen winPanel;
-    private LoseScreen losePanel;
     private Player players[];
     private boolean gameStarted = false;
-    public final static int TOTAL_NUM_PLAYERS = 10;
-
     /**
      * Constructs a GameClient.
      */
@@ -45,21 +39,21 @@ public class GameClient extends JFrame {
         setSize(SIZE);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        gameScreen = new GameScreen(this);
+        gameScreen = new GameScreen();
 
         add(gameScreen, BorderLayout.CENTER);
 
         Start.log.info("Setting frame visible");
         cardPanel = new JPanel();
-        CardLayout cl = new CardLayout();
-        cardPanel.setLayout(cl);
+        cardLayout = new CardLayout();
+        cardPanel.setLayout(cardLayout);
 
-        menuScreen = new MenuScreen(this);
-        instructionPanel = new InstructionScreen(this);
-        creditsPanel = new CreditsScreen(this);
-        multiPlayerPanel = new LobbyScreen(this);
-        winPanel = new WinScreen(this);
-        losePanel = new LoseScreen(this);
+        MenuScreen menuScreen = new MenuScreen(this);
+        InstructionScreen instructionPanel = new InstructionScreen(this);
+        CreditsScreen creditsPanel = new CreditsScreen(this);
+        LobbyScreen multiPlayerPanel = new LobbyScreen(this);
+        WinScreen winPanel = new WinScreen(this);
+        LoseScreen losePanel = new LoseScreen(this);
 
         cardPanel.add(menuScreen, "menuScreen");
         cardPanel.add(gameScreen, "renderTree");
@@ -74,11 +68,11 @@ public class GameClient extends JFrame {
         setVisible(true);
 
         //create tissue here
-        Cell[][] cells = new Cell[2 * N + 1][2 * N + 1];
+        Cell[][] cells = new Cell[2 * GameConstants.N + 1][2 * GameConstants.N + 1];
         Tissue tissue = new Tissue(cells, gameScreen);
-        for (int i = -N; i <= N; i++) {
-            for (int j = -N; j <= N; j++) {
-                for (int k = -N; k <= N; k++) {
+        for (int i = -GameConstants.N; i <= GameConstants.N; i++) {
+            for (int j = -GameConstants.N; j <= GameConstants.N; j++) {
+                for (int k = -GameConstants.N; k <= GameConstants.N; k++) {
                     if (i + j + k == 0) {
                         Location loc = new Location(i, j);
                         tissue.setCell(loc, new Cell(tissue, loc));
@@ -87,7 +81,7 @@ public class GameClient extends JFrame {
                 }
             }
         }
-        players = new Player[TOTAL_NUM_PLAYERS + 1];
+        players = new Player[GameConstants.TOTAL_NUM_PLAYERS + 1];
     }
 
     public void setPlayer(int i, Player p) {
@@ -108,47 +102,37 @@ public class GameClient extends JFrame {
      * @param s the panel to change to.
      */
     public void changePanel(String s) {
-        ((CardLayout) cardPanel.getLayout()).show(cardPanel, s);
+        cardLayout.show(cardPanel, s);
         requestFocus();
     }
 
     /**
      * Starts the game by placing the players and dead cells.
      *
-     * @param humanPlayers the array of human players
+     * @param list the array of human players
      */
-    public void gameStart(ArrayList<Player> humanPlayers) {
+    public void gameStart(List<Player> list) {
         Start.log.info("Game Started!");
 
-	Cell[][] cells = new Cell[2 * N + 1][2 * N + 1];
+        Cell[][] cells = new Cell[2 * GameConstants.N + 1][2 * GameConstants.N + 1];
         Tissue t = new Tissue(cells, gameScreen);
-        for (int i = -N; i <= N; i++) {
-            for (int j = -N; j <= N; j++) {
-                for (int k = -N; k <= N; k++) {
+        for (int i = -GameConstants.N; i <= GameConstants.N; i++) {
+            for (int j = -GameConstants.N; j <= GameConstants.N; j++) {
+                for (int k = -GameConstants.N; k <= GameConstants.N; k++) {
                     if (i + j + k == 0) {
                         Location loc = new Location(i, j);
                         t.setCell(loc, new Cell(t, loc));
                     }
                 }
-	Tissue tissue = gameScreen.getTissue();
-        
-        //creates two players
-        for (int i = 0; i <= humanPlayers.size(); i++) {
-            if (i == humanPlayers.size()) {
-                if (players[i] != null) {
-                    continue;
-                } else {
-                    players[i] = new AIPlayer(new Color(200 + i * 50, 250 - i * 50, 200), tissue);
-                    players[i].setName("MachinePlayer");                    
-                }
-            } else {
-   
-		}
+            }
         }
+        
         Game game = new Game(t);
         gameScreen.setGame(game);
 
 
+        // TODO fix this
+        /*
         // adds some viruses for both players
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
@@ -170,15 +154,15 @@ public class GameClient extends JFrame {
                     }
                 }
             }
-        }
+        }*/
 //        Start.log.info("f of Cells: " + count);
 
         //place dead cells in the renderTree
         int dead = 0;
-        while (dead < DEAD_CELL_NUM) {
+        while (dead < GameConstants.DEAD_CELL_NUM) {
             Random rand = new Random();
-            int xPos = rand.nextInt(N * 2 + 1) - N;
-            int yPos = rand.nextInt(N * 2 + 1) - N;
+            int xPos = rand.nextInt(GameConstants.N * 2 + 1) - GameConstants.N;
+            int yPos = rand.nextInt(GameConstants.N * 2 + 1) - GameConstants.N;
 
             Location loc = new Location(xPos, yPos);
             if (t.getCell(loc) != null &&
@@ -188,28 +172,11 @@ public class GameClient extends JFrame {
             }
         }
 
-        count -= DEAD_CELL_NUM;
+        count -= GameConstants.DEAD_CELL_NUM;
         (new Thread(gameScreen)).start();
         gameStarted = true;
     }
     
-    public void gameStop() {
-    	for (int i = 0; i <(TOTAL_NUM_PLAYERS + 1); i++) {
-    		if (players[i] != null) {
-    			Start.log.info("going to destroy player" + i);
-    			players[i].destroy();
-    		}
-    	}
-    	gameScreen.getTissue().removeAllPlayers();
-    	gameScreen.getTissue().removeAllCells();
-    	
-    	for (int i = 0; i <(TOTAL_NUM_PLAYERS + 1); i++) {
-    		if (players[i] != null) {
-    			players[i] = null;
-    		}
-    	}
-    	gameStarted = false;
-    }
     
     public boolean isGameStarted() {
     	return gameStarted;

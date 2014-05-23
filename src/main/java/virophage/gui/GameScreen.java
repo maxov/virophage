@@ -2,6 +2,7 @@ package virophage.gui;
 
 import virophage.core.*;
 import virophage.game.Game;
+import virophage.util.GameConstants;
 import virophage.util.HexagonConstants;
 import virophage.util.Location;
 import virophage.util.Vector;
@@ -22,8 +23,8 @@ public class GameScreen extends Canvas implements Runnable {
 
     public double zoom = 1;
     public Vector displacement = new Vector(0, 0);
-    private GameClient w;
     private Game game;
+    private GameScreenListener listener;
 
     public static Timer timer = new Timer();
     public static Selection selection = new Selection();
@@ -31,13 +32,12 @@ public class GameScreen extends Canvas implements Runnable {
     /**
      * Constructs a RenderTree and adds the listeners.
      */
-    public GameScreen(GameClient g) {
-        w = g;
+    public GameScreen() {
         setIgnoreRepaint(true);
         setFocusable(true);
         requestFocus();
 
-        GameScreenListener listener = new GameScreenListener(this);
+        listener = new GameScreenListener(this);
 
 
         addKeyListener(listener);
@@ -45,10 +45,6 @@ public class GameScreen extends Canvas implements Runnable {
         addMouseListener(listener);
         addMouseMotionListener(listener);
         addMouseWheelListener(listener);
-    }
-
-    public GameClient getGameClient() {
-        return w;
     }
 
     public Game getGame() {
@@ -92,7 +88,7 @@ public class GameScreen extends Canvas implements Runnable {
         g.setStroke(new BasicStroke());
         if (channel.hasVirus()) {
             Virus v = channel.virus;
-            double circleRadius = (v.getEnergy() / (double) GameClient.MAX_ENERGY) *
+            double circleRadius = (v.getEnergy() / (double) GameConstants.MAX_ENERGY) *
                     (HexagonConstants.RADIUS * 0.7);
             int circleDiameter = (int) (circleRadius * 2);
             int x = (int) (endpoint.x - circleRadius);
@@ -138,7 +134,7 @@ public class GameScreen extends Canvas implements Runnable {
             g.setColor(light);
             g.fillPolygon(hexagon);
             g.setColor(dark);
-            double circleRadius = (occupant.getEnergy() / (double) GameClient.MAX_ENERGY) *
+            double circleRadius = (occupant.getEnergy() / (double) GameConstants.MAX_ENERGY) *
                     (HexagonConstants.RADIUS * 0.7);
             int circleDiameter = (int) (circleRadius * 2);
             int x = (int) (HexagonConstants.RADIUS - circleRadius);
@@ -205,9 +201,9 @@ public class GameScreen extends Canvas implements Runnable {
         at.translate(displacement.x, displacement.y);
         g.setTransform(at);
 
-        for (int x = -GameClient.N; x <= GameClient.N; x++) {
-            for (int y = -GameClient.N; y <= GameClient.N; y++) {
-                for (int z = -GameClient.N; z <= GameClient.N; z++) {
+        for (int x = -GameConstants.N; x <= GameConstants.N; x++) {
+            for (int y = -GameConstants.N; y <= GameConstants.N; y++) {
+                for (int z = -GameConstants.N; z <= GameConstants.N; z++) {
                     if (x + y + z == 0) {
                         Location loc = new Location(x, y);
                         drawCell(tissue.getCell(loc), createGraphics(g, loc.asCoordinates()));
@@ -223,6 +219,8 @@ public class GameScreen extends Canvas implements Runnable {
         int x = this.getWidth();
         int y = this.getHeight();
 
+        // TODO fix this
+        /*
         Font f = new Font("arial", Font.BOLD, 20);
         g.setFont(f);
         Player[] p = tissue.getPlayers();
@@ -234,7 +232,7 @@ public class GameScreen extends Canvas implements Runnable {
         g.setColor(Color.RED);
         int virusSize = p[1].getViruses().size();
         String vSize = virusSize + "";
-        g.drawString("Red: #cells - " + virusSize + "", x - 128 - 15 * vSize.length(), y - 10);
+        g.drawString("Red: #cells - " + virusSize + "", x - 128 - 15 * vSize.length(), y - 10);*/
 
 
     }
@@ -244,6 +242,7 @@ public class GameScreen extends Canvas implements Runnable {
      */
     @Override
     public void run() {
+    	listener.setTissue(game.getTissue());
         this.createBufferStrategy(2);
         BufferStrategy strategy = this.getBufferStrategy();
         while (true) {

@@ -2,8 +2,6 @@ package virophage.util;
 
 import java.util.ArrayList;
 
-import virophage.gui.GameClient;
-
 /**
  * A <code>Location</code> represents the x & y coordinates of a cell.
  *
@@ -101,7 +99,7 @@ public class Location {
 
         for (int[] neighbor : NEIGHBORS) {
             Location l = new Location(this.x + neighbor[0], this.y + neighbor[1]);
-            if (l.inHexagon(GameClient.N) && !l.equals(this)) {
+            if (l.inHexagon(GameConstants.N) && !l.equals(this)) {
                 list.add(l);
             }
         }

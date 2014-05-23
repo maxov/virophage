@@ -16,7 +16,7 @@ import javax.swing.JPanel;
  */
 public class TextScreen extends JPanel implements ActionListener {
 
-    public JButton buttonBack;
+    protected JButton buttonBack;
     private GameClient w;
 
     /**

@@ -61,6 +61,8 @@ public class Player implements Serializable {
     public void addVirus(Virus v) {
         viruses.add(v);
         Player[] players = tissue.getPlayers();
+        // TODO move game end logic to Game class
+        /*
         if (tissue.getTree().getGameClient().isGameStarted()) {
 	        for (Player p: players){
 	        	if (p instanceof AIPlayer){
@@ -84,7 +86,7 @@ public class Player implements Serializable {
 	        		}
 	        	}
 	        }
-        }
+        }*/
     }
 
     /**
@@ -128,6 +130,8 @@ public class Player implements Serializable {
         Iterator<Virus> vs = viruses.iterator();
         while (vs.hasNext()) {
             Virus q = vs.next();
+            // TODO move game end logic to Game class
+            /*
             if (q.equals(v)) {
                 vs.remove();
                 if (tissue.getTree().getGameClient().isGameStarted()) {
@@ -160,7 +164,7 @@ public class Player implements Serializable {
 			        	}
 			        }          	
                 }
-            }
+            }*/
         }
         
     }
@@ -218,4 +222,9 @@ public class Player implements Serializable {
             }
     	}
     }
+    
+    public String toString() {
+    	return name + " [color = " + color.toString() + "]";
+    }
+    
 }

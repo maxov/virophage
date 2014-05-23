@@ -32,8 +32,12 @@ class GameScreenListener implements KeyListener, MouseListener, MouseMotionListe
      */
     public GameScreenListener(GameScreen gameScreen) {
         this.gameScreen = gameScreen;
-        tissue = gameScreen.getGame().getTissue();
+        tissue = null;
         zoomFactor = 1;
+    }
+    
+    public void setTissue(Tissue tissue) {
+    	this.tissue = tissue;
     }
 
     private Cell getCellAround(MouseEvent e) {
@@ -88,7 +92,7 @@ class GameScreenListener implements KeyListener, MouseListener, MouseMotionListe
         }
         if (code == KeyEvent.VK_ESCAPE) {
             // how to stop all thread's timer? and clean up the game?
-            gameScreen.getGameClient().changePanel("menuScreen");
+            System.exit(0);
         }
         gameScreen.repaint();
     }

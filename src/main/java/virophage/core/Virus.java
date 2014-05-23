@@ -6,8 +6,8 @@ import java.util.Date;
 import java.util.TimerTask;
 
 import virophage.Start;
-import virophage.gui.GameClient;
 import virophage.gui.GameScreen;
+import virophage.util.GameConstants;
 import virophage.util.Location;
 
 /**
@@ -28,7 +28,7 @@ public class Virus implements Serializable {
          */
         @Override
         public void run() {
-            if (getEnergy() < GameClient.MAX_ENERGY) {
+            if (getEnergy() < GameConstants.MAX_ENERGY) {
                 setEnergy(getEnergy() + 1);
             }
         }

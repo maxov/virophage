@@ -5,8 +5,8 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.TimerTask;
 
-import virophage.gui.GameClient;
 import virophage.gui.GameScreen;
+import virophage.util.GameConstants;
 import virophage.util.Location;
 
 /**
@@ -37,7 +37,7 @@ public class Channel implements Serializable {
             if (v != null && v.getEnergy() > 1) {
                 if (v1 != null) {
                     if (v.getPlayer().equals(v1.getPlayer())) {
-                        if (v1.getEnergy() < GameClient.MAX_ENERGY) {
+                        if (v1.getEnergy() < GameConstants.MAX_ENERGY) {
                             v1.setEnergy(v1.getEnergy() + 1);
                             v.setEnergy(v.getEnergy() - 1);
                         }
@@ -46,7 +46,7 @@ public class Channel implements Serializable {
                             createVirus();
                         }
                         Virus my = getVirus();
-                        if (my.getEnergy() < GameClient.MAX_ENERGY) {
+                        if (my.getEnergy() < GameConstants.MAX_ENERGY) {
                             my.setEnergy(my.getEnergy() + 1);
                             v.setEnergy(v.getEnergy() - 1);
                             if (my.getEnergy() >= v1.getEnergy()) {
