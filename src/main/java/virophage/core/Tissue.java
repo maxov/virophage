@@ -55,6 +55,20 @@ public class Tissue implements Serializable {
     public void addPlayer(Player player) {
         players.add(player);
     }
+    
+    public void removeAllPlayers() {
+    	for (Player p: players) {
+    		players.remove(p);
+    	}
+    }
+    
+    public void removeAllCells() {
+    	for (int i = 0; i < cells.length; i++) {
+    		for (int j = 0; j < cells[i].length; j++) {
+    			cells[i][j] = null;
+    		}
+    	}
+    }
 
     public Player[] getPlayers() {
         return players.toArray(new Player[players.size()]);

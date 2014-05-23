@@ -60,6 +60,31 @@ public class Player implements Serializable {
      */
     public void addVirus(Virus v) {
         viruses.add(v);
+        Player[] players = tissue.getPlayers();
+        if (tissue.getTree().getGameClient().isGameStarted()) {
+	        for (Player p: players){
+	        	if (p instanceof AIPlayer){
+	        		if (p.getViruses().size() == 0){
+	        			tissue.getTree().getGameClient().changePanel("winScreen");
+	        			// END THE GAME
+	        			tissue.getTree().getGameClient().gameStop();
+	        		}
+	        		else if(getViruses().size() + p.getViruses().size() == tissue.getTree().getGameClient().getNumberCellsCount()){
+	        			if (getViruses().size() > p.getViruses().size()){
+	        				tissue.getTree().getGameClient().changePanel("winScreen");
+	            			// END THE GAME
+	        				tissue.getTree().getGameClient().gameStop();
+	        			}
+	        			else{
+	        				tissue.getTree().getGameClient().changePanel("loseScreen");
+	            			// END THE GAME
+	        				tissue.getTree().getGameClient().gameStop();
+	
+	        			}
+	        		}
+	        	}
+	        }
+        }
     }
 
     /**
@@ -105,10 +130,51 @@ public class Player implements Serializable {
             Virus q = vs.next();
             if (q.equals(v)) {
                 vs.remove();
+                if (tissue.getTree().getGameClient().isGameStarted()) {
+                	Player[] players = tissue.getPlayers();
+			        if (getViruses().size() == 0){
+			        	tissue.getTree().getGameClient().changePanel("loseScreen");
+			        	tissue.getTree().getGameClient().gameStop();
+			        }
+			        for (Player p: players){
+			        	if (p instanceof AIPlayer){
+			        		if (p.getViruses().size() == 0){
+			        			
+			        			tissue.getTree().getGameClient().changePanel("winScreen");
+			        			// END THE GAME
+			        			tissue.getTree().getGameClient().gameStop();
+			        		}
+			        		else if(getViruses().size() + p.getViruses().size() == tissue.getTree().getGameClient().getNumberCellsCount()){
+			        			if (getViruses().size() > p.getViruses().size()){
+			        				tissue.getTree().getGameClient().changePanel("winScreen");
+			            			// END THE GAME
+			        				tissue.getTree().getGameClient().gameStop();
+			        			}
+			        			else{
+			        				tissue.getTree().getGameClient().changePanel("loseScreen");
+			            			// END THE GAME
+			        				tissue.getTree().getGameClient().gameStop();
+			
+			        			}
+			        		}
+			        	}
+			        }          	
+                }
             }
         }
+        
     }
 
+    public void removeVirusFromList(Virus v) {
+        Iterator<Virus> vs = viruses.iterator();
+        while (vs.hasNext()) {
+            Virus q = vs.next();
+            if (q.equals(v)) {
+                vs.remove();
+            }
+        }
+        
+    }
     /**
      * Detects if there is a channel owned by the player between two locations.
      *
@@ -131,4 +197,25 @@ public class Player implements Serializable {
     	this.tissue = tissue;
     }
 
+    public void destroy() {
+    	if (channels != null) {
+    		Iterator<Channel> channels = this.getChannels().iterator();
+            while (channels.hasNext()) {
+                Channel c = channels.next();             
+                    channels.remove();
+                    this.removeChannel(c);
+                    c.destroy();               
+            }
+    	}
+    	
+    	if (viruses != null) {
+    		Iterator<Virus> viruses = this.getViruses().iterator();
+            while (viruses.hasNext()) {
+                Virus v = viruses.next();             
+                    viruses.remove();
+                    this.removeVirusFromList(v);
+                    v.destroy();               
+            }
+    	}
+    }
 }

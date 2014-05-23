@@ -23,13 +23,17 @@ public class GameClient extends JFrame {
     public static final int DEAD_CELL_NUM = 60;
     public static final int N = 10; // max location coordinate
     public static final int MAX_ENERGY = 8;
+    private int count = 0;
     private JPanel cardPanel;
     private GameScreen gameScreen;
     private MenuScreen menuScreen;
     private InstructionScreen instructionPanel;
     private CreditsScreen creditsPanel;
     private LobbyScreen multiPlayerPanel;
+    private WinScreen winPanel;
+    private LoseScreen losePanel;
     private Player players[];
+    private boolean gameStarted = false;
     public final static int TOTAL_NUM_PLAYERS = 10;
 
     /**
@@ -54,13 +58,16 @@ public class GameClient extends JFrame {
         instructionPanel = new InstructionScreen(this);
         creditsPanel = new CreditsScreen(this);
         multiPlayerPanel = new LobbyScreen(this);
-
+        winPanel = new WinScreen(this);
+        losePanel = new LoseScreen(this);
 
         cardPanel.add(menuScreen, "menuScreen");
         cardPanel.add(gameScreen, "renderTree");
         cardPanel.add(instructionPanel, "instructionScreen");
         cardPanel.add(creditsPanel, "creditsScreen");
         cardPanel.add(multiPlayerPanel, "multiplayerScreen");
+        cardPanel.add(winPanel, "winScreen");
+        cardPanel.add(losePanel, "loseScreen");
 
         add(cardPanel);
 
@@ -75,6 +82,7 @@ public class GameClient extends JFrame {
                     if (i + j + k == 0) {
                         Location loc = new Location(i, j);
                         tissue.setCell(loc, new Cell(tissue, loc));
+                        count ++;
                     }
                 }
             }
@@ -112,7 +120,7 @@ public class GameClient extends JFrame {
     public void gameStart(ArrayList<Player> humanPlayers) {
         Start.log.info("Game Started!");
 
-        Cell[][] cells = new Cell[2 * N + 1][2 * N + 1];
+	Cell[][] cells = new Cell[2 * N + 1][2 * N + 1];
         Tissue t = new Tissue(cells, gameScreen);
         for (int i = -N; i <= N; i++) {
             for (int j = -N; j <= N; j++) {
@@ -122,12 +130,24 @@ public class GameClient extends JFrame {
                         t.setCell(loc, new Cell(t, loc));
                     }
                 }
-            }
+	Tissue tissue = gameScreen.getTissue();
+        
+        //creates two players
+        for (int i = 0; i <= humanPlayers.size(); i++) {
+            if (i == humanPlayers.size()) {
+                if (players[i] != null) {
+                    continue;
+                } else {
+                    players[i] = new AIPlayer(new Color(200 + i * 50, 250 - i * 50, 200), tissue);
+                    players[i].setName("MachinePlayer");                    
+                }
+            } else {
+   
+		}
         }
         Game game = new Game(t);
         gameScreen.setGame(game);
 
-//        Start.log.info("Number of Cells: " + count);
 
         // adds some viruses for both players
         for (int i = -1; i <= 1; i++) {
@@ -151,6 +171,7 @@ public class GameClient extends JFrame {
                 }
             }
         }
+//        Start.log.info("f of Cells: " + count);
 
         //place dead cells in the renderTree
         int dead = 0;
@@ -165,10 +186,37 @@ public class GameClient extends JFrame {
                 t.setCell(loc, new DeadCell(t, loc));
                 dead++;
             }
-
         }
 
+        count -= DEAD_CELL_NUM;
         (new Thread(gameScreen)).start();
+        gameStarted = true;
+    }
+    
+    public void gameStop() {
+    	for (int i = 0; i <(TOTAL_NUM_PLAYERS + 1); i++) {
+    		if (players[i] != null) {
+    			Start.log.info("going to destroy player" + i);
+    			players[i].destroy();
+    		}
+    	}
+    	gameScreen.getTissue().removeAllPlayers();
+    	gameScreen.getTissue().removeAllCells();
+    	
+    	for (int i = 0; i <(TOTAL_NUM_PLAYERS + 1); i++) {
+    		if (players[i] != null) {
+    			players[i] = null;
+    		}
+    	}
+    	gameStarted = false;
+    }
+    
+    public boolean isGameStarted() {
+    	return gameStarted;
+    }
+    
+    public int getNumberCellsCount (){
+    	return count;
     }
 
 }
