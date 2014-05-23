@@ -13,7 +13,7 @@ public class Game extends Listening implements Runnable {
 
     private Scheduler scheduler;
     private Tissue tissue;
-
+    
     /**
      * Construct this game given a tissue.
      *

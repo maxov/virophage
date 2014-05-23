@@ -74,6 +74,7 @@ public class Channel implements Serializable {
                 } else {
                     t.occupant = new Virus(v.getPlayer(), 0);
                     t.occupant.setCell(t);
+                    v.getPlayer().addVirus(t.occupant);
                     t.occupant.schedule();
                     v.setEnergy(v.getEnergy() - 1);
                 }

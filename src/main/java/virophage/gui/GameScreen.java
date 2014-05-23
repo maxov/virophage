@@ -1,7 +1,7 @@
 package virophage.gui;
 
 import virophage.core.*;
-import virophage.core.AIPlayer;
+import virophage.game.Game;
 import virophage.util.HexagonConstants;
 import virophage.util.Location;
 import virophage.util.Vector;
@@ -22,8 +22,8 @@ public class GameScreen extends Canvas implements Runnable {
 
     public double zoom = 1;
     public Vector displacement = new Vector(0, 0);
-    private Tissue tissue;
     private GameClient w;
+    private Game game;
 
     public static Timer timer = new Timer();
     public static Selection selection = new Selection();
@@ -51,15 +51,15 @@ public class GameScreen extends Canvas implements Runnable {
         return w;
     }
 
-    public void setTissue(Tissue t) {
-        tissue = t;
-    }
+    public Game getGame() {
+		return game;
+	}
 
-    public Tissue getTissue() {
-        return tissue;
-    }
+	public void setGame(Game game) {
+		this.game = game;
+	}
 
-    /**
+	/**
      * Draws the graphics for a Channel.
      *
      * @param channel the channel
@@ -193,6 +193,7 @@ public class GameScreen extends Canvas implements Runnable {
      */
     public void render(Graphics gr) {
         Graphics2D g = (Graphics2D) gr;
+        Tissue tissue = game.getTissue();
         // makes the game look really nice, but also really slow
         //g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 

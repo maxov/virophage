@@ -5,6 +5,7 @@ import virophage.core.Cell;
 import virophage.core.Channel;
 import virophage.core.DeadCell;
 import virophage.core.Player;
+import virophage.core.Tissue;
 import virophage.util.HexagonConstants;
 import virophage.util.Vector;
 
@@ -20,6 +21,7 @@ import java.awt.event.*;
 class GameScreenListener implements KeyListener, MouseListener, MouseMotionListener, MouseWheelListener {
 
     private GameScreen gameScreen;
+    private Tissue tissue;
     private Vector prevPos;
     private double zoomFactor;
 
@@ -30,12 +32,13 @@ class GameScreenListener implements KeyListener, MouseListener, MouseMotionListe
      */
     public GameScreenListener(GameScreen gameScreen) {
         this.gameScreen = gameScreen;
+        tissue = gameScreen.getGame().getTissue();
         zoomFactor = 1;
     }
 
     private Cell getCellAround(MouseEvent e) {
         Vector p = new Vector(e.getPoint()).scale(1 / gameScreen.zoom).subtract(gameScreen.displacement);
-        for (Cell[] cells : gameScreen.getTissue().cells) {
+        for (Cell[] cells : tissue.cells) {
             for (Cell cell : cells) {
                 if (cell != null && insideCell(cell, p)) return cell;
             }
@@ -158,7 +161,7 @@ class GameScreenListener implements KeyListener, MouseListener, MouseMotionListe
             Player p = from.getOccupant().getPlayer();
             if (!(to.equals(from)) && !(to instanceof DeadCell) && !p.hasChannelBetween(to.location, from.location)
                     && to.location.isNeighbor(from.location)) {
-                Channel c = new Channel(gameScreen.getTissue(), from.location, to.location, p);
+                Channel c = new Channel(tissue, from.location, to.location, p);
                 p.addChannel(c);
             }
             GameScreen.selection = new Selection();

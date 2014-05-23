@@ -47,7 +47,6 @@ public class Virus implements Serializable {
     public Virus(Player player, int energy) {
         this.player = player;
         this.energy = energy;
-        player.addVirus(this);
     }
 
     /**

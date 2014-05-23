@@ -2,6 +2,7 @@ package virophage.gui;
 
 import virophage.Start;
 import virophage.core.*;
+import virophage.game.Game;
 import virophage.util.Location;
 
 import javax.swing.*;
@@ -78,7 +79,6 @@ public class GameClient extends JFrame {
                 }
             }
         }
-        gameScreen.setTissue(tissue);
         players = new Player[TOTAL_NUM_PLAYERS + 1];
     }
 
@@ -112,21 +112,20 @@ public class GameClient extends JFrame {
     public void gameStart(ArrayList<Player> humanPlayers) {
         Start.log.info("Game Started!");
 
-        Tissue tissue = gameScreen.getTissue();
-        int count = 0;
-        //creates two players
-        for (int i = 0; i <= humanPlayers.size(); i++) {
-            if (i == humanPlayers.size()) {
-                if (players[i] != null) {
-                    continue;
-                } else {
-                    players[i] = new AIPlayer(new Color(200 + i * 50, 250 - i * 50, 200), tissue);
-                    players[i].setName("MachinePlayer");
+        Cell[][] cells = new Cell[2 * N + 1][2 * N + 1];
+        Tissue t = new Tissue(cells, gameScreen);
+        for (int i = -N; i <= N; i++) {
+            for (int j = -N; j <= N; j++) {
+                for (int k = -N; k <= N; k++) {
+                    if (i + j + k == 0) {
+                        Location loc = new Location(i, j);
+                        t.setCell(loc, new Cell(t, loc));
+                    }
                 }
-            } else {
-                players[i] = humanPlayers.get(i);
             }
         }
+        Game game = new Game(t);
+        gameScreen.setGame(game);
 
 //        Start.log.info("Number of Cells: " + count);
 
@@ -137,14 +136,16 @@ public class GameClient extends JFrame {
                     if (i + j + k == 0) {
                         Location loc1 = new Location(i - 3, j);
                         Virus v1 = new Virus(players[0], 4);
-                        tissue.getCell(loc1).setOccupant(v1);
-                        v1.setCell(tissue.getCell(loc1));
+                        players[0].addVirus(v1);
+                        t.getCell(loc1).setOccupant(v1);
+                        v1.setCell(t.getCell(loc1));
                         v1.schedule();
 
                         Location loc2 = new Location(i + 3, j);
                         Virus v2 = new Virus(players[1], 4);
-                        tissue.getCell(loc2).setOccupant(v2);
-                        v2.setCell(tissue.getCell(loc2));
+                        players[1].addVirus(v2);
+                        t.getCell(loc2).setOccupant(v2);
+                        v2.setCell(t.getCell(loc2));
                         v2.schedule();
                     }
                 }
@@ -159,9 +160,9 @@ public class GameClient extends JFrame {
             int yPos = rand.nextInt(N * 2 + 1) - N;
 
             Location loc = new Location(xPos, yPos);
-            if (gameScreen.getTissue().getCell(loc) != null &&
-                    gameScreen.getTissue().getCell(loc).occupant == null) {
-                gameScreen.getTissue().setCell(loc, new DeadCell(tissue, loc));
+            if (t.getCell(loc) != null &&
+                    t.getCell(loc).occupant == null) {
+                t.setCell(loc, new DeadCell(t, loc));
                 dead++;
             }
 

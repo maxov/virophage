@@ -22,15 +22,17 @@ public class AIPlayer extends Player {
      */
     public AIPlayer(Color color, Tissue tissue) {
         super(color, tissue);
-        GameScreen.timer.schedule(task, 3000, 100);
+    }
+    
+    public void schedule() {
+    	GameScreen.timer.schedule(task, 100, 300);
     }
 
     private TimerTask task = new TimerTask() {
         @Override
         public void run() {
             for (Virus v : getViruses()) {
-                try {
-                    Tissue tissue = getTissue();
+                try {                    Tissue tissue = getTissue();
                     if (v.getCell() == null) {
                         continue;
                     }
@@ -40,7 +42,9 @@ public class AIPlayer extends Player {
                         if (cellTo != null && !(cellTo instanceof DeadCell) &&
                                 !hasChannelBetween(from, to) && !hasChannelBetween(to, from) &&
                                 v.getEnergy() > 4
-                                && Math.random() < 0.005) {
+                                && Math.random() < 0.01) {
+                        /*if (cellTo != null && !(cellTo instanceof DeadCell) &&
+                                !hasChannelBetween(from, to) && !hasChannelBetween(to, from)) {*/
                             Channel c = new Channel(tissue, from, to, AIPlayer.this);
                             addChannel(c);
                         }

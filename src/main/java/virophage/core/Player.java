@@ -47,7 +47,6 @@ public class Player implements Serializable {
     public Player(Color color, Tissue tissue) {
         this.color = color;
         this.tissue = tissue;
-        tissue.addPlayer(this);
     }
 
     public Color getColor() {
@@ -126,6 +125,10 @@ public class Player implements Serializable {
 
     public Tissue getTissue() {
         return tissue;
+    }
+    
+    public void setTissue(Tissue tissue) {
+    	this.tissue = tissue;
     }
 
 }
