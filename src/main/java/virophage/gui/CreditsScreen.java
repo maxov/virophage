@@ -21,7 +21,7 @@ public class CreditsScreen extends TextScreen {
     }
 
     /**
-     * Paint this CreditsScreen.
+     * Paints this CreditsScreen.
      *
      * @param g a Graphics object
      */

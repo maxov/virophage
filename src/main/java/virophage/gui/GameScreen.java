@@ -194,7 +194,7 @@ public class GameScreen extends Canvas implements Runnable {
     public void render(Graphics gr) {
         Graphics2D g = (Graphics2D) gr;
         // makes the game look really nice, but also really slow
-        //g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         g.setColor(new Color(230, 230, 230));
         g.fillRect(0, 0, getWidth(), getHeight());
