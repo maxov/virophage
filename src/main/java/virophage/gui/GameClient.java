@@ -172,20 +172,33 @@ public class GameClient extends JFrame {
 
         //place dead cells in the renderTree
         int dead = 0;
+        Location loc;
         while (dead < GameConstants.DEAD_CELL_NUM) {
             Random rand = new Random();
             int xPos = rand.nextInt(GameConstants.N * 2 + 1) - GameConstants.N;
             int yPos = rand.nextInt(GameConstants.N * 2 + 1) - GameConstants.N;
 
-            Location loc = new Location(xPos, yPos);
+            loc = new Location(xPos, yPos);
             if (t.getCell(loc) != null &&
-                    t.getCell(loc).occupant == null) {
+                    t.getCell(loc).occupant == null && !(t.getCell(loc) instanceof BonusCell)) {
                 t.setCell(loc, new DeadCell(t, loc));
                 dead++;
             }
         }
 
         count -= GameConstants.DEAD_CELL_NUM;
+        
+        //set bonus cells
+        loc = new Location(0, 0);
+        if (t.getCell(loc) != null){
+        	ArrayList<Location> centerLocs = loc.getNeighbors();
+        	for (Location l : centerLocs){
+        		t.setCell(l, new BonusCell(t, l));
+        	}
+            t.setCell(loc, new BonusCell(t, loc));
+            dead++;
+        }
+        
         (new Thread(gameScreen)).start();
         game.setGameStarted(true);
     }

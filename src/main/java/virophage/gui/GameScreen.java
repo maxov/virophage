@@ -74,9 +74,8 @@ public class GameScreen extends Canvas implements Runnable {
 
         // draw line with masking circle at end
         g.setColor(channel.player.getColor().darker().darker());
-        g.setStroke(new BasicStroke(10));
+        g.setStroke((new BasicStroke(10,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND)));
         g.drawLine((int) startpoint.x, (int) startpoint.y, (int) endpoint.x, (int) endpoint.y);
-        g.fillOval((int) endpoint.x - 7, (int) endpoint.y - 7, 14, 14);
 
         // draw loop
         g.setColor(channel.player.getColor().darker().darker().darker().darker());
@@ -144,7 +143,14 @@ public class GameScreen extends Canvas implements Runnable {
         } else {
             if (cell instanceof DeadCell) {
                 g.setColor(Color.BLACK);
-            } else {
+            }
+            else if (cell instanceof BonusCell){
+            	g.setColor(Color.RED);
+            	g.setStroke(new BasicStroke(3));
+            	g.drawPolygon(hexagon);
+            	return;
+            }
+            else {
                 if (selection.isFrom(cell)) {
                     g.setColor(Color.GRAY);
                 } else if (selection.isPossible(cell)) {
@@ -162,12 +168,13 @@ public class GameScreen extends Canvas implements Runnable {
         g.setColor(Color.BLACK);
         //int x = (int) (HexagonConstants.RADIUS - fm.stringWidth(loc.toString()) / 2);
         //int y = (int) (HexagonConstants.TRI_HEIGHT);
-        //g.drawString(loc.toString(), x, y);
+        g.setColor(Color.RED);
+        g.drawString(cell.location.toString(),10, 100);
         if (cell.getOccupant() != null) {
             Virus tempV = cell.getOccupant();
             String s;
             s = tempV.getPlayer().getName();
-            g.drawString(s, 100, 100);
+//            g.drawString(s, 100, 100);
         }
     }
 
