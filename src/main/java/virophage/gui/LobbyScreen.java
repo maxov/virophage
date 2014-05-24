@@ -38,6 +38,7 @@ public class LobbyScreen extends JPanel implements ActionListener, ListSelection
     private JButton b3;
     private JCheckBox c1;
     private JList list;
+    DefaultListModel<Player> listModel = new DefaultListModel<>();
     private JTextField playerName;
     private Vector<Player> players = new Vector<Player>();
     private JButton buttonBack, buttonContinue;
@@ -96,7 +97,7 @@ public class LobbyScreen extends JPanel implements ActionListener, ListSelection
         playerName = new JTextField("Player Name ", 20);
         add(playerName);
 
-        list = new JList<Player>(players);
+        list = new JList<Player>(listModel);
         list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         list.setLayoutOrientation(JList.VERTICAL_WRAP);
         list.setVisibleRowCount(-1);
@@ -169,12 +170,11 @@ public class LobbyScreen extends JPanel implements ActionListener, ListSelection
                 index++;
             }
 
-            Player another = new AIPlayer(new Color(200 + index * 50, 250 - index * 50, 200), null);
+            Player another = new AIPlayer(new Color(5 + index * 20, 255 - index * 20, 200), null);
             another.setName(name);
             players.add(index, another);
-            //If we just wanted to add to the end, we'd do this:
-            //listModel.addElement(employeeName.getText());
 
+            listModel.addElement(another);
             //Reset the text field.
             playerName.requestFocusInWindow();
             playerName.setText("");

@@ -1,5 +1,6 @@
 package virophage.core;
 
+import virophage.Start;
 import virophage.util.Location;
 
 import java.awt.Color;
@@ -60,33 +61,8 @@ public class Player implements Serializable {
      */
     public void addVirus(Virus v) {
         viruses.add(v);
-        Player[] players = tissue.getPlayers();
-        // TODO move game end logic to Game class
-        /*
-        if (tissue.getTree().getGameClient().isGameStarted()) {
-	        for (Player p: players){
-	        	if (p instanceof AIPlayer){
-	        		if (p.getViruses().size() == 0){
-	        			tissue.getTree().getGameClient().changePanel("winScreen");
-	        			// END THE GAME
-	        			tissue.getTree().getGameClient().gameStop();
-	        		}
-	        		else if(getViruses().size() + p.getViruses().size() == tissue.getTree().getGameClient().getNumberCellsCount()){
-	        			if (getViruses().size() > p.getViruses().size()){
-	        				tissue.getTree().getGameClient().changePanel("winScreen");
-	            			// END THE GAME
-	        				tissue.getTree().getGameClient().gameStop();
-	        			}
-	        			else{
-	        				tissue.getTree().getGameClient().changePanel("loseScreen");
-	            			// END THE GAME
-	        				tissue.getTree().getGameClient().gameStop();
-	
-	        			}
-	        		}
-	        	}
-	        }
-        }*/
+        if (tissue != null && tissue.getTree() != null && tissue.getTree().getGame()!=null)
+        	tissue.getTree().getGame().checkGame();
     }
 
     /**
@@ -130,41 +106,12 @@ public class Player implements Serializable {
         Iterator<Virus> vs = viruses.iterator();
         while (vs.hasNext()) {
             Virus q = vs.next();
-            // TODO move game end logic to Game class
-            /*
             if (q.equals(v)) {
                 vs.remove();
-                if (tissue.getTree().getGameClient().isGameStarted()) {
-                	Player[] players = tissue.getPlayers();
-			        if (getViruses().size() == 0){
-			        	tissue.getTree().getGameClient().changePanel("loseScreen");
-			        	tissue.getTree().getGameClient().gameStop();
-			        }
-			        for (Player p: players){
-			        	if (p instanceof AIPlayer){
-			        		if (p.getViruses().size() == 0){
-			        			
-			        			tissue.getTree().getGameClient().changePanel("winScreen");
-			        			// END THE GAME
-			        			tissue.getTree().getGameClient().gameStop();
-			        		}
-			        		else if(getViruses().size() + p.getViruses().size() == tissue.getTree().getGameClient().getNumberCellsCount()){
-			        			if (getViruses().size() > p.getViruses().size()){
-			        				tissue.getTree().getGameClient().changePanel("winScreen");
-			            			// END THE GAME
-			        				tissue.getTree().getGameClient().gameStop();
-			        			}
-			        			else{
-			        				tissue.getTree().getGameClient().changePanel("loseScreen");
-			            			// END THE GAME
-			        				tissue.getTree().getGameClient().gameStop();
-			
-			        			}
-			        		}
-			        	}
-			        }          	
-                }
-            }*/
+                Start.log.info("player "+name+" has " + viruses.size() + " viruses");
+                if (tissue != null && tissue.getTree() != null && tissue.getTree().getGame()!=null)
+                	tissue.getTree().getGame().checkGame();
+            }
         }
         
     }

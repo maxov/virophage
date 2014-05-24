@@ -29,7 +29,8 @@ public class GameClient extends JFrame {
     
     private GameScreen gameScreen;
     private Player players[];
-    private boolean gameStarted = false;
+    private Game game;
+    
     /**
      * Constructs a GameClient.
      */
@@ -112,7 +113,7 @@ public class GameClient extends JFrame {
      * @param list the array of human players
      */
     public void gameStart(List<Player> list) {
-        Start.log.info("Game Started!");
+        Start.log.info("Game Started!, num of players is: " + list.size());
 
         Cell[][] cells = new Cell[2 * GameConstants.N + 1][2 * GameConstants.N + 1];
         Tissue t = new Tissue(cells, gameScreen);
@@ -127,34 +128,46 @@ public class GameClient extends JFrame {
             }
         }
         
-        Game game = new Game(t);
+        game = new Game(t, this);
         gameScreen.setGame(game);
 
 
         // TODO fix this
-        /*
-        // adds some viruses for both players
-        for (int i = -1; i <= 1; i++) {
-            for (int j = -1; j <= 1; j++) {
-                for (int k = -1; k <= 1; k++) {
-                    if (i + j + k == 0) {
-                        Location loc1 = new Location(i - 3, j);
-                        Virus v1 = new Virus(players[0], 4);
-                        players[0].addVirus(v1);
-                        t.getCell(loc1).setOccupant(v1);
-                        v1.setCell(t.getCell(loc1));
-                        v1.schedule();
-
-                        Location loc2 = new Location(i + 3, j);
-                        Virus v2 = new Virus(players[1], 4);
-                        players[1].addVirus(v2);
-                        t.getCell(loc2).setOccupant(v2);
-                        v2.setCell(t.getCell(loc2));
-                        v2.schedule();
-                    }
-                }
-            }
-        }*/
+        for (int ii = 0; ii < list.size(); ii++) {
+        	setPlayer(ii, (Player)list.get(ii));
+        	((Player)list.get(ii)).setTissue(t);
+        	t.addPlayer(((Player)list.get(ii)));
+        
+	        // adds some viruses for players
+	        for (int i = -1; i <= 1; i++) {
+	            for (int j = -1; j <= 1; j++) {
+	                for (int k = -1; k <= 1; k++) {
+	                    if (i + j + k == 0) {
+	                    	Location loc1 = null;
+	                    	if (ii < 4) {
+	                    		loc1 = new Location(i - 9 + ii*6, j);
+	                    	} else if (ii < 8) {
+	                    		loc1 = new Location(i, j - 9 + (ii -4)*6);
+	                    	} else if (ii < 12) {
+	                    		loc1 = new Location(i - 9 + (ii-8)*6, j + 9 - (ii -8)*6);
+	                    	}
+	                        Virus v1 = new Virus(players[ii], 4);
+	                        players[ii].addVirus(v1);
+	                        t.getCell(loc1).setOccupant(v1);
+	                        v1.setCell(t.getCell(loc1));
+	                        v1.schedule();
+	
+//	                        Location loc2 = new Location(i + 3, j);
+//	                        Virus v2 = new Virus(players[1], 4);
+//	                        players[1].addVirus(v2);
+//	                        t.getCell(loc2).setOccupant(v2);
+//	                        v2.setCell(t.getCell(loc2));
+//	                        v2.schedule();
+	                    }
+	                }
+	            }
+	        }
+        }
 //        Start.log.info("f of Cells: " + count);
 
         //place dead cells in the renderTree
@@ -174,16 +187,15 @@ public class GameClient extends JFrame {
 
         count -= GameConstants.DEAD_CELL_NUM;
         (new Thread(gameScreen)).start();
-        gameStarted = true;
-    }
-    
-    
-    public boolean isGameStarted() {
-    	return gameStarted;
+        game.setGameStarted(true);
     }
     
     public int getNumberCellsCount (){
     	return count;
+    }
+    
+    public Game getGame() {
+    	return game;
     }
 
 }

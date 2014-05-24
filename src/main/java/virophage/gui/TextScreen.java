@@ -44,5 +44,9 @@ public class TextScreen extends JPanel implements ActionListener {
             w.changePanel("menuScreen");
         }
     }
+    
+    public GameClient getGameClient() {
+    	return w;
+    }
 
 }

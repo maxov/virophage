@@ -166,11 +166,7 @@ public class GameScreen extends Canvas implements Runnable {
         if (cell.getOccupant() != null) {
             Virus tempV = cell.getOccupant();
             String s;
-            if (tempV.getPlayer() instanceof AIPlayer) {
-                s = "M";
-            } else {
-                s = "S";
-            }
+            s = tempV.getPlayer().getName();
             g.drawString(s, 100, 100);
         }
     }
