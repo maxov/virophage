@@ -6,6 +6,7 @@ import virophage.util.Location;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * A <code>Tissue</code> represents a collection of related cells that are modified by players.
@@ -45,6 +46,18 @@ public class Tissue implements Serializable {
             channels.addAll(p.channels);
         }
         return channels;
+    }
+
+    public List<Cell> flatCells() {
+        ArrayList<Cell> flat = new ArrayList<Cell>();
+        for(Cell[] cls: cells) {
+            for(Cell cell: cls) {
+                if(cell != null) {
+                    flat.add(cell);
+                }
+            }
+        }
+        return flat;
     }
 
     /**

@@ -35,10 +35,8 @@ public class GameScreen extends Canvas implements Runnable {
     public GameScreen() {
         setIgnoreRepaint(true);
         setFocusable(true);
-        requestFocus();
 
         listener = new GameScreenListener(this);
-
 
         addKeyListener(listener);
 
@@ -191,7 +189,7 @@ public class GameScreen extends Canvas implements Runnable {
         Graphics2D g = (Graphics2D) gr;
         Tissue tissue = game.getTissue();
         // makes the game look really nice, but also really slow
-        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        //g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         g.setColor(new Color(230, 230, 230));
         g.fillRect(0, 0, getWidth(), getHeight());
@@ -201,15 +199,9 @@ public class GameScreen extends Canvas implements Runnable {
         at.translate(displacement.x, displacement.y);
         g.setTransform(at);
 
-        for (int x = -GameConstants.N; x <= GameConstants.N; x++) {
-            for (int y = -GameConstants.N; y <= GameConstants.N; y++) {
-                for (int z = -GameConstants.N; z <= GameConstants.N; z++) {
-                    if (x + y + z == 0) {
-                        Location loc = new Location(x, y);
-                        drawCell(tissue.getCell(loc), createGraphics(g, loc.asCoordinates()));
-                    }
-                }
-            }
+        for(Cell cell: tissue.flatCells()) {
+            Location loc = cell.location;
+            drawCell(tissue.getCell(loc), createGraphics(g, loc.asCoordinates()));
         }
 
         for (Channel c : tissue.getChannels()) {

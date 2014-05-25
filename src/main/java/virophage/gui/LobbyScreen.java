@@ -1,22 +1,14 @@
 package virophage.gui;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.Iterator;
 import java.util.Vector;
 
-import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
+import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -44,15 +36,7 @@ public class LobbyScreen extends JPanel implements ActionListener, ListSelection
     private GameClient w;
     private boolean isNetworkedGame;
 
-    public static final Color[] colors = new Color[] {
-    	Color.RED,
-    	Color.GREEN,
-    	Color.BLUE,
-    	Color.YELLOW,
-    	Color.PINK,
-    	Color.MAGENTA,
-    	Color.ORANGE,
-    };
+    private Player youPlayer;
 
     /**
      * Constructs a screen in which the user can add or remove players.
@@ -63,6 +47,10 @@ public class LobbyScreen extends JPanel implements ActionListener, ListSelection
         w = g;
         isNetworkedGame = false;
         this.setLayout(null);
+
+        youPlayer = new Player(GameConstants.PLAYER_COLORS[0].darker(), null);
+        youPlayer.setName("You");
+        players.add(youPlayer);
 
         buttonBack = new JButton("Back");
         Font f = new Font("Verdana", Font.ITALIC | Font.BOLD, 16);
@@ -100,6 +88,7 @@ public class LobbyScreen extends JPanel implements ActionListener, ListSelection
         list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         list.setLayoutOrientation(JList.VERTICAL_WRAP);
         list.setVisibleRowCount(-1);
+        list.setCellRenderer(new CellRenderer());
         add(list);
     }
 
@@ -139,20 +128,18 @@ public class LobbyScreen extends JPanel implements ActionListener, ListSelection
 
 
         if (x == buttonBack) {
+            players.removeAllElements();
+            players.add(youPlayer);
+            list.setListData(players);
             w.changePanel("menuScreen");
         } else if (x == buttonContinue) {
-            // multiplayer game starts
-            Start.log.info("Multiplayer Game will start now!");
-            if (isNetworkedGame) {
-
-            } else {
-                w.changePanel("renderTree");
-                w.gameStart(Arrays.asList(players.toArray(new Player[players.size()])));
-            }
+            w.changePanel("renderTree");
+            w.gameStart(Arrays.asList(players.toArray(new Player[players.size()])));
         } else if (x == b2) {
-            if (players.size() >= GameConstants.TOTAL_NUM_PLAYERS) {
+            if (players.size() >= GameConstants.MAX_PLAYERS) {
                 return;
             }
+            b3.setEnabled(true);
             String name = playerName.getText();
 
             //User didn't type in a unique name...
@@ -169,9 +156,23 @@ public class LobbyScreen extends JPanel implements ActionListener, ListSelection
                 index++;
             }
 
-            Player another = new AIPlayer(new Color(200 + index * 50, 250 - index * 50, 200), null);
+            ArrayList<Color> colorList = new ArrayList<Color>(Arrays.asList(GameConstants.PLAYER_COLORS));
+            playerFor: for(Player p: players) {
+                Color pColor = p.getColor();
+                Iterator<Color> colorIterator = colorList.iterator();
+                while(colorIterator.hasNext()) {
+                    Color c = colorIterator.next().darker();
+                    if(c.equals(pColor)) {
+                        colorIterator.remove();
+                        continue playerFor;
+                    }
+                }
+            }
+
+            Player another = new AIPlayer(colorList.get(0).darker(), null);
             another.setName(name);
             players.add(index, another);
+            list.setListData(players);
             //If we just wanted to add to the end, we'd do this:
             //listModel.addElement(employeeName.getText());
 
@@ -198,6 +199,7 @@ public class LobbyScreen extends JPanel implements ActionListener, ListSelection
                 return;
             }
             players.remove(index);
+            list.setListData(players);
 
             int size = players.size();
 
@@ -214,6 +216,7 @@ public class LobbyScreen extends JPanel implements ActionListener, ListSelection
 
                 list.setSelectedIndex(index);
                 list.ensureIndexIsVisible(index);
+
             }
         } else if (x == c1) {
             if (c1.isSelected()) {
@@ -230,6 +233,38 @@ public class LobbyScreen extends JPanel implements ActionListener, ListSelection
     @Override
     public void valueChanged(ListSelectionEvent arg0) {
         // TODO Auto-generated method stub
+
+    }
+
+    private class CellRenderer extends JLabel implements ListCellRenderer<Player> {
+
+        private CellRenderer() {
+            setOpaque(true);
+        }
+
+        public Dimension getPreferredSize() {
+            return new Dimension(list.getWidth(), 24);
+        }
+
+        @Override
+        public Component getListCellRendererComponent(JList<? extends Player> list, Player value, int index, boolean isSelected, boolean cellHasFocus) {
+
+            setSize(getHeight(), list.getWidth());
+
+            if (isSelected) {
+                setBackground(list.getSelectionBackground());
+            } else {
+                setBackground(list.getBackground());
+            }
+
+            //Set the icon and text.  If icon was null, say so.
+            Player player = players.get(index);
+            String name = player.getName();
+            setForeground(player.getColor());
+            setText(name);
+
+            return this;
+        }
 
     }
 

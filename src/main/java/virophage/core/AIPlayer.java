@@ -32,7 +32,8 @@ public class AIPlayer extends Player {
         @Override
         public void run() {
             for (Virus v : getViruses()) {
-                try {                    Tissue tissue = getTissue();
+                try {
+                    Tissue tissue = getTissue();
                     if (v.getCell() == null) {
                         continue;
                     }
@@ -41,8 +42,8 @@ public class AIPlayer extends Player {
                         Cell cellTo = tissue.getCell(to);
                         if (cellTo != null && !(cellTo instanceof DeadCell) &&
                                 !hasChannelBetween(from, to) && !hasChannelBetween(to, from) &&
-                                v.getEnergy() > 4
-                                && Math.random() < 0.01) {
+                                v.getEnergy() >= 4
+                                && Math.random() < 0.1) {
                         /*if (cellTo != null && !(cellTo instanceof DeadCell) &&
                                 !hasChannelBetween(from, to) && !hasChannelBetween(to, from)) {*/
                             Channel c = new Channel(tissue, from, to, AIPlayer.this);

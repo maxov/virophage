@@ -60,7 +60,7 @@ public class Player implements Serializable {
      */
     public void addVirus(Virus v) {
         viruses.add(v);
-        Player[] players = tissue.getPlayers();
+        //Player[] players = tissue.getPlayers();
         // TODO move game end logic to Game class
         /*
         if (tissue.getTree().getGameClient().isGameStarted()) {
@@ -131,9 +131,10 @@ public class Player implements Serializable {
         while (vs.hasNext()) {
             Virus q = vs.next();
             // TODO move game end logic to Game class
-            /*
+
             if (q.equals(v)) {
                 vs.remove();
+                /*
                 if (tissue.getTree().getGameClient().isGameStarted()) {
                 	Player[] players = tissue.getPlayers();
 			        if (getViruses().size() == 0){
@@ -163,8 +164,8 @@ public class Player implements Serializable {
 			        		}
 			        	}
 			        }          	
-                }
-            }*/
+                }*/
+            }
         }
         
     }
