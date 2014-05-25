@@ -169,10 +169,18 @@ public class GameClient extends JFrame {
 	        }
         }
 //        Start.log.info("f of Cells: " + count);
-
+        //set bonus cells
+        Location loc = new Location(0, 0);
+        if (t.getCell(loc) != null){
+        	ArrayList<Location> centerLocs = loc.getNeighbors();
+        	for (Location l : centerLocs){
+        		t.setCell(l, new BonusCell(t, l));
+        	}
+            t.setCell(loc, new BonusCell(t, loc));
+        }
+        
         //place dead cells in the renderTree
         int dead = 0;
-        Location loc;
         while (dead < GameConstants.DEAD_CELL_NUM) {
             Random rand = new Random();
             int xPos = rand.nextInt(GameConstants.N * 2 + 1) - GameConstants.N;
@@ -188,16 +196,7 @@ public class GameClient extends JFrame {
 
         count -= GameConstants.DEAD_CELL_NUM;
         
-        //set bonus cells
-        loc = new Location(0, 0);
-        if (t.getCell(loc) != null){
-        	ArrayList<Location> centerLocs = loc.getNeighbors();
-        	for (Location l : centerLocs){
-        		t.setCell(l, new BonusCell(t, l));
-        	}
-            t.setCell(loc, new BonusCell(t, loc));
-            dead++;
-        }
+        
         
         (new Thread(gameScreen)).start();
         game.setGameStarted(true);
