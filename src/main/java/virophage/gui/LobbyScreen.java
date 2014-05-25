@@ -81,7 +81,7 @@ public class LobbyScreen extends JPanel implements ActionListener, ListSelection
         c1.addActionListener(this);
         add(c1);
 
-        playerName = new JTextField("Player1", 20);
+        playerName = new JTextField("Player" + (int) (Math.random() * 500), 20);
         add(playerName);
 
         list = new JList<Player>(players);
@@ -232,7 +232,6 @@ public class LobbyScreen extends JPanel implements ActionListener, ListSelection
 
     @Override
     public void valueChanged(ListSelectionEvent arg0) {
-        // TODO Auto-generated method stub
 
     }
 

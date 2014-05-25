@@ -8,7 +8,7 @@ import java.awt.Graphics;
  * @author Leon
  *
  */
-public class LoseScreen extends TextScreen{
+public class LoseScreen extends TextScreen {
 
 	/**
 	 * Constructs a screen that inidicated to the user that he/she has won.
@@ -16,7 +16,6 @@ public class LoseScreen extends TextScreen{
 	 */
 	public LoseScreen(GameClient g) {
 		super(g);
-		// TODO Auto-generated constructor stub
 	}
 	
     /**

@@ -25,11 +25,11 @@ public class Player implements Serializable {
     /**
      * Constructs a player with a given name.
      *
-     * @param s
+     * @param name
      */
-    public Player(String s) {
+    public Player(String name) {
         color = Color.blue;
-        name = s;
+        this.name = name;
     }
 
     public String getName() {
@@ -52,6 +52,10 @@ public class Player implements Serializable {
 
     public Color getColor() {
         return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
     }
 
     /**
@@ -177,16 +181,6 @@ public class Player implements Serializable {
         
     }
 
-    public void removeVirusFromList(Virus v) {
-        Iterator<Virus> vs = viruses.iterator();
-        while (vs.hasNext()) {
-            Virus q = vs.next();
-            if (q.equals(v)) {
-                vs.remove();
-            }
-        }
-        
-    }
     /**
      * Detects if there is a channel owned by the player between two locations.
      *
@@ -214,9 +208,8 @@ public class Player implements Serializable {
     		Iterator<Channel> channels = this.getChannels().iterator();
             while (channels.hasNext()) {
                 Channel c = channels.next();             
-                    channels.remove();
-                    this.removeChannel(c);
-                    c.destroy();               
+                channels.remove();
+                c.destroy();
             }
     	}
     	
@@ -224,9 +217,8 @@ public class Player implements Serializable {
     		Iterator<Virus> viruses = this.getViruses().iterator();
             while (viruses.hasNext()) {
                 Virus v = viruses.next();             
-                    viruses.remove();
-                    this.removeVirusFromList(v);
-                    v.destroy();               
+                viruses.remove();
+                v.destroy();
             }
     	}
     }

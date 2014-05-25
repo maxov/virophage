@@ -16,7 +16,6 @@ public class WinScreen extends TextScreen{
 	 */
 	public WinScreen(GameClient g) {
 		super(g);
-		// TODO Auto-generated constructor stub
 	}
 	
     /**

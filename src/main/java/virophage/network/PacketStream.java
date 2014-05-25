@@ -11,7 +11,6 @@ import java.util.List;
 
 /**
  * Represents a continuous stream of Packet objects, abstracting away the Network client and server.
- * This object does not block, see {@link virophage.TestClientServer} for an example.
  *
  * @author Max Ovsiankin
  * @since 2014-05-16
@@ -24,7 +23,7 @@ public class PacketStream {
 
     private List<Object> write = Collections.synchronizedList(new ArrayList<Object>());
 
-    private ArrayList<EventListener> listeners = new ArrayList<EventListener>();
+    private ArrayList<PacketStreamListener> listeners = new ArrayList<PacketStreamListener>();
 
     /**
      * Create a duplex PacketStream from a socket.
@@ -51,7 +50,7 @@ public class PacketStream {
      *
      * @param listener an object for listening.
      */
-    public void addListener(EventListener listener) {
+    public void addListener(PacketStreamListener listener) {
         listeners.add(listener);
     }
 
@@ -76,7 +75,7 @@ public class PacketStream {
                 try {
                     data = (Serializable) in.readObject();
                     System.out.println("read: " + data);
-                    for (EventListener listener : listeners) {
+                    for (PacketStreamListener listener : listeners) {
                         listener.onEvent(data);
                     }
                 } catch (IOException e) {
@@ -130,6 +129,9 @@ public class PacketStream {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            }
+            for(PacketStreamListener listener: listeners) {
+                listener.onDisconnect(socket);
             }
             try {
                 out.close();

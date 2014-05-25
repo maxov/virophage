@@ -69,6 +69,11 @@ public class Virus implements Serializable {
     	return timeToUpdate;
     }
 
+    public void reschedule(int time) {
+        task.cancel();
+        GameScreen.timer.schedule(task, time, time);
+    }
+
     /**
      * Cancels this task.
      */

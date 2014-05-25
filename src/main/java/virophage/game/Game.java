@@ -10,7 +10,6 @@ import virophage.core.Player;
 import virophage.core.Tissue;
 import virophage.core.Virus;
 import virophage.gui.GameClient;
-import virophage.util.Listening;
 
 /**
  * Represents an active game that is going on.
@@ -24,6 +23,7 @@ public class Game {
     private boolean gameStarted = false;
     private GameClient client;
     private String loserName;
+    private Player activePlayer;
     private ArrayList<BonusCell> bonuses;
     
     /**
@@ -34,6 +34,7 @@ public class Game {
     public Game(Tissue tissue, GameClient c) {
         this.tissue = tissue;
         client = c;
+        this.activePlayer = null;
         bonuses = new ArrayList<BonusCell>();
     }
 
@@ -115,4 +116,13 @@ public class Game {
 	        }
         }
     }
+
+    public Player getActivePlayer() {
+        return activePlayer;
+    }
+
+    public void setActivePlayer(Player activePlayer) {
+        this.activePlayer = activePlayer;
+    }
+
 }
