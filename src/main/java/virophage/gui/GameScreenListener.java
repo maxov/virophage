@@ -42,10 +42,8 @@ class GameScreenListener implements KeyListener, MouseListener, MouseMotionListe
 
     private Cell getCellAround(MouseEvent e) {
         Vector p = new Vector(e.getPoint()).scale(1 / gameScreen.zoom).subtract(gameScreen.displacement);
-        for (Cell[] cells : tissue.cells) {
-            for (Cell cell : cells) {
-                if (cell != null && insideCell(cell, p)) return cell;
-            }
+        for (Cell cell: tissue.flatCells()) {
+            if (cell != null && insideCell(cell, p)) return cell;
         }
         return null;
     }
@@ -104,7 +102,7 @@ class GameScreenListener implements KeyListener, MouseListener, MouseMotionListe
     @Override
     public void mousePressed(MouseEvent e) {
         prevPos = new Vector(e.getPoint());
-        if (!e.isControlDown()) {
+        if (!e.isControlDown() && tissue != null) {
             Cell c = getCellAround(e);
             if (c != null && c.hasOccupant()) {
                 GameScreen.selection.setFrom(c);
@@ -117,7 +115,7 @@ class GameScreenListener implements KeyListener, MouseListener, MouseMotionListe
         if (e.isControlDown()) {
             Vector newPos = new Vector(e.getPoint());
             gameScreen.displacement = gameScreen.displacement.add(newPos.subtract(prevPos).scale(1 / gameScreen.zoom));
-            Start.log.info("DRAG " + gameScreen.displacement);
+            //Start.log.info("DRAG " + gameScreen.displacement);
             prevPos = newPos;
             gameScreen.repaint();
         }
@@ -159,7 +157,7 @@ class GameScreenListener implements KeyListener, MouseListener, MouseMotionListe
     }
 
     public void mouseReleased(MouseEvent e) {
-        if (GameScreen.selection.hasFrom()) {
+        if (GameScreen.selection.hasFrom() && tissue != null) {
             Cell to = getCellAround(e);
             Cell from = GameScreen.selection.getFrom();
             Player p = from.getOccupant().getPlayer();

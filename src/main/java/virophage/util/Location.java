@@ -47,7 +47,7 @@ public class Location {
     }
 
     /**
-     * Constructs a new Location at (x,y)
+     * Constructs a new Location at (x,y,z)
      *
      * @param x the xCoordinate
      * @param y the yCoordinate
@@ -78,7 +78,7 @@ public class Location {
     }
 
     public boolean equals(Location other) {
-        return (this.x == other.x && this.y == other.y);
+        return (this.x == other.x && this.y == other.y && this.z == other.z);
     }
 
     public int getX() {

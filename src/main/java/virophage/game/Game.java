@@ -1,8 +1,10 @@
 package virophage.game;
 
+import virophage.core.Channel;
 import virophage.core.AIPlayer;
 import virophage.core.Player;
 import virophage.core.Tissue;
+import virophage.core.Virus;
 import virophage.gui.GameClient;
 import virophage.util.Listening;
 
@@ -12,9 +14,8 @@ import virophage.util.Listening;
  * @author Max Ovsiankin, Leon Ren
  * @since 2014-05-16
  */
-public class Game extends Listening implements Runnable {
+public class Game {
 
-    private Scheduler scheduler;
     private Tissue tissue;
     private boolean gameStarted = false;
     private GameClient client;
@@ -28,34 +29,19 @@ public class Game extends Listening implements Runnable {
     public Game(Tissue tissue, GameClient c) {
         this.tissue = tissue;
         client = c;
-        scheduler = new Scheduler(0);
-    }
-
-    /**
-     * From Runnable.run, run this game in another thread.
-     */
-    @Override
-    public void run() {
-        while (isListening()) {
-            long t = System.nanoTime();
-            scheduler.tick();
-            int delta = (int) (System.nanoTime() - t / 1000000d);
-            if (delta < 10) {
-                try {
-                    Thread.sleep((long) (10 - delta));
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
-    public Scheduler getScheduler() {
-        return scheduler;
     }
 
     public Tissue getTissue() {
         return tissue;
+    }
+
+    private boolean canInfect(Channel c) {
+        Virus virus = tissue.getCell(c.from).getOccupant();
+        return virus != null && virus.getEnergy() > 2;
+    }
+
+    public void tick(int tick) {
+
     }
 
 
