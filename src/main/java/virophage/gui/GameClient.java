@@ -155,18 +155,24 @@ public class GameClient extends JFrame {
             }
         }
 //        Start.log.info("f of Cells: " + count);
+    
+        Game game = new Game(t, this);
+        gameScreen.setGame(game);   
         //set bonus cells
         Location loc = new Location(0, 0);
         if (t.getCell(loc) != null){
         	ArrayList<Location> centerLocs = loc.getNeighbors();
+        	BonusCell b = null;
         	for (Location l : centerLocs){
-        		t.setCell(l, new BonusCell(t, l));
+        		b = new BonusCell(t, l);
+        		t.setCell(l, b);
+        		game.addBonusCell(b);
         	}
-            t.setCell(loc, new BonusCell(t, loc));
+        	b = new BonusCell(t, loc);
+            t.setCell(loc, b);
+            game.addBonusCell(b);
         }
 
-        Game game = new Game(t, this);
-        gameScreen.setGame(game);
 
         //place dead cells in the renderTree
         int dead = 0;

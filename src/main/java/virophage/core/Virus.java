@@ -21,6 +21,7 @@ public class Virus implements Serializable {
     private Player player;
     private int energy;
     private Cell cell;
+    private int timeToUpdate;
 
     private TimerTask task = new TimerTask() {
         /**
@@ -47,13 +48,25 @@ public class Virus implements Serializable {
     public Virus(Player player, int energy) {
         this.player = player;
         this.energy = energy;
+        this.timeToUpdate = 10000;
     }
 
     /**
      * Schedules this task.
      */
     public void schedule() {
-        GameScreen.timer.schedule(task, 10000, 10000);
+        GameScreen.timer.schedule(task, timeToUpdate, timeToUpdate);
+    }
+    
+    public void reschedule() {
+    	GameScreen.timer.schedule(task, timeToUpdate, timeToUpdate);
+    }
+    public void setTimeToUpdate(int t){
+    	timeToUpdate = t;
+    }
+    
+    public int getUpdateTime(){
+    	return timeToUpdate;
     }
 
     /**

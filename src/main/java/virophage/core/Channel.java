@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.TimerTask;
 
+import virophage.Start;
 import virophage.gui.GameScreen;
 import virophage.util.GameConstants;
 import virophage.util.Location;
@@ -72,6 +73,39 @@ public class Channel implements Serializable {
 
                     }
                 } else {
+                	if(t instanceof BonusCell){
+                		((BonusCell)t).setPlayer(v.getPlayer());
+                		//tissue.getTree().getGame().removeBonusCell((BonusCell)t);
+                		Player p = null;
+                	    int numPlayers = 0;
+                	    for (BonusCell c : tissue.getTree().getGame().getBonuses()){
+                	    	if(p == null && c.getPlayer() != null){
+                	    		p = c.getPlayer();
+                	    		numPlayers ++;
+                	    	}
+                	    	else if (c.getPlayer() != null){
+                	    		if (p != c.getPlayer()){
+                	    			break;
+                	    		}
+                	    		else{
+                	    			numPlayers ++;
+                	    		}
+                	    	}
+                	    }
+                	    if (numPlayers == 7){
+                	    	Start.log.info("ALL BONUSES TAKEN");
+                	    	for (Virus vx : p.getViruses()){
+                	    		if (vx.getUpdateTime() == 5000){
+                	    			continue;
+                	    		}
+                	    		// half the time to update
+                	    		vx.setTimeToUpdate(5000);
+                	    		vx.destroy();
+                	    		vx.schedule();
+                	    	}
+                	    }
+                	}
+                	
                     t.occupant = new Virus(v.getPlayer(), 0);
                     t.occupant.setCell(t);
                     v.getPlayer().addVirus(t.occupant);

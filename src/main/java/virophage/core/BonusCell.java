@@ -19,8 +19,19 @@ public class BonusCell extends Cell implements Serializable {
      * @param tissue the gameboard that will contain this cell.
      * @param loc    the location of the BonusCell
      */
+	
+	private Player occupant;
+	
     public BonusCell(Tissue tissue, Location loc) {
         super(tissue, loc, null);
+    }
+    
+    public void setPlayer(Player p){
+    	occupant = p;
+    }
+    
+    public Player getPlayer(){
+    	return occupant;
     }
 
 }

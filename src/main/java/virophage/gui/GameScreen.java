@@ -128,7 +128,13 @@ public class GameScreen extends Canvas implements Runnable {
             } else if (selection.isPossible(cell)) {
                 light = Color.LIGHT_GRAY;
             }
-            g.setColor(light);
+            if (cell instanceof BonusCell){
+            	g.setColor(Color.YELLOW);
+            }
+            else{
+            	g.setColor(light);
+            }
+            
             g.fillPolygon(hexagon);
             g.setColor(dark);
             double circleRadius = (occupant.getEnergy() / (double) GameConstants.MAX_ENERGY) *
@@ -143,8 +149,8 @@ public class GameScreen extends Canvas implements Runnable {
                 g.setColor(Color.BLACK);
             }
             else if (cell instanceof BonusCell){
-            	g.setColor(Color.RED);
-            	g.setStroke(new BasicStroke(3));
+            	g.setColor(Color.YELLOW);
+            	g.setStroke(new BasicStroke(13));
             	g.drawPolygon(hexagon);
             	return;
             }
