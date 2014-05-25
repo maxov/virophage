@@ -3,6 +3,7 @@ package virophage.gui;
 import virophage.Start;
 import virophage.core.*;
 import virophage.game.Game;
+import virophage.game.ServerGame;
 import virophage.util.GameConstants;
 
 import javax.swing.*;
@@ -21,9 +22,9 @@ public class GameClient extends JFrame {
     
     private JPanel cardPanel;
     private CardLayout cardLayout;
-    
+
+    private LobbyScreen lobbyScreen;
     GameScreen gameScreen;
-    private Player players[];
     private Game game;
     
     /**
@@ -47,7 +48,7 @@ public class GameClient extends JFrame {
         MenuScreen menuScreen = new MenuScreen(this);
         InstructionScreen instructionPanel = new InstructionScreen(this);
         CreditsScreen creditsPanel = new CreditsScreen(this);
-        LobbyScreen multiPlayerPanel = new LobbyScreen(this);
+        lobbyScreen = new LobbyScreen(this);
         WinScreen winPanel = new WinScreen(this);
         LoseScreen losePanel = new LoseScreen(this);
 
@@ -55,22 +56,13 @@ public class GameClient extends JFrame {
         cardPanel.add(gameScreen, "renderTree");
         cardPanel.add(instructionPanel, "instructionScreen");
         cardPanel.add(creditsPanel, "creditsScreen");
-        cardPanel.add(multiPlayerPanel, "multiplayerScreen");
+        cardPanel.add(lobbyScreen, "lobbyScreen");
         cardPanel.add(winPanel, "winScreen");
         cardPanel.add(losePanel, "loseScreen");
 
         add(cardPanel);
 
         setVisible(true);
-        players = new Player[GameConstants.MAX_PLAYERS + 1];
-    }
-
-    public void setPlayer(int i, Player p) {
-        players[i] = p;
-    }
-
-    public Player getPlayer(int i) {
-        return players[i];
     }
 
     public GameScreen getGameScreen() {

@@ -23,6 +23,10 @@ public class AIPlayer extends Player {
     public AIPlayer(Color color, Tissue tissue) {
         super(color, tissue);
     }
+
+    public AIPlayer(String name) {
+        super(name);
+    }
     
     public void schedule() {
     	GameScreen.timer.schedule(task, 100, 300);
