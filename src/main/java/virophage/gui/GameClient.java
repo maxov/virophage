@@ -156,7 +156,7 @@ public class GameClient extends JFrame {
         }
 //        Start.log.info("f of Cells: " + count);
     
-        Game game = new Game(t, this);
+        game = new Game(t, this);
         gameScreen.setGame(game);   
         //set bonus cells
         Location loc = new Location(0, 0);

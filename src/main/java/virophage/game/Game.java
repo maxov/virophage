@@ -91,7 +91,7 @@ public class Game {
         
         if (isGameStarted()) {
 	        for (Player p: players){
-	        	if (p instanceof AIPlayer){
+	        	//if (p instanceof AIPlayer){
 	        		if (p.getViruses().size() == 0){
 	        			loserName = p.getName();
 	        			client.changePanel("loseScreen");
@@ -113,7 +113,7 @@ public class Game {
 	        			}
 	        		}*/
 	        	}
-	        }
+	        //}
         }
     }
 
