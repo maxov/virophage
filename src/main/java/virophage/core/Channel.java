@@ -100,8 +100,7 @@ public class Channel implements Serializable {
                 	    		}
                 	    		// half the time to update
                 	    		vx.setTimeToUpdate(5000);
-                	    		vx.destroy();
-                	    		vx.schedule();
+                	    		vx.reschedule();
                 	    	}
                 	    }
                 	}

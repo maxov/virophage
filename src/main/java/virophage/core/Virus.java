@@ -23,17 +23,21 @@ public class Virus implements Serializable {
     private Cell cell;
     private int timeToUpdate;
 
-    private TimerTask task = new TimerTask() {
-        /**
-         * Spawns new cells.
-         */
-        @Override
-        public void run() {
-            if (getEnergy() < GameConstants.MAX_ENERGY) {
-                setEnergy(getEnergy() + 1);
+    private TimerTask task = recreateTask();
+
+    private TimerTask recreateTask() {
+        return new TimerTask() {
+            /**
+             * Spawns new cells.
+             */
+            @Override
+            public void run() {
+                if (getEnergy() < GameConstants.MAX_ENERGY) {
+                    setEnergy(getEnergy() + 1);
+                }
             }
-        }
-    };
+        };
+    }
 
     public void setEnergy(int energy) {
         this.energy = energy;
@@ -59,6 +63,8 @@ public class Virus implements Serializable {
     }
     
     public void reschedule() {
+        task.cancel();
+        task = recreateTask();
     	GameScreen.timer.schedule(task, timeToUpdate, timeToUpdate);
     }
     public void setTimeToUpdate(int t){
@@ -67,11 +73,6 @@ public class Virus implements Serializable {
     
     public int getUpdateTime(){
     	return timeToUpdate;
-    }
-
-    public void reschedule(int time) {
-        task.cancel();
-        GameScreen.timer.schedule(task, time, time);
     }
 
     /**
