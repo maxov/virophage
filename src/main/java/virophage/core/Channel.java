@@ -78,7 +78,7 @@ public class Channel implements Serializable {
                 		//tissue.getTree().getGame().removeBonusCell((BonusCell)t);
                 		Player p = null;
                 	    int numPlayers = 0;
-                	    for (BonusCell c : tissue.getTree().getGame().getBonuses()){
+                	    for (BonusCell c : tissue.getBonuses()){
                 	    	if(p == null && c.getPlayer() != null){
                 	    		p = c.getPlayer();
                 	    		numPlayers ++;

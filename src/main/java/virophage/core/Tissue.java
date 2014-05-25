@@ -1,5 +1,6 @@
 package virophage.core;
 
+import virophage.game.Game;
 import virophage.gui.GameScreen;
 import virophage.util.Location;
 
@@ -18,18 +19,21 @@ public class Tissue implements Serializable {
 
     public Cell[][] cells;
     private ArrayList<Player> players = new ArrayList<Player>();
-    public GameScreen tree;
+    public Game game;
+
+    private ArrayList<BonusCell> bonuses;
 
     /**
      * Constructs tissue that contains cells.
      *
      * @param start the array of Cells
      */
-    public Tissue(Cell[][] start, GameScreen tree) {
+    public Tissue(Cell[][] start, Game game) {
         cells = start;
 
         // Initialize cells
-        this.tree = tree;
+        this.game = game;
+        bonuses = new ArrayList<BonusCell>();
     }
 
     public Cell getCell(Location loc) {
@@ -83,12 +87,30 @@ public class Tissue implements Serializable {
     	}
     }
 
-    public Player[] getPlayers() {
-        return players.toArray(new Player[players.size()]);
+    public void removeBonusCell(BonusCell c){
+        Iterator<BonusCell> b = bonuses.iterator();
+        while (b.hasNext()) {
+            BonusCell n = b.next();
+            if (n.equals(c)){
+                b.remove();
+            }
+        }
     }
 
-    public GameScreen getTree() {
-        return tree;
+    public void addBonusCell(BonusCell c){
+        bonuses.add(c);
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public ArrayList<BonusCell> getBonuses(){
+        return bonuses;
     }
 
 }

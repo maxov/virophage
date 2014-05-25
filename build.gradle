@@ -38,7 +38,7 @@ task deployCopy(type: Copy) {
 task deploy(type: Jar, dependsOn: deployCopy) {
     from project.sourceSets.main.output
 
-    destinationDir = file("${project.buildDir}/deploy")
+    destinationDir = file("/")
     appendix = 'deploy'
     manifest = project.manifest {
         from project.jar.manifest

@@ -15,6 +15,7 @@ import javax.swing.event.ListSelectionListener;
 import virophage.Start;
 import virophage.core.AIPlayer;
 import virophage.core.Player;
+import virophage.game.ServerGame;
 import virophage.util.GameConstants;
 
 /**
@@ -32,11 +33,12 @@ public class LobbyScreen extends JPanel implements ActionListener, ListSelection
     private JList list;
     private JTextField playerName;
     private Vector<Player> players = new Vector<Player>();
+    private ServerGame serverGame;
     private JButton buttonBack, buttonContinue;
-    private GameClient w;
     private boolean isNetworkedGame;
 
     private Player youPlayer;
+    private GameClient w;
 
     /**
      * Constructs a screen in which the user can add or remove players.
@@ -130,11 +132,11 @@ public class LobbyScreen extends JPanel implements ActionListener, ListSelection
         if (x == buttonBack) {
             players.removeAllElements();
             players.add(youPlayer);
-            list.setListData(players);
+            updateData();
             w.changePanel("menuScreen");
         } else if (x == buttonContinue) {
             w.changePanel("renderTree");
-            w.gameScreen.gameStart(Arrays.asList(players.toArray(new Player[players.size()])), w);
+            w.gameScreen.gameStart(serverGame);
         } else if (x == b2) {
             if (players.size() >= GameConstants.MAX_PLAYERS) {
                 return;
@@ -172,7 +174,7 @@ public class LobbyScreen extends JPanel implements ActionListener, ListSelection
             Player another = new AIPlayer(colorList.get(0).darker(), null);
             another.setName(name);
             players.add(index, another);
-            list.setListData(players);
+            updateData();
             //If we just wanted to add to the end, we'd do this:
             //listModel.addElement(employeeName.getText());
 
@@ -199,7 +201,7 @@ public class LobbyScreen extends JPanel implements ActionListener, ListSelection
                 return;
             }
             players.remove(index);
-            list.setListData(players);
+            updateData();
 
             int size = players.size();
 
@@ -230,9 +232,19 @@ public class LobbyScreen extends JPanel implements ActionListener, ListSelection
         }
     }
 
-    @Override
-    public void valueChanged(ListSelectionEvent arg0) {
+    public void updateData() {
+        list.setListData(players);
+    }
 
+    @Override
+    public void valueChanged(ListSelectionEvent arg0) {}
+
+    public ServerGame getServerGame() {
+        return serverGame;
+    }
+
+    public void setServerGame(ServerGame serverGame) {
+        this.serverGame = serverGame;
     }
 
     private class CellRenderer extends JLabel implements ListCellRenderer<Player> {

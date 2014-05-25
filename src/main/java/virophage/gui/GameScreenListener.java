@@ -35,7 +35,7 @@ class GameScreenListener implements KeyListener, MouseListener, MouseMotionListe
         tissue = null;
         zoomFactor = 1;
     }
-    
+
     public void setTissue(Tissue tissue) {
     	this.tissue = tissue;
     }

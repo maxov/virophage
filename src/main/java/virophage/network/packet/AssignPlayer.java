@@ -1,5 +1,7 @@
 package virophage.network.packet;
 
+import virophage.core.Player;
+
 /**
  * A packet which is supposed to assign a player to the game on join.
  *
@@ -8,5 +10,18 @@ package virophage.network.packet;
  */
 public class AssignPlayer implements Packet {
 
+    private Player player;
+
+    public AssignPlayer(Player player) {
+        this.player = player;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
 
 }

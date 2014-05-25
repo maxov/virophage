@@ -1,17 +1,13 @@
-package virophage.network;
+package virophage.game;
 
-import virophage.util.Listening;
+import virophage.core.Tissue;
+import virophage.gui.GameClient;
+import virophage.network.PacketStream;
 
 import java.io.IOException;
 import java.net.Socket;
 
-/**
- * Represents a client on the network.
- *
- * @author Max Ovsiankin
- * @since 2014-05-16
- */
-public class NetworkClient extends Listening {
+public class ClientGame extends Game {
 
     private int port;
     private String host;
@@ -19,9 +15,10 @@ public class NetworkClient extends Listening {
 
     public PacketStream stream;
 
-    public NetworkClient(String host, int port) {
-        this.port = port;
+    public ClientGame(Tissue tissue, String host, int port) {
+        super(tissue);
         this.host = host;
+        this.port = port;
     }
 
     /**

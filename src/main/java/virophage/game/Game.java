@@ -2,14 +2,12 @@ package virophage.game;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
-import virophage.core.BonusCell;
-import virophage.core.Channel;
-import virophage.core.AIPlayer;
-import virophage.core.Player;
-import virophage.core.Tissue;
-import virophage.core.Virus;
-import virophage.gui.GameClient;
+import virophage.core.*;
+import virophage.gui.GameScreen;
+import virophage.util.GameConstants;
+import virophage.util.Location;
 
 /**
  * Represents an active game that is going on.
@@ -22,25 +20,42 @@ public class Game {
     private Tissue tissue;
     private boolean gameStarted = false;
     private boolean gameEnded = false;
-    private GameClient client;
     private String loserName;
     private Player activePlayer;
-    private ArrayList<BonusCell> bonuses;
+
     
     /**
      * Construct this game given a tissue.
      *
      * @param tissue the tissue
      */
-    public Game(Tissue tissue, GameClient c) {
+    public Game(Tissue tissue) {
         this.tissue = tissue;
-        client = c;
         this.activePlayer = null;
-        bonuses = new ArrayList<BonusCell>();
+
+    }
+
+    public Game() {
+        this(null);
     }
 
     public Tissue getTissue() {
         return tissue;
+    }
+
+    public void constructTissue() {
+        Cell[][] cells = new Cell[2 * GameConstants.N + 1][2 * GameConstants.N + 1];
+        Tissue t = new Tissue(cells, this);
+        for (int i = -GameConstants.N; i <= GameConstants.N; i++) {
+            for (int j = -GameConstants.N; j <= GameConstants.N; j++) {
+                for (int k = -GameConstants.N; k <= GameConstants.N; k++) {
+                    if (i + j + k == 0) {
+                        Location loc = new Location(i, j);
+                        t.setCell(loc, new Cell(t, loc));
+                    }
+                }
+            }
+        }
     }
 
     private boolean canInfect(Channel c) {
@@ -65,30 +80,8 @@ public class Game {
     	return loserName;
     }
     
-    public void addBonusCell(BonusCell c){
-    	bonuses.add(c);
-    }
-    
-    public void removeBonusCell(BonusCell c){
-    	Iterator<BonusCell> b = bonuses.iterator();
-        while (b.hasNext()) {
-            BonusCell n = b.next();
-            if (n.equals(c)){
-                b.remove();
-            }
-        }
-    }
-    
-    public int getBonusCount(){
-    	return bonuses.size();
-    }
-    
-    public ArrayList<BonusCell> getBonuses(){
-    	return bonuses;
-    }
-    
     public void checkGame() {
-    	Player[] players = tissue.getPlayers();
+    	List<Player> players = tissue.getPlayers();
         
         if (isGameStarted()) {
 	        for (Player p: players){
@@ -96,19 +89,19 @@ public class Game {
                     loserName = p.getName();
                     gameEnded = true;
                     // END THE GAME
-                    //tissue.getTree().getGameClient().gameStop();
+                    //tissue.getTree().getGameScreen().gameStop();
                 }
                 /*
-                else if(getViruses().size() + p.getViruses().size() == tissue.getTree().getGameClient().getNumberCellsCount()){
+                else if(getViruses().size() + p.getViruses().size() == tissue.getTree().getGameScreen().getNumberCellsCount()){
                     if (getViruses().size() > p.getViruses().size()){
-                        tissue.getTree().getGameClient().changePanel("winScreen");
+                        tissue.getTree().getGameScreen().changePanel("winScreen");
                         // END THE GAME
-                        //tissue.getTree().getGameClient().gameStop();
+                        //tissue.getTree().getGameScreen().gameStop();
                     }
                     else{
-                        tissue.getTree().getGameClient().changePanel("loseScreen");
+                        tissue.getTree().getGameScreen().changePanel("loseScreen");
                         // END THE GAME
-                        //tissue.getTree().getGameClient().gameStop();
+                        //tissue.getTree().getGameScreen().gameStop();
 
                     }
                 }*/
