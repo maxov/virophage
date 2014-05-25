@@ -134,7 +134,7 @@ public class LobbyScreen extends JPanel implements ActionListener, ListSelection
             w.changePanel("menuScreen");
         } else if (x == buttonContinue) {
             w.changePanel("renderTree");
-            w.gameStart(Arrays.asList(players.toArray(new Player[players.size()])));
+            w.gameScreen.gameStart(Arrays.asList(players.toArray(new Player[players.size()])), w);
         } else if (x == b2) {
             if (players.size() >= GameConstants.MAX_PLAYERS) {
                 return;

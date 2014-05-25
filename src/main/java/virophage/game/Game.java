@@ -21,6 +21,7 @@ public class Game {
 
     private Tissue tissue;
     private boolean gameStarted = false;
+    private boolean gameEnded = false;
     private GameClient client;
     private String loserName;
     private Player activePlayer;
@@ -91,28 +92,26 @@ public class Game {
         
         if (isGameStarted()) {
 	        for (Player p: players){
-	        	if (p instanceof AIPlayer){
-	        		if (p.getViruses().size() == 0){
-	        			loserName = p.getName();
-	        			client.changePanel("loseScreen");
-	        			// END THE GAME
-	        			//tissue.getTree().getGameClient().gameStop();
-	        		}
-	        		/*
-	        		else if(getViruses().size() + p.getViruses().size() == tissue.getTree().getGameClient().getNumberCellsCount()){
-	        			if (getViruses().size() > p.getViruses().size()){
-	        				tissue.getTree().getGameClient().changePanel("winScreen");
-	            			// END THE GAME
-	        				//tissue.getTree().getGameClient().gameStop();
-	        			}
-	        			else{
-	        				tissue.getTree().getGameClient().changePanel("loseScreen");
-	            			// END THE GAME
-	        				//tissue.getTree().getGameClient().gameStop();
-	
-	        			}
-	        		}*/
-	        	}
+                if (p.getViruses().size() == 0){
+                    loserName = p.getName();
+                    gameEnded = true;
+                    // END THE GAME
+                    //tissue.getTree().getGameClient().gameStop();
+                }
+                /*
+                else if(getViruses().size() + p.getViruses().size() == tissue.getTree().getGameClient().getNumberCellsCount()){
+                    if (getViruses().size() > p.getViruses().size()){
+                        tissue.getTree().getGameClient().changePanel("winScreen");
+                        // END THE GAME
+                        //tissue.getTree().getGameClient().gameStop();
+                    }
+                    else{
+                        tissue.getTree().getGameClient().changePanel("loseScreen");
+                        // END THE GAME
+                        //tissue.getTree().getGameClient().gameStop();
+
+                    }
+                }*/
 	        }
         }
     }
@@ -125,4 +124,7 @@ public class Game {
         this.activePlayer = activePlayer;
     }
 
+    public boolean isGameEnded() {
+        return gameEnded;
+    }
 }

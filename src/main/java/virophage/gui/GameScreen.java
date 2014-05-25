@@ -1,5 +1,6 @@
 package virophage.gui;
 
+import virophage.Start;
 import virophage.core.*;
 import virophage.game.Game;
 import virophage.util.GameConstants;
@@ -7,7 +8,7 @@ import virophage.util.HexagonConstants;
 import virophage.util.Location;
 import virophage.util.Vector;
 
-import java.util.Timer;
+import java.util.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
@@ -72,7 +73,7 @@ public class GameScreen extends Canvas implements Runnable {
 
         // draw line with masking circle at end
         g.setColor(channel.player.getColor().darker().darker());
-        g.setStroke((new BasicStroke(10,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND)));
+        g.setStroke((new BasicStroke(10, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND)));
         g.drawLine((int) startpoint.x, (int) startpoint.y, (int) endpoint.x, (int) endpoint.y);
 
         // draw loop
@@ -234,8 +235,20 @@ public class GameScreen extends Canvas implements Runnable {
         int virusSize = p[1].getViruses().size();
         String vSize = virusSize + "";
         g.drawString("Red: #cells - " + virusSize + "", x - 128 - 15 * vSize.length(), y - 10);*/
-
-
+        g.setTransform(new AffineTransform());
+        if(game.isGameEnded()) {
+            g.setColor(new Color(50, 50, 50, 200));
+            g.fillRect(100, 100, x - 200, y - 200);
+            Font font = new Font("SansSerif", Font.BOLD, 96);
+            g.setFont(font);
+            g.setColor(Color.WHITE);
+            FontMetrics fm = g.getFontMetrics();
+            String s1 = "Victory!";
+            int sw = fm.stringWidth(s1) / 2;
+            int sh = fm.getHeight();
+            g.drawString(s1, x / 2 - sw, 100 + sh);
+            g.draw3DRect(x / 2 - 50, y / 2 - 25, 100, 50, true);
+        }
     }
 
     /**
@@ -243,7 +256,6 @@ public class GameScreen extends Canvas implements Runnable {
      */
     @Override
     public void run() {
-    	listener.setTissue(game.getTissue());
         this.createBufferStrategy(2);
         BufferStrategy strategy = this.getBufferStrategy();
         while (true) {
@@ -259,4 +271,112 @@ public class GameScreen extends Canvas implements Runnable {
         }
     }
 
+    /**
+     * Starts the game by placing the players and dead cells.
+     *
+     * @param players the list of players
+     * @param gameClient
+     */
+    public void gameStart(java.util.List<Player> players, GameClient gameClient) {
+        Start.log.info("Game Started!");
+
+        Cell[][] cells = new Cell[2 * GameConstants.N + 1][2 * GameConstants.N + 1];
+        Tissue t = new Tissue(cells, this);
+        for (int i = -GameConstants.N; i <= GameConstants.N; i++) {
+            for (int j = -GameConstants.N; j <= GameConstants.N; j++) {
+                for (int k = -GameConstants.N; k <= GameConstants.N; k++) {
+                    if (i + j + k == 0) {
+                        Location loc = new Location(i, j);
+                        t.setCell(loc, new Cell(t, loc));
+                    }
+                }
+            }
+        }
+
+        // initialize player locations
+        for(int i = 0; i < players.size(); i++) {
+            Player p = players.get(i);
+            p.setTissue(t);
+            t.addPlayer(p);
+            Location playerCenterLoc = null;
+            switch(i) {
+                case 0:
+                    playerCenterLoc = new Location(0, -GameConstants.PLAYER_DISTANCE);
+                    break;
+                case 1:
+                    playerCenterLoc = new Location(GameConstants.PLAYER_DISTANCE, -GameConstants.PLAYER_DISTANCE);
+                    break;
+                case 2:
+                    playerCenterLoc = new Location(GameConstants.PLAYER_DISTANCE, 0);
+                    break;
+                case 3:
+                    playerCenterLoc = new Location(0, GameConstants.PLAYER_DISTANCE);
+                    break;
+                case 4:
+                    playerCenterLoc = new Location(-GameConstants.PLAYER_DISTANCE, GameConstants.PLAYER_DISTANCE);
+                    break;
+                case 5:
+                    playerCenterLoc = new Location(-GameConstants.PLAYER_DISTANCE, 0);
+                    break;
+            }
+            for(int x = -1; x <= 1; x++) {
+                for(int y = -1; y <= 1; y++) {
+                    for(int z = -1; z <= 1; z++) {
+                        if(x + y + z == 0) {
+                            Virus v = new Virus(p, 4);
+                            p.addVirus(v);
+                            v.schedule();
+                            Cell c = t.getCell(new Location(playerCenterLoc.x + x, playerCenterLoc.y + y));
+                            c.setOccupant(v);
+                            v.setCell(c);
+                        }
+                    }
+                }
+            }
+        }
+//        Start.log.info("f of Cells: " + count);
+
+        Game game = new Game(t, gameClient);
+        setGame(game);
+        //set bonus cells
+        Location loc = new Location(0, 0);
+        if (t.getCell(loc) != null){
+        	ArrayList<Location> centerLocs = loc.getNeighbors();
+        	BonusCell b = null;
+        	for (Location l : centerLocs){
+        		b = new BonusCell(t, l);
+        		t.setCell(l, b);
+        		game.addBonusCell(b);
+        	}
+        	b = new BonusCell(t, loc);
+            t.setCell(loc, b);
+            game.addBonusCell(b);
+        }
+
+
+        //place dead cells in the renderTree
+        int dead = 0;
+        while (dead < GameConstants.DEAD_CELL_NUM) {
+            Random rand = new Random();
+            int xPos = rand.nextInt(GameConstants.N * 2 + 1) - GameConstants.N;
+            int yPos = rand.nextInt(GameConstants.N * 2 + 1) - GameConstants.N;
+
+            loc = new Location(xPos, yPos);
+            if (t.getCell(loc) != null &&
+                    t.getCell(loc).occupant == null && !(t.getCell(loc) instanceof BonusCell)) {
+                t.setCell(loc, new DeadCell(t, loc));
+                dead++;
+            }
+        }
+
+        for(Player p: players) {
+            if(p instanceof AIPlayer) {
+                ((AIPlayer) p).schedule();
+            }
+        }
+        listener.setTissue(t);
+
+        (new Thread(this)).start();
+        game.setGameStarted(true);
+    }
 }
