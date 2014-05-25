@@ -1,5 +1,6 @@
 package virophage.core;
 
+import virophage.Start;
 import virophage.util.Location;
 
 import java.awt.Color;
@@ -87,6 +88,8 @@ public class Player implements Serializable {
 	        	}
 	        }
         }*/
+        if (tissue != null && tissue.getTree() != null && tissue.getTree().getGame()!=null)
+        	tissue.getTree().getGame().checkGame();
     }
 
     /**
@@ -165,6 +168,10 @@ public class Player implements Serializable {
 			        	}
 			        }          	
                 }*/
+            }
+                Start.log.info("player "+name+" has " + viruses.size() + " viruses");
+                if (tissue != null && tissue.getTree() != null && tissue.getTree().getGame()!=null)
+                	tissue.getTree().getGame().checkGame();
             }
         }
         

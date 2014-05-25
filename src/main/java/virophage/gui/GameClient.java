@@ -9,6 +9,7 @@ import virophage.util.Location;
 import javax.swing.*;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -28,7 +29,8 @@ public class GameClient extends JFrame {
     
     private GameScreen gameScreen;
     private Player players[];
-    private boolean gameStarted = false;
+    private Game game;
+    
     /**
      * Constructs a GameClient.
      */
@@ -153,19 +155,20 @@ public class GameClient extends JFrame {
             }
         }
         
-        Game game = new Game(t);
+        Game game = new Game(t, this);
         gameScreen.setGame(game);
 
         //place dead cells in the renderTree
         int dead = 0;
+        
         while (dead < GameConstants.DEAD_CELL_NUM) {
             Random rand = new Random();
             int xPos = rand.nextInt(GameConstants.N * 2 + 1) - GameConstants.N;
             int yPos = rand.nextInt(GameConstants.N * 2 + 1) - GameConstants.N;
 
-            Location loc = new Location(xPos, yPos);
+            loc = new Location(xPos, yPos);
             if (t.getCell(loc) != null &&
-                    t.getCell(loc).occupant == null) {
+                    t.getCell(loc).occupant == null && !(t.getCell(loc) instanceof BonusCell)) {
                 t.setCell(loc, new DeadCell(t, loc));
                 dead++;
             }
@@ -178,17 +181,28 @@ public class GameClient extends JFrame {
         }
 
         count -= GameConstants.DEAD_CELL_NUM;
+        
+        //set bonus cells
+        Location loc = new Location(0, 0);
+        if (t.getCell(loc) != null){
+        	ArrayList<Location> centerLocs = loc.getNeighbors();
+        	for (Location l : centerLocs){
+        		t.setCell(l, new BonusCell(t, l));
+        	}
+            t.setCell(loc, new BonusCell(t, loc));
+            dead++;
+        }
+        
         (new Thread(gameScreen)).start();
-        gameStarted = true;
-    }
-    
-    
-    public boolean isGameStarted() {
-    	return gameStarted;
+        game.setGameStarted(true);
     }
     
     public int getNumberCellsCount (){
     	return count;
+    }
+    
+    public Game getGame() {
+    	return game;
     }
 
 }
