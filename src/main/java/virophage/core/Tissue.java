@@ -104,6 +104,10 @@ public class Tissue implements Serializable {
     public List<Player> getPlayers() {
         return players;
     }
+    
+    public Player[] getPlayerList(){
+    	return players.toArray(new Player[players.size()]);
+    }
 
     public Game getGame() {
         return game;

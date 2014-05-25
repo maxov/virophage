@@ -224,7 +224,7 @@ public class GameScreen extends Canvas implements Runnable {
         
         Font f = new Font("arial", Font.BOLD, 20);
         g.setFont(f);
-        Player[] p = tissue.getPlayers();
+        Player[] p = tissue.getPlayerList();
         g.setTransform(new AffineTransform());
         g.setColor(Color.GRAY);
         g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 9 * 0.1f));
