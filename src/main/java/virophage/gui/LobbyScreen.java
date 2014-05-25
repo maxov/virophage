@@ -81,7 +81,7 @@ public class LobbyScreen extends JPanel implements ActionListener, ListSelection
         c1.addActionListener(this);
         add(c1);
 
-        playerName = new JTextField("Player Name ", 20);
+        playerName = new JTextField("Player1", 20);
         add(playerName);
 
         list = new JList<Player>(players);
@@ -178,7 +178,7 @@ public class LobbyScreen extends JPanel implements ActionListener, ListSelection
 
             //Reset the text field.
             playerName.requestFocusInWindow();
-            playerName.setText("");
+            playerName.setText("Player" + (int) (Math.random() * 500));
 
             //Select the new item and make it visible.
             list.setSelectedIndex(index);
@@ -260,6 +260,11 @@ public class LobbyScreen extends JPanel implements ActionListener, ListSelection
             //Set the icon and text.  If icon was null, say so.
             Player player = players.get(index);
             String name = player.getName();
+            if(player instanceof AIPlayer) {
+                name += " (Machine)";
+            } else {
+                name += " (Human)";
+            }
             setForeground(player.getColor());
             setText(name);
 
