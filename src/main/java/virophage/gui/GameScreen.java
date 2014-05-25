@@ -220,21 +220,29 @@ public class GameScreen extends Canvas implements Runnable {
 
         int x = this.getWidth();
         int y = this.getHeight();
-
-        // TODO fix this
-        /*
+        
         Font f = new Font("arial", Font.BOLD, 20);
         g.setFont(f);
         Player[] p = tissue.getPlayers();
         g.setTransform(new AffineTransform());
         g.setColor(Color.GRAY);
+        g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 9 * 0.1f));
         g.fillRect(0, y - 40, x, y);
-        g.setColor(Color.GREEN);
-        g.drawString("Green: #cells - " + p[0].getViruses().size() + "", 10, y - 10);
-        g.setColor(Color.RED);
-        int virusSize = p[1].getViruses().size();
-        String vSize = virusSize + "";
-        g.drawString("Red: #cells - " + virusSize + "", x - 128 - 15 * vSize.length(), y - 10);*/
+        g.setColor(Color.LIGHT_GRAY);
+        g.drawString("NumPlayers: " + p.length, 10, y - 10);
+        f = new Font("arial", Font.PLAIN, 18);
+        g.setFont(f);
+        int spaceBetween = (x - 200)/(p.length);
+        int i = 0;
+        for (Player myPlayer: p){
+        	g.setColor(myPlayer.getColor().brighter().brighter());
+        	g.drawString(myPlayer.getName() + ": " + myPlayer.getViruses().size() + " cells", 280 + i * spaceBetween, y - 10);
+        	i ++;
+        }
+//        g.setColor(Color.RED);
+//        int virusSize = p[1].getViruses().size();
+//        String vSize = virusSize + "";
+//        g.drawString("Red: #cells - " + virusSize + "", x - 128 - 15 * vSize.length(), y - 10);
         g.setTransform(new AffineTransform());
         if(game.isGameEnded()) {
             g.setColor(new Color(50, 50, 50, 200));
