@@ -168,7 +168,7 @@ public class Player implements Serializable {
 			        	}
 			        }          	
                 }*/
-            }
+
                 Start.log.info("player "+name+" has " + viruses.size() + " viruses");
                 if (tissue != null && tissue.getTree() != null && tissue.getTree().getGame()!=null)
                 	tissue.getTree().getGame().checkGame();

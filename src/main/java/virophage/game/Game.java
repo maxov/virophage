@@ -29,7 +29,6 @@ public class Game {
     public Game(Tissue tissue, GameClient c) {
         this.tissue = tissue;
         client = c;
-        scheduler = new Scheduler(0);
     }
 
     public Tissue getTissue() {

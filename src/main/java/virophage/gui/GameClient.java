@@ -160,7 +160,7 @@ public class GameClient extends JFrame {
 
         //place dead cells in the renderTree
         int dead = 0;
-        
+        Location loc;
         while (dead < GameConstants.DEAD_CELL_NUM) {
             Random rand = new Random();
             int xPos = rand.nextInt(GameConstants.N * 2 + 1) - GameConstants.N;
@@ -183,7 +183,7 @@ public class GameClient extends JFrame {
         count -= GameConstants.DEAD_CELL_NUM;
         
         //set bonus cells
-        Location loc = new Location(0, 0);
+        loc = new Location(0, 0);
         if (t.getCell(loc) != null){
         	ArrayList<Location> centerLocs = loc.getNeighbors();
         	for (Location l : centerLocs){
