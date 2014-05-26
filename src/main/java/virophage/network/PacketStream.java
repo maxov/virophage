@@ -1,7 +1,5 @@
 package virophage.network;
 
-import virophage.Start;
-
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -15,13 +13,13 @@ import java.util.List;
  * @author Max Ovsiankin
  * @since 2014-05-16
  */
-public class PacketStream {
+public class PacketStream  implements Runnable {
 
     private Socket socket;
-    private PacketWriter packetWriter;
-    private PacketReader eventWriter;
+    private ObjectInputStream in = null;
+    private ObjectOutputStream out = null;
 
-    private List<Object> write = Collections.synchronizedList(new ArrayList<Object>());
+    private List<Object> write = new ArrayList<Object>();
 
     private ArrayList<PacketStreamListener> listeners = new ArrayList<PacketStreamListener>();
 
@@ -32,8 +30,6 @@ public class PacketStream {
      */
     public PacketStream(Socket socket) {
         this.socket = socket;
-        this.packetWriter = new PacketWriter();
-        this.eventWriter = new PacketReader();
     }
 
     /**
@@ -41,7 +37,7 @@ public class PacketStream {
      *
      * @param obj an object for writing.
      */
-    public void write(Object obj) {
+    public synchronized void write(Object obj) {
         write.add(obj);
     }
 
@@ -54,96 +50,86 @@ public class PacketStream {
         listeners.add(listener);
     }
 
-    private class PacketWriter implements Runnable {
+    public void start() {
+        new Thread(this).start();
+    }
 
-        private ObjectInputStream in;
-
-        private PacketWriter() {
-            new Thread(this).start();
-        }
-
-        @Override
-        public void run() {
-            try {
-                in = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
-            } catch (IOException e) {
-                Start.log.warning("Error on creating input stream to socket");
-                e.printStackTrace();
-            }
-            while (socket.isConnected()) {
-                Serializable data;
+    @Override
+    public void run() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
                 try {
-                    data = (Serializable) in.readObject();
+                    in = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    //disconnect();
+                }
+            }
+        }).start();
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+                    out = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    //disconnect();
+                }
+            }
+        }).start();
+        Object data = null;
+        try {
+            while(socket.isConnected()) {
+                try {
+                    if(in != null)
+                    data = in.readObject();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+                if(data != null) {
                     System.out.println("read: " + data);
                     for (PacketStreamListener listener : listeners) {
                         listener.onEvent(data);
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
                 }
-            }
-            try {
-                in.close();
-                if (!socket.isClosed()) {
-                    socket.close();
-                }
-            } catch (IOException e) {
-                Start.log.warning("Error on closing socket");
-                e.printStackTrace();
-            }
-        }
-
-    }
-
-    private class PacketReader implements Runnable {
-
-        private ObjectOutputStream out;
-
-        private PacketReader() {
-            new Thread(this).start();
-        }
-
-        @Override
-        public void run() {
-            try {
-                out = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
-            } catch (IOException e) {
-                Start.log.warning("Error on creating output stream to socket");
-                e.printStackTrace();
-            }
-            while (socket.isConnected()) {
-                try {
+                synchronized(this) {
                     Iterator<Object> it = write.iterator();
                     while (it.hasNext()) {
                         Object obj = it.next();
                         if (obj != null) {
                             System.out.println("wrote: " + obj);
-                            out.writeObject(obj);
+                            if(out != null)
+                                out.writeObject(obj);
                         }
                         it.remove();
                     }
+                }
+                if(out != null) {
                     out.flush();
                     out.reset();
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
-            }
-            for(PacketStreamListener listener: listeners) {
-                listener.onDisconnect(socket);
-            }
-            try {
-                out.close();
-                if (!socket.isClosed()) {
-                    socket.close();
-                }
-            } catch (IOException e) {
-                Start.log.warning("Error on closing socket");
-                e.printStackTrace();
-            }
-        }
 
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            disconnect();
+        }
+    }
+
+    private void disconnect() {
+        try {
+            if(in != null) in.close();
+            if(out != null) out.close();
+            if(!socket.isClosed()) socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        for(PacketStreamListener listener: listeners) {
+            listener.onDisconnect(socket);
+        }
     }
 
 }

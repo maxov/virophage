@@ -1,10 +1,10 @@
 package virophage.network.packet;
 
-public class RequestPlayer implements Packet {
+public class RequestPlayerName implements Packet {
 
     private String name;
 
-    public RequestPlayer(String name) {
+    public RequestPlayerName(String name) {
         this.name = name;
     }
 

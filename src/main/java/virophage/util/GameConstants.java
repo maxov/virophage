@@ -12,12 +12,16 @@ public class GameConstants {
 	public final static int TOTAL_NUM_PLAYERS = 12;
 
     public static final Color[] PLAYER_COLORS = new Color[] {
-    	Color.RED,
-    	Color.GREEN,
-    	Color.BLUE,
-    	Color.ORANGE,
-    	Color.PINK,
-    	Color.MAGENTA
+    	new Color(255, 167, 163),
+    	new Color(124, 226, 136),
+    	new Color(178, 189, 255),
+    	new Color(255, 190, 147),
+    	new Color(218, 154, 255),
+    	new Color(165, 255, 253)
         //, Color.YELLOW
     };
+
+    public static final int VIRUS_GROW_TICKS = 100;
+    public static final int CHANNEL_MOVE_TICKS = 20;
+
 }

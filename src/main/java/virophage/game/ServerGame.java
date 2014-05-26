@@ -1,33 +1,27 @@
 package virophage.game;
 
+import virophage.Start;
 import virophage.core.*;
-import virophage.gui.GameClient;
 import virophage.gui.LobbyScreen;
-import virophage.network.PacketBundle;
-import virophage.network.PacketStream;
-import virophage.network.PacketStreamListener;
-import virophage.network.packet.AssignPlayer;
-import virophage.network.packet.ErrorPacket;
-import virophage.network.packet.RequestPlayer;
+import virophage.network.SocketBundle;
+import virophage.network.packet.*;
 import virophage.util.GameConstants;
 import virophage.util.Location;
 
 import java.awt.*;
-import java.io.IOException;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.Random;
+import java.util.*;
 
-public class ServerGame extends Game {
+public class ServerGame extends Game implements Runnable {
 
     private int port;
-    private ArrayList<PacketBundle> packetBundles = new ArrayList<PacketBundle>();
-    private boolean accepting = false;
+    private final ArrayList<SocketBundle> socketBundles = new ArrayList<SocketBundle>();
     private boolean listening;
+    private boolean inLobbyMode = true;
 
+    private ServerSocket serverSocket;
     private LobbyScreen lobbyScreen;
 
     /**
@@ -44,21 +38,138 @@ public class ServerGame extends Game {
      * Start this serverGame.
      */
     public void start() {
+        new Thread(this).start();
+    }
+
+    public void run() {
         startListening();
 
         try {
-            ServerSocket serverSocket = new ServerSocket(port);
+            serverSocket = new ServerSocket(port);
 
             while (isListening()) {
                 Socket socket = serverSocket.accept();
-                handleSocket(socket, new PacketStream(socket));
+                new Thread(new Handler(socket)).start();
             }
 
             serverSocket.close();
+            serverSocket = null;
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean addAI(String name) {
+        if(getTissue().getPlayers().size() < GameConstants.MAX_PLAYERS) {
+            getTissue().addPlayer(new AIPlayer(name));
+            return true;
+        } else
+            return false;
+    }
+
+    public Color requestPlayerColor() {
+        ArrayList<Color> colorList = new ArrayList<Color>(Arrays.asList(GameConstants.PLAYER_COLORS));
+        playerFor: for(Player p: getTissue().getPlayers()) {
+            Color pColor = p.getColor();
+            Iterator<Color> colorIterator = colorList.iterator();
+            while(colorIterator.hasNext()) {
+                Color c = colorIterator.next();
+                if(c.equals(pColor)) {
+                    colorIterator.remove();
+                    continue playerFor;
+                }
+            }
+        }
+        return colorList.get(0);
+    }
+
+    public boolean isListening() {
+        return listening;
+    }
+
+    public void startListening() {
+        this.listening = true;
+    }
+
+    public void stopListening() {
+        this.listening = false;
+        try {
+            serverSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Iterator<SocketBundle> socketIterator = socketBundles.iterator();
+        while(socketIterator.hasNext()) {
+            SocketBundle socketBundle = socketIterator.next();
+            try {
+                socketBundle.getSocket().close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            socketIterator.remove();
+        }
+        getTissue().removeAllPlayers();
+    }
+
+    public boolean isInLobbyMode() {
+        return inLobbyMode;
+    }
+
+    private void writeToAll(Packet packet) {
+        for(SocketBundle bundle: socketBundles) {
+            ObjectOutputStream out = bundle.getOut();
+            if(out != null) {
+                try {
+                    out.writeObject(packet);
+                    out.flush();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public void setInLobbyMode(boolean inLobbyMode) {
+        this.inLobbyMode = inLobbyMode;
+    }
+
+    public void updateLobby(java.util.List<Player> playerList) {
+        writeToAll(new LobbyPacket(playerList));
+    }
+
+    public void removePlayer(String name) {
+        Iterator<Player> playerIterator = getTissue().getPlayers().iterator();
+        while(playerIterator.hasNext()) {
+            Player player = playerIterator.next();
+            if(player.getName().equals(name)) {
+                if (!(player instanceof AIPlayer)) {
+                    Iterator<SocketBundle> socketBundleIterator = socketBundles.iterator();
+                    while(socketBundleIterator.hasNext()) {
+                        SocketBundle socketBundle = socketBundleIterator.next();
+                        if(socketBundle.getPlayer().getName().equals(player.getName())) {
+                            try {
+                                socketBundle.getSocket().close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            socketBundleIterator.remove();
+                            break;
+                        }
+                    }
+                }
+                playerIterator.remove();
+                break;
+            }
+        }
+    }
+
+    public LobbyScreen getLobbyScreen() {
+        return lobbyScreen;
+    }
+
+    public void setLobbyScreen(LobbyScreen lobbyScreen) {
+        this.lobbyScreen = lobbyScreen;
     }
 
     public void beginGame() {
@@ -68,7 +179,6 @@ public class ServerGame extends Game {
         for(int i = 0; i < players.size(); i++) {
             Player p = players.get(i);
             p.setTissue(t);
-            t.addPlayer(p);
             Location playerCenterLoc = null;
             switch(i) {
                 case 0:
@@ -142,102 +252,113 @@ public class ServerGame extends Game {
                 ((AIPlayer) p).schedule();
             }
         }
+        writeToAll(new StartGamePacket(getTissue()));
+        setInLobbyMode(false);
         setGameStarted(true);
     }
 
-    public void handleSocket(final Socket socket, final PacketStream ps) {
-        ps.addListener(new PacketStreamListener() {
+    private class Handler implements Runnable{
 
-            @Override
-            public void onDisconnect(Socket socket) {
-                Iterator<PacketBundle> packetBundleIterator = packetBundles.iterator();
-                while(packetBundleIterator.hasNext()) {
-                    PacketBundle bundle = packetBundleIterator.next();
-                    if(bundle.getSocket().equals(socket)) {
-                        packetBundleIterator.remove();
-                        break;
+        private SocketBundle socketBundle;
+        private ObjectInputStream in;
+        private ObjectOutputStream out;
+
+        public Handler(Socket socket) {
+            this.socketBundle = new SocketBundle(socket, null, null, null);
+            socketBundles.add(socketBundle);
+        }
+
+        @Override
+        public void run() {
+            try {
+                Socket socket = socketBundle.getSocket();
+                out = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+                out.flush();
+                in = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
+                socketBundle.setIn(in);
+                socketBundle.setOut(out);
+
+                // There are already too many players
+                if(getTissue().getPlayers().size() >= GameConstants.MAX_PLAYERS) {
+                    out.writeObject(new TooManyPlayersError("already " + GameConstants.MAX_PLAYERS + " players"));
+                    out.flush();
+                    return;
+                }
+
+                String name= null;
+
+                waitForPlayerName: while (true) {
+                    try {
+                        RequestPlayerName requestPlayerName = (RequestPlayerName) in.readObject();
+                        name = requestPlayerName.getName();
+                        int len = requestPlayerName.getName().length();
+                        // invalid length
+                        if(len >= 4 && len <= 12) {
+                            // name already taken
+                            boolean taken = false;
+                            for(Player p: getTissue().getPlayers()) {
+                                String n = p.getName();
+                                if(n.equals(name)) {
+                                    out.writeObject(new PlayerNameError("that name is already taken"));
+                                    out.flush();
+                                    taken = true;
+                                }
+                            }
+                            if(!taken) break waitForPlayerName;
+                        } else {
+                            out.writeObject(new PlayerNameError("name not between 4 and 12 chars"));
+                            out.flush();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        return;
                     }
                 }
 
-            }
-            @Override
-            public void onEvent(Object event) {
-                if(event instanceof RequestPlayer ) {
-                    if(accepting && !isGameStarted() &&
-                            getTissue().getPlayers().size() < GameConstants.MAX_PLAYERS) {
-                        String name = ((RequestPlayer) event).getName();
-                        for(Player p: getTissue().getPlayers()) {
-                            if(p.getName().equals(name)) {
-                                ps.write(new ErrorPacket("that name is already taken"));
-                                return;
+                Color c = requestPlayerColor();
+                Player player = new Player(name);
+                player.setTissue(getTissue());
+                player.setColor(c);
+                getTissue().addPlayer(player);
+                socketBundle.setPlayer(player);
+                out.writeObject(new AssignPlayer(player));
+                out.flush();
+                out.writeObject(new LobbyPacket(getTissue().getPlayers()));
+                out.flush();
+
+                lobbyScreen.resetPlayers();
+
+                while (socketBundles.contains(socketBundle) && isListening()) {
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                if (socketBundle != null) {
+                        synchronized(socketBundles) {
+                            socketBundles.remove(socketBundle);
+                        }
+                }
+                try {
+                    socketBundle.getSocket().close();
+                } catch (IOException ignored) {
+                }
+                if(inLobbyMode) {
+                    if(socketBundle.getPlayer() != null) {
+                        Iterator<Player> playerIterator = getTissue().getPlayers().iterator();
+                        while(playerIterator.hasNext()) {
+                            Player player = playerIterator.next();
+                            if(player.getName().equals(socketBundle.getPlayer().getName())) {
+                                playerIterator.remove();
                             }
                         }
-                        Player p = new Player(name);
-                        RemotePlayer remotePlayer = new RemotePlayer(name);
-                        remotePlayer.setTissue(getTissue());
-                        remotePlayer.setColor(requestPlayerColor());
-                        packetBundles.add(new PacketBundle(remotePlayer, ps, socket));
-                        ps.write(new AssignPlayer(p));
-                    } else {
-                        ps.write(new ErrorPacket("cannot join at this time"));
+                        lobbyScreen.resetPlayers();
                     }
                 }
             }
-
-        });
-    }
-
-    public boolean addAI(String name) {
-        if(getTissue().getPlayers().size() < GameConstants.MAX_PLAYERS) {
-            getTissue().addPlayer(new AIPlayer(name));
-            return true;
-        } else {
-            return false;
         }
+
     }
 
-    private Color requestPlayerColor() {
-        ArrayList<Color> colorList = new ArrayList<Color>(Arrays.asList(GameConstants.PLAYER_COLORS));
-        playerFor: for(Player p: getTissue().getPlayers()) {
-            Color pColor = p.getColor();
-            Iterator<Color> colorIterator = colorList.iterator();
-            while(colorIterator.hasNext()) {
-                Color c = colorIterator.next().darker();
-                if(c.equals(pColor)) {
-                    colorIterator.remove();
-                    continue playerFor;
-                }
-            }
-        }
-        return colorList.get(0);
-    }
 
-    public boolean isAccepting() {
-        return accepting;
-    }
 
-    public void setAccepting(boolean accepting) {
-        this.accepting = accepting;
-    }
-
-    public boolean isListening() {
-        return listening;
-    }
-
-    public void startListening() {
-        this.listening = true;
-    }
-
-    public void stopListening() {
-        this.listening = false;
-        packetBundles = new ArrayList<PacketBundle>();
-    }
-
-    public LobbyScreen getLobbyScreen() {
-        return lobbyScreen;
-    }
-
-    public void setLobbyScreen(LobbyScreen lobbyScreen) {
-        this.lobbyScreen = lobbyScreen;
-    }
 }

@@ -32,7 +32,7 @@ public class AIPlayer extends Player {
     	GameScreen.timer.schedule(task, 100, 300);
     }
 
-    private TimerTask task = new TimerTask() {
+    private transient TimerTask task = new TimerTask() {
         @Override
         public void run() {
             for (Virus v : getViruses()) {

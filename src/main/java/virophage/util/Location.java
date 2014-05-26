@@ -1,5 +1,6 @@
 package virophage.util;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -8,7 +9,7 @@ import java.util.ArrayList;
  * @author Max Ovsiankin, Leon Ren
  * @since 2014-05-6
  */
-public class Location {
+public class Location implements Serializable {
 
     public static final Vector X_VECTOR = new Vector(
             0.5 * HexagonConstants.TRI_WIDTH + HexagonConstants.RADIUS,

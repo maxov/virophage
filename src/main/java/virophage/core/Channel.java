@@ -23,6 +23,7 @@ public class Channel implements Serializable {
     public Location to;
     public Player player;
     public Virus virus;
+    private int creationTime;
 
     private TimerTask task = new TimerTask() {
         /**
@@ -77,22 +78,22 @@ public class Channel implements Serializable {
                 		((BonusCell)t).setPlayer(v.getPlayer());
                 		//tissue.getTree().getGame().removeBonusCell((BonusCell)t);
                 		Player p = null;
-                	    int numPlayers = 0;
+                	    int numTaken = 0;
                 	    for (BonusCell c : tissue.getBonuses()){
                 	    	if(p == null && c.getPlayer() != null){
                 	    		p = c.getPlayer();
-                	    		numPlayers ++;
+                	    		numTaken ++;
                 	    	}
                 	    	else if (c.getPlayer() != null){
-                	    		if (p != c.getPlayer()){
+                	    		if (!p.equals(c.getPlayer())){
                 	    			break;
                 	    		}
                 	    		else{
-                	    			numPlayers ++;
+                	    			numTaken ++;
                 	    		}
                 	    	}
                 	    }
-                	    if (numPlayers == 7){
+                	    if (numTaken == 7){
                 	    	Start.log.info("ALL BONUSES TAKEN");
                 	    	for (Virus vx : p.getViruses()){
                 	    		if (vx.getUpdateTime() == 5000){

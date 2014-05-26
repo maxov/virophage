@@ -3,6 +3,7 @@ package virophage.game;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 import virophage.core.*;
 import virophage.gui.GameScreen;
@@ -20,7 +21,6 @@ public class Game {
     private Tissue tissue;
     private boolean gameStarted = false;
     private boolean gameEnded = false;
-    private String loserName;
     private Player activePlayer;
 
     
@@ -42,6 +42,9 @@ public class Game {
     public Tissue getTissue() {
         return tissue;
     }
+    public Tissue setTissue(Tissue tissue) {
+        return tissue;
+    }
 
     public void constructTissue() {
         Cell[][] cells = new Cell[2 * GameConstants.N + 1][2 * GameConstants.N + 1];
@@ -56,11 +59,22 @@ public class Game {
                 }
             }
         }
+        this.tissue = t;
     }
 
     private boolean canInfect(Channel c) {
         Virus virus = tissue.getCell(c.from).getOccupant();
-        return virus != null && virus.getEnergy() > 2;
+        return virus != null && virus.getEnergy() > 1;
+    }
+
+    private ArrayList<Channel> getInfectors(Cell c) {
+        ArrayList<Channel> channels = new ArrayList<Channel>();
+        for(Channel channel: tissue.getChannels()) {
+            if(channel.to.equals(c.location) && canInfect(channel)) {
+                
+            }
+        }
+        return channels;
     }
 
     public void tick(int tick) {
@@ -75,10 +89,7 @@ public class Game {
     public void setGameStarted(boolean g) {
     	gameStarted = g;
     }
-    
-    public String getLoserName() {
-    	return loserName;
-    }
+
     
     public void checkGame() {
     	List<Player> players = tissue.getPlayers();
@@ -86,7 +97,6 @@ public class Game {
         if (isGameStarted()) {
 	        for (Player p: players){
                 if (p.getViruses().size() == 0){
-                    loserName = p.getName();
                     gameEnded = true;
                     // END THE GAME
                     //tissue.getTree().getGameScreen().gameStop();
@@ -120,4 +130,5 @@ public class Game {
     public boolean isGameEnded() {
         return gameEnded;
     }
+
 }

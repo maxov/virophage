@@ -61,4 +61,24 @@ public class TissueSegment implements Serializable {
         return locs;
     }
 
+    public void apply(Tissue tissue) {
+        for (int i = 0; i < locs.length; i++) {
+            tissue.setCell(locs[i], cells[i]);
+        }
+
+        for (Player player : tissue.getPlayers()) {
+            for (Channel channel : player.channels) {
+                for (Location loc : locs) {
+                    if (loc.equals(channel.from) || loc.equals(channel.to)) {
+                        player.removeChannel(channel);
+                        channel.destroy();
+                    }
+                }
+            }
+        }
+        for(Channel channel: channels) {
+
+        }
+    }
+
 }

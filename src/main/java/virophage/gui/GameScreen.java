@@ -130,13 +130,7 @@ public class GameScreen extends Canvas implements Runnable {
             } else if (selection.isPossible(cell)) {
                 light = Color.LIGHT_GRAY;
             }
-            if (cell instanceof BonusCell){
-            	g.setColor(Color.YELLOW);
-            }
-            else{
-            	g.setColor(light);
-            }
-            
+            g.setColor(light);
             g.fillPolygon(hexagon);
             g.setColor(dark);
             double circleRadius = (occupant.getEnergy() / (double) GameConstants.MAX_ENERGY) *
@@ -149,12 +143,6 @@ public class GameScreen extends Canvas implements Runnable {
         } else {
             if (cell instanceof DeadCell) {
                 g.setColor(Color.BLACK);
-            }
-            else if (cell instanceof BonusCell){
-            	g.setColor(Color.YELLOW);
-            	g.setStroke(new BasicStroke(13));
-            	g.drawPolygon(hexagon);
-            	return;
             }
             else {
                 if (selection.isFrom(cell)) {
@@ -169,7 +157,19 @@ public class GameScreen extends Canvas implements Runnable {
         }
 
         //g.setStroke(new BasicStroke(4));
+
         g.setColor(new Color(32, 32, 32));
+        if(cell instanceof BonusCell) {
+            g.setStroke(new BasicStroke(
+                    5,
+                    BasicStroke.CAP_BUTT,
+                    BasicStroke.JOIN_MITER,
+                    10.0f,
+                    new float[] {15.0f, 7.0f},
+                    0));
+            //g.setColor(Color.WHITE);
+            g.setColor(new Color(180, 180, 180));
+        }
         g.drawPolygon(hexagon);
         g.setColor(Color.BLACK);
         //int x = (int) (HexagonConstants.RADIUS - fm.stringWidth(loc.toString()) / 2);
@@ -178,9 +178,9 @@ public class GameScreen extends Canvas implements Runnable {
 //        g.drawString(cell.location.toString(),10, 100);
         if (cell.getOccupant() != null) {
             Virus tempV = cell.getOccupant();
-            String s;
-            s = tempV.getPlayer().getName();
-            g.drawString(s, 100, 100);
+            String s = tempV.getPlayer().getName();
+            FontMetrics fm = g.getFontMetrics();
+            g.drawString(s, 100 - fm.stringWidth(s) / 2, 100);
         }
     }
 
@@ -200,7 +200,7 @@ public class GameScreen extends Canvas implements Runnable {
         Graphics2D g = (Graphics2D) gr;
         Tissue tissue = game.getTissue();
         // makes the game look really nice, but also really slow
-        //g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+       // g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         g.setColor(new Color(230, 230, 230));
         g.fillRect(0, 0, getWidth(), getHeight());
@@ -236,8 +236,8 @@ public class GameScreen extends Canvas implements Runnable {
         int spaceBetween = (x - 200)/(p.length);
         int i = 0;
         for (Player myPlayer: p){
-        	g.setColor(myPlayer.getColor().brighter().brighter());
-        	g.drawString(myPlayer.getName() + ": " + myPlayer.getViruses().size() + " cells", 280 + i * spaceBetween, y - 10);
+        	g.setColor(myPlayer.getColor());
+        	g.drawString(myPlayer.getName() + ": " + myPlayer.getViruses().size() + " cells", 210 + i * spaceBetween, y - 10);
         	i ++;
         }
 //        g.setColor(Color.RED);
@@ -245,7 +245,7 @@ public class GameScreen extends Canvas implements Runnable {
 //        String vSize = virusSize + "";
 //        g.drawString("Red: #cells - " + virusSize + "", x - 128 - 15 * vSize.length(), y - 10);
         g.setTransform(new AffineTransform());
-        if(game.isGameEnded()) {
+        /*if(game.isGameEnded()) {
             g.setColor(new Color(50, 50, 50, 200));
             g.fillRect(100, 100, x - 200, y - 200);
             Font font = new Font("SansSerif", Font.BOLD, 96);
@@ -257,7 +257,7 @@ public class GameScreen extends Canvas implements Runnable {
             int sh = fm.getHeight();
             g.drawString(s1, x / 2 - sw, 100 + sh);
             g.draw3DRect(x / 2 - 50, y / 2 - 25, 100, 50, true);
-        }
+        }*/
     }
 
     /**
@@ -285,7 +285,7 @@ public class GameScreen extends Canvas implements Runnable {
      *
      * @param game a ServerGame
      */
-    public void gameStart(ServerGame game) {
+    public void gameStart(Game game) {
         Start.log.info("Game Started!");
         this.game = game;
 

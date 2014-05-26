@@ -22,6 +22,7 @@ public class Virus implements Serializable {
     private int energy;
     private Cell cell;
     private int timeToUpdate;
+    private int creationTime;
 
     private TimerTask task = recreateTask();
 
@@ -103,5 +104,13 @@ public class Virus implements Serializable {
 
     public Cell getCell() {
         return cell;
+    }
+
+    public int getCreationTime() {
+        return creationTime;
+    }
+
+    public void setCreationTime(int creationTime) {
+        this.creationTime = creationTime;
     }
 }

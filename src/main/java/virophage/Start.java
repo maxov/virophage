@@ -19,6 +19,7 @@ public class Start {
     }
 
     public static Logger log = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    public static GameClient gameClient;
 
     /**
      * Starts the game.
@@ -28,7 +29,7 @@ public class Start {
     public static void main(String[] args) {
 
         log.info("Constructing frame");
-        GameClient gameClient = new GameClient();
+        gameClient = new GameClient();
     }
 
 }

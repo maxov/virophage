@@ -34,7 +34,7 @@ public class LoseScreen extends TextScreen {
         // Draw the Title
         Font f = new Font("arial", Font.BOLD, 30);
         g.setFont(f);
-        g.drawString(super.getGameClient().getGame().getLoserName() + " Loses- Try again!", x / 3 + x / 10, y / 4);
+        g.drawString(super.getGameClient().getGame() + " Loses- Try again!", x / 3 + x / 10, y / 4);
 
         
 

@@ -24,7 +24,8 @@ public class GameClient extends JFrame {
     private CardLayout cardLayout;
 
     private LobbyScreen lobbyScreen;
-    GameScreen gameScreen;
+    private ClientLobbyScreen clientLobbyScreen;
+    private GameScreen gameScreen;
     private Game game;
     
     /**
@@ -38,8 +39,6 @@ public class GameClient extends JFrame {
 
         gameScreen = new GameScreen();
 
-        add(gameScreen, BorderLayout.CENTER);
-
         Start.log.info("Setting frame visible");
         cardPanel = new JPanel();
         cardLayout = new CardLayout();
@@ -49,6 +48,7 @@ public class GameClient extends JFrame {
         InstructionScreen instructionPanel = new InstructionScreen(this);
         CreditsScreen creditsPanel = new CreditsScreen(this);
         lobbyScreen = new LobbyScreen(this);
+        clientLobbyScreen = new ClientLobbyScreen(this);
         WinScreen winPanel = new WinScreen(this);
         LoseScreen losePanel = new LoseScreen(this);
 
@@ -59,6 +59,7 @@ public class GameClient extends JFrame {
         cardPanel.add(lobbyScreen, "lobbyScreen");
         cardPanel.add(winPanel, "winScreen");
         cardPanel.add(losePanel, "loseScreen");
+        cardPanel.add(clientLobbyScreen, "clientLobbyScreen");
 
         add(cardPanel);
 
@@ -81,6 +82,10 @@ public class GameClient extends JFrame {
     
     public Game getGame() {
     	return game;
+    }
+
+    public ClientLobbyScreen getClientLobbyScreen() {
+        return clientLobbyScreen;
     }
 
 }

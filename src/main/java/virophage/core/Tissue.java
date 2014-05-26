@@ -19,7 +19,7 @@ public class Tissue implements Serializable {
 
     public Cell[][] cells;
     private ArrayList<Player> players = new ArrayList<Player>();
-    public Game game;
+    public transient Game game;
 
     private ArrayList<BonusCell> bonuses;
 
@@ -74,9 +74,7 @@ public class Tissue implements Serializable {
     }
     
     public void removeAllPlayers() {
-    	for (Player p: players) {
-    		players.remove(p);
-    	}
+    	players = new ArrayList<Player>();
     }
     
     public void removeAllCells() {
@@ -96,7 +94,6 @@ public class Tissue implements Serializable {
             }
         }
     }
-
     public void addBonusCell(BonusCell c){
         bonuses.add(c);
     }
