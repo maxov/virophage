@@ -107,13 +107,15 @@ public class ServerGame extends Game implements Runnable {
     public void stopListening() {
         this.listening = false;
         try {
-            serverSocket.close();
+            if(serverSocket != null)
+                serverSocket.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
         Iterator<SocketBundle> socketIterator = socketBundles.iterator();
         while(socketIterator.hasNext()) {
             SocketBundle socketBundle = socketIterator.next();
+            getTissue().getPlayers().remove(socketBundle.getPlayer());
             try {
                 socketBundle.getSocket().close();
             } catch (IOException e) {
@@ -121,7 +123,7 @@ public class ServerGame extends Game implements Runnable {
             }
             socketIterator.remove();
         }
-        getTissue().removeAllPlayers();
+        lobbyScreen.resetPlayers();
     }
 
     public boolean isInLobbyMode() {
@@ -335,9 +337,7 @@ public class ServerGame extends Game implements Runnable {
                 socketBundle.setPlayer(player);
                 out.writeObject(new AssignPlayer(player));
                 out.flush();
-                out.writeObject(new LobbyPacket(getTissue().getPlayers()));
-                out.flush();
-
+                updateLobby(getTissue().getPlayers());
                 lobbyScreen.resetPlayers();
 
                 while (socketBundles.contains(socketBundle) && isListening()) {

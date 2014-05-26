@@ -1,19 +1,13 @@
 package virophage.network.packet;
 
 import virophage.core.Player;
-import virophage.network.TissueSegment;
 
-/**
- * Represents a Player action.
- *
- * @author Max Ovsiankin
- * @since 2014-05-17
- */
-public class Action implements Packet {
+public class ChatPacket extends BroadcastPacket {
 
     private Player player;
 
-    public Action(Player player) {
+    public ChatPacket(Player player, String message) {
+        super(message);
         this.player = player;
     }
 

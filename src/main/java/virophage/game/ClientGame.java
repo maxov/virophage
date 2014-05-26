@@ -6,6 +6,7 @@ import virophage.gui.ClientLobbyScreen;
 import virophage.gui.ConnectionDialog;
 import virophage.network.PacketStream;
 import virophage.network.packet.*;
+import virophage.network.packet.Action;
 import virophage.util.GameConstants;
 import virophage.util.Location;
 
@@ -32,6 +33,7 @@ public class ClientGame extends Game implements Runnable {
     private ObjectInputStream in;
     private Player player;
     private boolean inLobbyMode = true;
+    private boolean loud = true;
     private ClientLobbyScreen clientLobbyScreen;
 
     public PacketStream stream;
@@ -62,6 +64,11 @@ public class ClientGame extends Game implements Runnable {
         out.flush();
     }
 
+    private void writeAction(Action action) throws IOException {
+        out.writeObject(action);
+        out.flush();
+    }
+
     /**
      * Begin listening on this socket.
      */
@@ -87,24 +94,34 @@ public class ClientGame extends Game implements Runnable {
                         } else if(packet instanceof StartGamePacket) {
                             setTissue(((StartGamePacket) packet).getTissue());
                             Start.gameClient.getGameScreen().gameStart(this);
-                            Start.gameClient.changePanel("menuScreen");
+                            Start.gameClient.changePanel("gameScreen");
                             inLobbyMode = false;
                         }
                     } else {
+                        if(packet instanceof TissueUpdate) {
+                            setTissue(((TissueUpdate) packet).getTissue());
+                        } else if(packet instanceof BroadcastPacket) {
+                            if(packet instanceof ChatPacket) {
 
+                            } else {
+
+                            }
+                        }
                     }
                 } else {
                     if(packet instanceof PlayerError) {
                         if(packet instanceof TooManyPlayersError) {
                             JOptionPane.showMessageDialog(
                                     Start.gameClient,
+                                    "Disconnected: Too many players",
                                     "Disconnected",
-                                    "Too many players",
                                     JOptionPane.WARNING_MESSAGE);
                             Start.gameClient.changePanel("menuScreen");
+                            loud = false;
                             new Thread(new Runnable() {
                                 @Override
                                 public void run() {
+
                                     new ConnectionDialog(Start.gameClient);
                                 }
                             }).start();
@@ -128,11 +145,13 @@ public class ClientGame extends Game implements Runnable {
             }
         } catch (IOException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(
-                    Start.gameClient,
-                    "Error: Disconnected",
-                    "Disconnected",
-                    JOptionPane.ERROR_MESSAGE);
+            if(loud) {
+                JOptionPane.showMessageDialog(
+                        Start.gameClient,
+                        "Error: Disconnected",
+                        "Disconnected",
+                        JOptionPane.ERROR_MESSAGE);
+            }
             Start.gameClient.changePanel("menuScreen");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
