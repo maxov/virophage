@@ -3,6 +3,5 @@ virophage.core
 virophage.game
 virophage.gui
 virophage.network
-virophage.network.event
-virophage.render
+virophage.network.packet
 virophage.util

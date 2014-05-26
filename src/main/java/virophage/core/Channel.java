@@ -29,6 +29,7 @@ public class Channel implements Serializable {
         /**
          * Timer - Timeout Method.
          * Transfers energy and removes channel when "conquered" by opponent.
+         * @post the energy of the "from" cell will be reduced by one. The energy of the "to" cell will be increased by one.
          */
         @Override
         public void run() {
@@ -119,9 +120,9 @@ public class Channel implements Serializable {
     /**
      * Constructs a Channel for a player between two locations.
      *
-     * @param from   - The location the bridge starts from
-     * @param to     - The location the bridge goes to
-     * @param player - The current player making this bridge
+     * @param from   The location the bridge starts from
+     * @param to     The location the bridge goes to
+     * @param player The current player making this bridge
      */
     public Channel(final Tissue tissue, final Location from, final Location to, final Player player) {
         this.tissue = tissue;
@@ -138,6 +139,7 @@ public class Channel implements Serializable {
 
     /**
      * Destroys this Channel.
+     * @post timer is canceled
      */
     public void destroy() {
         task.cancel();

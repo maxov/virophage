@@ -17,6 +17,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ *
+ * @author Max Ovsiankin
+ * @since 2014-05-6
+ */
+
 public class ClientGame extends Game implements Runnable {
 
     private int port;

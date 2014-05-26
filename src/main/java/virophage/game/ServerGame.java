@@ -41,6 +41,9 @@ public class ServerGame extends Game implements Runnable {
         new Thread(this).start();
     }
 
+    /**
+     * Starts a new serverGame that listens to the client.
+     */
     public void run() {
         startListening();
 
@@ -60,6 +63,11 @@ public class ServerGame extends Game implements Runnable {
         }
     }
 
+    /**
+     * Adds a new AI player.
+     * @param name the name of the player
+     * @return if succesfully added
+     */
     public boolean addAI(String name) {
         if(getTissue().getPlayers().size() < GameConstants.MAX_PLAYERS) {
             getTissue().addPlayer(new AIPlayer(name));
@@ -68,6 +76,10 @@ public class ServerGame extends Game implements Runnable {
             return false;
     }
 
+    /**
+     * 
+     * @return returns the player Color
+     */
     public Color requestPlayerColor() {
         ArrayList<Color> colorList = new ArrayList<Color>(Arrays.asList(GameConstants.PLAYER_COLORS));
         playerFor: for(Player p: getTissue().getPlayers()) {

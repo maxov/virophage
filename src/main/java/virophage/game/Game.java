@@ -43,6 +43,9 @@ public class Game {
         return tissue;
     }
 
+    /**
+     * Constructs the gameBoard.
+     */
     public void constructTissue() {
         Cell[][] cells = new Cell[2 * GameConstants.N + 1][2 * GameConstants.N + 1];
         Tissue t = new Tissue(cells, this);
@@ -224,23 +227,7 @@ public class Game {
 	        for (Player p: players){
                 if (p.getViruses().size() == 0){
                     gameEnded = true;
-                    // END THE GAME
-                    //tissue.getTree().getGameScreen().gameStop();
                 }
-                /*
-                else if(getViruses().size() + p.getViruses().size() == tissue.getTree().getGameScreen().getNumberCellsCount()){
-                    if (getViruses().size() > p.getViruses().size()){
-                        tissue.getTree().getGameScreen().changePanel("winScreen");
-                        // END THE GAME
-                        //tissue.getTree().getGameScreen().gameStop();
-                    }
-                    else{
-                        tissue.getTree().getGameScreen().changePanel("loseScreen");
-                        // END THE GAME
-                        //tissue.getTree().getGameScreen().gameStop();
-
-                    }
-                }*/
 	        }
         }
     }

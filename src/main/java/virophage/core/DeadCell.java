@@ -5,7 +5,7 @@ import virophage.util.Location;
 import java.io.Serializable;
 
 /**
- * A <code>DeadCell</code> is a space that no virus can "infect".
+ * A <code>DeadCell</code> is a space that no virus can "occupy".
  *
  * @author Leon Ren
  * @since 2014-05-6
@@ -13,7 +13,7 @@ import java.io.Serializable;
 public class DeadCell extends Cell implements Serializable {
 
     /**
-     * Constructs a dead cell that cannot be occupied.
+     * Constructs a dead cell that cannot be occupied - the color of the cell is black.
      *
      * @param tissue the gameboard that will contain this cell.
      * @param loc    the location of the DeadCell
