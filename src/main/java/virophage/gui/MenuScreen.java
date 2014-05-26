@@ -80,7 +80,7 @@ public class MenuScreen extends JPanel implements ActionListener {
         Font f = new Font("arial", Font.BOLD, 30);
         g.setFont(f);
         g.setColor(Color.WHITE);
-        g.drawString("Virophage", x / 3 + (int) (x / 9.7), y / 4);
+        g.drawString("Virophage", x / 3 + (int) (x / 9.1), y / 4);
     }
 
     public void actionPerformed(ActionEvent e) {
