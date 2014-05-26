@@ -24,8 +24,7 @@ public class Player implements Serializable {
 
     /**
      * Constructs a player with a given name.
-     *
-     * @param name
+     * @param name A string that represents the name of the player.
      */
     public Player(String name) {
         color = Color.blue;
@@ -41,9 +40,9 @@ public class Player implements Serializable {
     }
 
     /**
-     * Constructs a player with the given Color c
-     *
-     * @param color the color
+     * Constructs a player with the given Color in a given Tissue
+     * @param color the color of the player
+     * @param tissue the gameboard.
      */
     public Player(Color color, Tissue tissue) {
         this.color = color;
@@ -60,46 +59,21 @@ public class Player implements Serializable {
 
     /**
      * Add a virus that this player owns.
-     *
      * @param v the virus
+     * @pre v is not null and is in a Tissue
+     * @post v is added into the virus List for the player
+     * 
      */
     public void addVirus(Virus v) {
         viruses.add(v);
-        //Player[] players = tissue.getPlayers();
-        // TODO move game end logic to Game class
-        /*
-        if (tissue.getTree().getGameClient().isGameStarted()) {
-	        for (Player p: players){
-	        	if (p instanceof AIPlayer){
-	        		if (p.getViruses().size() == 0){
-	        			tissue.getTree().getGameClient().changePanel("winScreen");
-	        			// END THE GAME
-	        			tissue.getTree().getGameClient().gameStop();
-	        		}
-	        		else if(getViruses().size() + p.getViruses().size() == tissue.getTree().getGameClient().getNumberCellsCount()){
-	        			if (getViruses().size() > p.getViruses().size()){
-	        				tissue.getTree().getGameClient().changePanel("winScreen");
-	            			// END THE GAME
-	        				tissue.getTree().getGameClient().gameStop();
-	        			}
-	        			else{
-	        				tissue.getTree().getGameClient().changePanel("loseScreen");
-	            			// END THE GAME
-	        				tissue.getTree().getGameClient().gameStop();
-	
-	        			}
-	        		}
-	        	}
-	        }
-        }*/
         if (tissue != null && tissue.getGame() != null)
         	tissue.getGame().checkGame();
     }
 
     /**
      * Add a channel that this player owns.
-     *
      * @param c the channel
+     * @post c is added to the channel list for this player
      */
     public void addChannel(Channel c) {
         channels.add(c);
@@ -114,9 +88,10 @@ public class Player implements Serializable {
     }
 
     /**
-     * Remove a channel that this player owns.
-     *
+     * Removes a channel that this player owns.
      * @param c the channel
+     * @pre is not null and inside the tissue
+     * @post c is removed from the channel list of this player
      */
     public void removeChannel(Channel c) {
         Iterator<Channel> cs = channels.iterator();
@@ -130,49 +105,17 @@ public class Player implements Serializable {
 
     /**
      * Remove a virus that this player owns.
-     *
      * @param v the virus
+     * @pre v is not null and is in the Tissue
+     * @post v is removed from the list of Viruses for this player.
      */
     public void removeVirus(Virus v) {
         Iterator<Virus> vs = viruses.iterator();
         while (vs.hasNext()) {
             Virus q = vs.next();
-            // TODO move game end logic to Game class
 
             if (q.equals(v)) {
                 vs.remove();
-                /*
-                if (tissue.getTree().getGameClient().isGameStarted()) {
-                	Player[] players = tissue.getPlayers();
-			        if (getViruses().size() == 0){
-			        	tissue.getTree().getGameClient().changePanel("loseScreen");
-			        	tissue.getTree().getGameClient().gameStop();
-			        }
-			        for (Player p: players){
-			        	if (p instanceof AIPlayer){
-			        		if (p.getViruses().size() == 0){
-			        			
-			        			tissue.getTree().getGameClient().changePanel("winScreen");
-			        			// END THE GAME
-			        			tissue.getTree().getGameClient().gameStop();
-			        		}
-			        		else if(getViruses().size() + p.getViruses().size() == tissue.getTree().getGameClient().getNumberCellsCount()){
-			        			if (getViruses().size() > p.getViruses().size()){
-			        				tissue.getTree().getGameClient().changePanel("winScreen");
-			            			// END THE GAME
-			        				tissue.getTree().getGameClient().gameStop();
-			        			}
-			        			else{
-			        				tissue.getTree().getGameClient().changePanel("loseScreen");
-			            			// END THE GAME
-			        				tissue.getTree().getGameClient().gameStop();
-			
-			        			}
-			        		}
-			        	}
-			        }          	
-                }*/
-
                 Start.log.info("player "+name+" has " + viruses.size() + " viruses");
                 tissue.getGame().checkGame();
             }
@@ -202,6 +145,10 @@ public class Player implements Serializable {
     	this.tissue = tissue;
     }
 
+    /**
+     * Destroys the player;
+     * @post all viruses and channels to and from this player are destoryed.
+     */
     public void destroy() {
     	if (channels != null) {
     		Iterator<Channel> channels = this.getChannels().iterator();

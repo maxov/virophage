@@ -59,7 +59,7 @@ public class Selection {
     }
 
     /**
-     * Checks to cee if this cell is the 'from' cell of this Selection.
+     * Checks to see if this cell is the 'from' cell of this Selection.
      *
      * @param cell a Cell
      * @return a boolean

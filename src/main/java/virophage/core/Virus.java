@@ -26,6 +26,10 @@ public class Virus implements Serializable {
 
     private TimerTask task = recreateTask();
 
+    /**
+     * Recreates a TimerTask;
+     * @return the newly createdTimerTask
+     */
     private TimerTask recreateTask() {
         return new TimerTask() {
             /**
@@ -63,6 +67,9 @@ public class Virus implements Serializable {
         GameScreen.timer.schedule(task, timeToUpdate, timeToUpdate);
     }
     
+    /**
+     * Reschedules the timer according to the new TimeoutTime.
+     */
     public void reschedule() {
         task.cancel();
         task = recreateTask();
@@ -95,6 +102,11 @@ public class Virus implements Serializable {
         return energy;
     }
 
+    /**
+     * Sets the cell the virus belongs to.
+     * @pre c is not null
+     * @param c the cell (parent)
+     */
     public void setCell(Cell c) {
         if (c == null) {
             Start.log.info("whoah");
