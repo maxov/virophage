@@ -229,35 +229,42 @@ public class GameScreen extends Canvas implements Runnable {
         g.setColor(Color.GRAY);
         g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 9 * 0.1f));
         g.fillRect(0, y - 40, x, y);
-        g.setColor(Color.LIGHT_GRAY);
+        g.setColor(Color.WHITE);
         g.drawString("NumPlayers: " + p.length, 10, y - 10);
         f = new Font("arial", Font.PLAIN, 18);
         g.setFont(f);
         int spaceBetween = (x - 200)/(p.length);
         int i = 0;
+        int numPlayersOut = 0;
+        int winnerIndex = 0;
         for (Player myPlayer: p){
+        	int size = myPlayer.getViruses().size();
         	g.setColor(myPlayer.getColor());
-        	g.drawString(myPlayer.getName() + ": " + myPlayer.getViruses().size() + " cells", 210 + i * spaceBetween, y - 10);
+        	if (size == 0){
+        		g.drawString(myPlayer.getName() + " is out!", x/6 + i * spaceBetween, y - 10);
+        		numPlayersOut++;
+        	}
+        	else{
+        		g.drawString(myPlayer.getName() + ": " + size  + " cells", x/6 + i * spaceBetween, y - 10);
+        		winnerIndex = i;
+        	}
         	i ++;
         }
-//        g.setColor(Color.RED);
-//        int virusSize = p[1].getViruses().size();
-//        String vSize = virusSize + "";
-//        g.drawString("Red: #cells - " + virusSize + "", x - 128 - 15 * vSize.length(), y - 10);
-        g.setTransform(new AffineTransform());
-        /*if(game.isGameEnded()) {
-            g.setColor(new Color(50, 50, 50, 200));
-            g.fillRect(100, 100, x - 200, y - 200);
-            Font font = new Font("SansSerif", Font.BOLD, 96);
-            g.setFont(font);
+        
+       if (numPlayersOut == (p.length - 1)){
+        	g.setColor(Color.GRAY);
+            g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 9 * 0.1f));
+            g.fillRect(x / 5, y /5, x *3 / 5, y * 3 / 5);
+            g.setColor(p[winnerIndex].getColor());
+            f = new Font("arial", Font.BOLD, 32);
+            g.setFont(f);
+            g.drawString(p[winnerIndex].getName() + " Wins!", x * 3 / 7, y/2);
             g.setColor(Color.WHITE);
-            FontMetrics fm = g.getFontMetrics();
-            String s1 = "Victory!";
-            int sw = fm.stringWidth(s1) / 2;
-            int sh = fm.getHeight();
-            g.drawString(s1, x / 2 - sw, 100 + sh);
-            g.draw3DRect(x / 2 - 50, y / 2 - 25, 100, 50, true);
-        }*/
+            f = new Font("arial", Font.PLAIN, 15);
+            g.setFont(f);
+            g.drawString("Press ESC to exit the game.", x * 3 / 7, y/2 + y/6);
+        }
+        g.setTransform(new AffineTransform());
     }
 
     /**

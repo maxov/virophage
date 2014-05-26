@@ -49,16 +49,12 @@ public class GameClient extends JFrame {
         CreditsScreen creditsPanel = new CreditsScreen(this);
         lobbyScreen = new LobbyScreen(this);
         clientLobbyScreen = new ClientLobbyScreen(this);
-        WinScreen winPanel = new WinScreen(this);
-        LoseScreen losePanel = new LoseScreen(this);
 
         cardPanel.add(menuScreen, "menuScreen");
         cardPanel.add(gameScreen, "renderTree");
         cardPanel.add(instructionPanel, "instructionScreen");
         cardPanel.add(creditsPanel, "creditsScreen");
         cardPanel.add(lobbyScreen, "lobbyScreen");
-        cardPanel.add(winPanel, "winScreen");
-        cardPanel.add(losePanel, "loseScreen");
         cardPanel.add(clientLobbyScreen, "clientLobbyScreen");
 
         add(cardPanel);

@@ -46,7 +46,7 @@ public class CreditsScreen extends TextScreen {
         f = new Font("calibri", Font.PLAIN, 18);
         g.setFont(f);
         g.drawString("AP Computer Science - Period 1", x / 3, y / 4 + y / 15 + 2 * y / 9);
-        g.drawString("5/27/2015", x / 3, y / 4 + 2 * y / 15 + 2 * y / 9);
+        g.drawString("5/27/2014", x / 3, y / 4 + 2 * y / 15 + 2 * y / 9);
 
     }
 
