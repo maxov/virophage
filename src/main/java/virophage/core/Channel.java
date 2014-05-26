@@ -105,7 +105,7 @@ public class Channel implements Serializable {
                 	    	}
                 	    }
                 	}
-                	
+
                     t.occupant = new Virus(v.getPlayer(), 0);
                     t.occupant.setCell(t);
                     v.getPlayer().addVirus(t.occupant);
@@ -132,6 +132,10 @@ public class Channel implements Serializable {
         GameScreen.timer.schedule(task, 2000, 2000);
     }
 
+    public boolean canInfectAt(int time) {
+        return (time - creationTime) % GameConstants.CHANNEL_MOVE_TICKS == 0;
+    }
+
     /**
      * Destroys this Channel.
      */
@@ -156,6 +160,14 @@ public class Channel implements Serializable {
 
     public void setVirus(Virus virus) {
         this.virus = virus;
+    }
+
+    public void setCreationTime(int creationTime) {
+        this.creationTime = creationTime;
+    }
+
+    public int getCreationTime() {
+        return creationTime;
     }
 
 }

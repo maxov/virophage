@@ -144,7 +144,7 @@ public class LobbyScreen extends JPanel implements ActionListener, ListSelection
 
             serverGame.setInLobbyMode(false);
             serverGame.beginGame();
-            w.getGameScreen().gameStart(serverGame);
+            w.gameScreen.gameStart(serverGame);
         } else if (x == b2) {
             synchronized (players) {
                 if (players.size() >= GameConstants.MAX_PLAYERS) {

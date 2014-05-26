@@ -86,7 +86,6 @@ public class Player implements Serializable {
 	        				tissue.getTree().getGameClient().changePanel("loseScreen");
 	            			// END THE GAME
 	        				tissue.getTree().getGameClient().gameStop();
-	
 	        			}
 	        		}
 	        	}
@@ -151,7 +150,6 @@ public class Player implements Serializable {
 			        for (Player p: players){
 			        	if (p instanceof AIPlayer){
 			        		if (p.getViruses().size() == 0){
-			        			
 			        			tissue.getTree().getGameClient().changePanel("winScreen");
 			        			// END THE GAME
 			        			tissue.getTree().getGameClient().gameStop();
@@ -170,14 +168,19 @@ public class Player implements Serializable {
 			        			}
 			        		}
 			        	}
-			        }          	
+			        }
+
+			        			}
+			        		}
+			        	}
+			        }
                 }*/
 
                 Start.log.info("player "+name+" has " + viruses.size() + " viruses");
                 tissue.getGame().checkGame();
             }
         }
-        
+
     }
 
     /**
@@ -197,7 +200,7 @@ public class Player implements Serializable {
     public Tissue getTissue() {
         return tissue;
     }
-    
+
     public void setTissue(Tissue tissue) {
     	this.tissue = tissue;
     }

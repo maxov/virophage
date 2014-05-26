@@ -56,13 +56,17 @@ public class Virus implements Serializable {
         this.timeToUpdate = 10000;
     }
 
+    public boolean canGrowAt(int time) {
+        return (time - creationTime) % GameConstants.VIRUS_GROW_TICKS == 0;
+    }
+
     /**
      * Schedules this task.
      */
     public void schedule() {
         GameScreen.timer.schedule(task, timeToUpdate, timeToUpdate);
     }
-    
+
     public void reschedule() {
         task.cancel();
         task = recreateTask();
@@ -71,7 +75,7 @@ public class Virus implements Serializable {
     public void setTimeToUpdate(int t){
     	timeToUpdate = t;
     }
-    
+
     public int getUpdateTime(){
     	return timeToUpdate;
     }
@@ -113,4 +117,5 @@ public class Virus implements Serializable {
     public void setCreationTime(int creationTime) {
         this.creationTime = creationTime;
     }
+
 }
