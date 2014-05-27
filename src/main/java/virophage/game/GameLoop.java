@@ -1,11 +1,18 @@
 package virophage.game;
 
 
+/**
+ * Game Loop class that loops the game
+ */
 public class GameLoop implements Runnable {
 
     private ServerGame game;
     private boolean running = true;
 
+    /**
+     * Construct a gamelloop
+     * @param game
+     */
     public GameLoop(ServerGame game) {
         this.game = game;
     }
@@ -26,6 +33,9 @@ public class GameLoop implements Runnable {
         return (long) ((double) System.nanoTime() / 1000000);
     }
 
+    /**
+     * Begin GameLoop
+     */
     @Override
     public void run() {
         Thread.currentThread().setName("GameLoop");

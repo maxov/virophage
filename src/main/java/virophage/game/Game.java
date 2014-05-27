@@ -180,6 +180,10 @@ public class Game {
         return sum;
     }
 
+    /**
+     * DO a tick
+     * @param tick the current tick
+     */
     public void tick(int tick) {
         this.ticks = tick;
         Tissue tissue = getTissue();
@@ -247,7 +251,6 @@ public class Game {
 
     }
 
-
     public boolean isGameStarted() {
     	return gameStarted;
     }
@@ -257,6 +260,9 @@ public class Game {
     }
 
 
+    /**
+     * Check game for winning
+     */
     public void checkGame() {
     	List<Player> players = tissue.getPlayers();
 

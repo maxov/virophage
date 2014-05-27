@@ -110,7 +110,7 @@ class GameScreenListener implements KeyListener, MouseListener, MouseMotionListe
                 }
             }
         } else {
-            if(32 < e.getKeyChar() && e.getKeyChar()  < 176) {
+            if(!e.isActionKey() && 32 <= e.getKeyChar() && e.getKeyChar() <= 126) {
                 currentChat += e.getKeyChar();
                 Start.chatList.progressUpdate(currentChat);
             }
