@@ -9,12 +9,12 @@ By Max Ovsiankin & Leon Ren - Period 1, 5/7/14
       1. Real-Time-Strategy Game
       2. NON-INFINITE Hexagonal grid
          1. Every cell can be ‘occupied’ by only one player
-         2. Each cell has an energy level -- this is changed by the player, and reset when a cell is taken
-         3. Energy can be transferred between cells
-         4. Goal is to eliminate all of your opponent’s occupied cells
+         2. Each cell has an energy level -- this is increased every few seconds,and reset when a cell is taken
+         3. Energy can be transferred between cells via channels.
+         4. The goal is to eliminate all of your opponent’s occupied cells.
          5. At the start of the game, the map is randomly generated with several dead cells, these are colored black
-      3. Player-Vs-Player combat
-         1. Each player starts with occupying some number of cells
+      3. Player-vs-Player combat
+         1. Each player starts with occupying 7 cells.
          2. Each player starts with some number of energy on every cell
          3. To take an empty cell, the player must move at least one energy to that cell
          4. >= 2 players
