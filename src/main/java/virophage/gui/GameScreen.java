@@ -168,7 +168,7 @@ public class GameScreen extends Canvas implements Runnable {
                     new float[] {15.0f, 7.0f},
                     0));
             //g.setColor(Color.WHITE);
-            g.setColor(Color.RED);
+            g.setColor(new Color(180, 180, 180));
         }
         g.drawPolygon(hexagon);
         g.setColor(Color.BLACK);

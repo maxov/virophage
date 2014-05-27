@@ -1,10 +1,2131 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.1.6" icons="true" always-add-relationships="true" generalizations="true" realizations="true" 
   associations="true" dependencies="true" nesting-relationships="true">  
+  <class id="1" language="java" name="virophage.gui.TextScreen" project="virophage" 
+    file="/virophage/src/main/java/virophage/gui/TextScreen.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="89" x="1083" y="1060"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="virophage.core.Channel" project="virophage" 
+    file="/virophage/src/main/java/virophage/core/Channel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="87" x="992" y="502"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="virophage.network.packet.Action" project="virophage" 
+    file="/virophage/src/main/java/virophage/network/packet/Action.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="117" x="2171" y="316"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="virophage.core.DeadCell" project="virophage" 
+    file="/virophage/src/main/java/virophage/core/DeadCell.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="87" x="442" y="781"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="virophage.gui.Selection" project="virophage" 
+    file="/virophage/src/main/java/virophage/gui/Selection.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="87" x="400" y="595"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="virophage.gui.GameScreen" project="virophage" 
+    file="/virophage/src/main/java/virophage/gui/GameScreen.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="98" x="381" y="316"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="virophage.util.HexagonConstants" project="virophage" 
+    file="/virophage/src/main/java/virophage/util/HexagonConstants.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="132" x="62" y="1246"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="virophage.network.packet.PlayerNameError" project="virophage" 
+    file="/virophage/src/main/java/virophage/network/packet/PlayerNameError.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="122" x="964" y="409"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" name="virophage.core.Tissue" project="virophage" 
+    file="/virophage/src/main/java/virophage/core/Tissue.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="87" x="832" y="874"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="virophage.gui.LobbyScreen.CellRenderer" project="virophage" 
+    file="/virophage/src/main/java/virophage/gui/LobbyScreen.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="98" x="2033" y="316"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="virophage.network.packet.ErrorPacket" project="virophage" 
+    file="/virophage/src/main/java/virophage/network/packet/ErrorPacket.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="117" x="832" y="223"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="12" language="java" name="virophage.core.AIPlayer" project="virophage" 
+    file="/virophage/src/main/java/virophage/core/AIPlayer.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="87" x="1346" y="409"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="13" language="java" name="virophage.gui.MenuScreen" project="virophage" 
+    file="/virophage/src/main/java/virophage/gui/MenuScreen.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="96" x="980" y="874"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="14" language="java" name="virophage.network.packet.TooManyPlayersError" project="virophage" 
+    file="/virophage/src/main/java/virophage/network/packet/TooManyPlayersError.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="53" width="146" x="778" y="409"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="15" language="java" name="virophage.network.packet.Packet" project="virophage" 
+    file="/virophage/src/main/java/virophage/network/packet/Packet.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="117" x="1168" y="409"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="16" language="java" name="virophage.network.packet.StartGamePacket" project="virophage" 
+    file="/virophage/src/main/java/virophage/network/packet/StartGamePacket.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="125" x="970" y="316"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="17" language="java" name="virophage.network.packet.ChatPacket" project="virophage" 
+    file="/virophage/src/main/java/virophage/network/packet/ChatPacket.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="117" x="1850" y="409"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="18" language="java" name="virophage.network.packet.AssignPlayer" project="virophage" 
+    file="/virophage/src/main/java/virophage/network/packet/AssignPlayer.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="117" x="1336" y="316"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="19" language="java" name="virophage.core.Virus" project="virophage" 
+    file="/virophage/src/main/java/virophage/core/Virus.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="87" x="980" y="781"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="20" language="java" name="virophage.game.ServerGame.Handler" project="virophage" 
+    file="/virophage/src/main/java/virophage/game/ServerGame.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="87" x="1156" y="130"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="21" language="java" name="virophage.core.BonusCell" project="virophage" 
+    file="/virophage/src/main/java/virophage/core/BonusCell.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="87" x="779" y="967"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="22" language="java" name="virophage.util.GameConstants" project="virophage" 
+    file="/virophage/src/main/java/virophage/util/GameConstants.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="115" x="234" y="1246"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="23" language="java" name="virophage.Start" project="virophage" 
+    file="/virophage/src/main/java/virophage/Start.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="87" x="1577" y="1153"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="24" language="java" name="virophage.gui.ClientLobbyScreen" project="virophage" 
+    file="/virophage/src/main/java/virophage/gui/ClientLobbyScreen.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="131" x="2433" y="316"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="25" language="java" name="virophage.network.packet.RequestPlayerName" project="virophage" 
+    file="/virophage/src/main/java/virophage/network/packet/RequestPlayerName.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="140" x="1156" y="316"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="26" language="java" name="virophage.network.PacketStream" project="virophage" 
+    file="/virophage/src/main/java/virophage/network/PacketStream.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="106" x="2625" y="316"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="27" language="java" name="virophage.core.RemotePlayer" project="virophage" 
+    file="/virophage/src/main/java/virophage/core/RemotePlayer.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="104" x="2711" y="1153"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="28" language="java" name="virophage.network.PacketStreamListener" project="virophage" 
+    file="/virophage/src/main/java/virophage/network/PacketStreamListener.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="153" x="2497" y="409"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="29" language="java" name="virophage.util.Location" project="virophage" 
+    file="/virophage/src/main/java/virophage/util/Location.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="87" x="589" y="1153"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="30" language="java" name="virophage.gui.CreditsScreen" project="virophage" 
+    file="/virophage/src/main/java/virophage/gui/CreditsScreen.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="106" x="1127" y="1153"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="31" language="java" name="virophage.network.packet.PlayerError" project="virophage" 
+    file="/virophage/src/main/java/virophage/network/packet/PlayerError.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="117" x="729" y="316"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="32" language="java" name="virophage.network.packet.LobbyPacket" project="virophage" 
+    file="/virophage/src/main/java/virophage/network/packet/LobbyPacket.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="117" x="1650" y="316"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="33" language="java" name="virophage.network.PacketBundle" project="virophage" 
+    file="/virophage/src/main/java/virophage/network/PacketBundle.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="103" x="2796" y="223"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="34" language="java" name="virophage.game.ServerGame" project="virophage" 
+    file="/virophage/src/main/java/virophage/game/ServerGame.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="95" x="668" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="35" language="java" name="virophage.gui.GameScreenListener" project="virophage" 
+    file="/virophage/src/main/java/virophage/gui/GameScreenListener.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="145" x="320" y="223"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="36" language="java" name="virophage.game.Game" project="virophage" 
+    file="/virophage/src/main/java/virophage/game/Game.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="87" x="758" y="595"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="37" language="java" name="virophage.game.ClientGame" project="virophage" 
+    file="/virophage/src/main/java/virophage/game/ClientGame.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="89" x="1788" y="223"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="38" language="java" name="virophage.core.Player" project="virophage" 
+    file="/virophage/src/main/java/virophage/core/Player.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="87" x="1642" y="1060"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="39" language="java" name="virophage.util.Vector" project="virophage" 
+    file="/virophage/src/main/java/virophage/util/Vector.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="87" x="389" y="1246"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="40" language="java" name="virophage.network.TissueSegment" project="virophage" 
+    file="/virophage/src/main/java/virophage/network/TissueSegment.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="113" x="1529" y="409"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="41" language="java" name="virophage.util.Listening" project="virophage" 
+    file="/virophage/src/main/java/virophage/util/Listening.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="87" x="292" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="42" language="java" name="virophage.gui.InstructionScreen" project="virophage" 
+    file="/virophage/src/main/java/virophage/gui/InstructionScreen.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="126" x="1273" y="1153"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="43" language="java" name="virophage.network.packet.BroadcastPacket" project="virophage" 
+    file="/virophage/src/main/java/virophage/network/packet/BroadcastPacket.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="123" x="1828" y="316"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="44" language="java" name="virophage.gui.ConnectionDialog" project="virophage" 
+    file="/virophage/src/main/java/virophage/gui/ConnectionDialog.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="123" x="1330" y="967"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="45" language="java" name="virophage.network.packet.TissueUpdate" project="virophage" 
+    file="/virophage/src/main/java/virophage/network/packet/TissueUpdate.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="117" x="1493" y="316"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="46" language="java" name="virophage.network.SocketBundle" project="virophage" 
+    file="/virophage/src/main/java/virophage/network/SocketBundle.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="103" x="2572" y="223"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="47" language="java" name="virophage.gui.GameClient" project="virophage" 
+    file="/virophage/src/main/java/virophage/gui/GameClient.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="89" x="1537" y="1246"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="48" language="java" name="virophage.network.packet.CreateChannelAction" project="virophage" 
+    file="/virophage/src/main/java/virophage/network/packet/CreateChannelAction.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="53" width="144" x="1146" y="967"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="49" language="java" name="virophage.core.Cell" project="virophage" 
+    file="/virophage/src/main/java/virophage/core/Cell.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="87" x="736" y="688"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="50" language="java" name="virophage.gui.LobbyScreen" project="virophage" 
+    file="/virophage/src/main/java/virophage/gui/LobbyScreen.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="99" x="2433" y="223"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <dependency id="51">    
+    <bendpoint x="748" y="1060"/>    
+    <end type="SOURCE" refId="21"/>    
+    <end type="TARGET" refId="29"/>  
+  </dependency>  
+  <association id="52">    
+    <bendpoint x="853" y="688"/>    
+    <bendpoint x="853" y="781"/>    
+    <end type="SOURCE" refId="36" navigable="false">      
+      <attribute id="53" name="tissue"/>      
+      <multiplicity id="54" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="55">    
+    <bendpoint x="1022" y="595"/>    
+    <bendpoint x="1022" y="688"/>    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="56" name="virus"/>      
+      <multiplicity id="57" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="58">    
+    <end type="SOURCE" refId="30"/>    
+    <end type="TARGET" refId="1"/>  
+  </generalization>  
+  <association id="59">    
+    <bendpoint x="1997" y="409"/>    
+    <bendpoint x="1997" y="502"/>    
+    <bendpoint x="1997" y="595"/>    
+    <bendpoint x="1997" y="688"/>    
+    <bendpoint x="1997" y="781"/>    
+    <bendpoint x="1997" y="874"/>    
+    <bendpoint x="1997" y="967"/>    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="60" name="player"/>      
+      <multiplicity id="61" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="38" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="62">    
+    <bendpoint x="897" y="316"/>    
+    <end type="SOURCE" refId="37"/>    
+    <end type="TARGET" refId="14"/>  
+  </dependency>  
+  <dependency id="63">    
+    <bendpoint x="1125" y="130"/>    
+    <bendpoint x="1125" y="223"/>    
+    <bendpoint x="1125" y="316"/>    
+    <end type="SOURCE" refId="34"/>    
+    <end type="TARGET" refId="12"/>  
+  </dependency>  
+  <association id="64">    
+    <end type="SOURCE" refId="49" navigable="false">      
+      <attribute id="65" name="occupant"/>      
+      <multiplicity id="66" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="67">    
+    <bendpoint x="614" y="130"/>    
+    <bendpoint x="614" y="223"/>    
+    <bendpoint x="614" y="316"/>    
+    <bendpoint x="663" y="409"/>    
+    <bendpoint x="663" y="502"/>    
+    <end type="SOURCE" refId="34"/>    
+    <end type="TARGET" refId="36"/>  
+  </generalization>  
+  <association id="68">    
+    <end type="SOURCE" refId="24" navigable="false">      
+      <attribute id="69" name="clientGame"/>      
+      <multiplicity id="70" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="37" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="71">    
+    <bendpoint x="621" y="409"/>    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="6"/>  
+  </dependency>  
+  <dependency id="72">    
+    <bendpoint x="530" y="316"/>    
+    <bendpoint x="642" y="409"/>    
+    <bendpoint x="779" y="502"/>    
+    <bendpoint x="917" y="595"/>    
+    <bendpoint x="958" y="688"/>    
+    <end type="SOURCE" refId="35"/>    
+    <end type="TARGET" refId="19"/>  
+  </dependency>  
+  <dependency id="73">    
+    <bendpoint x="2929" y="130"/>    
+    <bendpoint x="2929" y="223"/>    
+    <bendpoint x="2929" y="316"/>    
+    <bendpoint x="2887" y="409"/>    
+    <bendpoint x="2845" y="502"/>    
+    <bendpoint x="2788" y="595"/>    
+    <bendpoint x="2731" y="688"/>    
+    <bendpoint x="2680" y="781"/>    
+    <bendpoint x="2638" y="874"/>    
+    <bendpoint x="2596" y="967"/>    
+    <end type="SOURCE" refId="34"/>    
+    <end type="TARGET" refId="38"/>  
+  </dependency>  
+  <association id="74">    
+    <bendpoint x="1158" y="502"/>    
+    <bendpoint x="959" y="595"/>    
+    <end type="SOURCE" refId="40" navigable="false">      
+      <attribute id="75" name="cells"/>      
+      <multiplicity id="76" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="49" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="77">    
+    <bendpoint x="369" y="409"/>    
+    <bendpoint x="348" y="502"/>    
+    <bendpoint x="306" y="595"/>    
+    <bendpoint x="306" y="688"/>    
+    <bendpoint x="285" y="781"/>    
+    <bendpoint x="306" y="874"/>    
+    <bendpoint x="327" y="967"/>    
+    <bendpoint x="348" y="1060"/>    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="29"/>  
+  </dependency>  
+  <dependency id="78">    
+    <bendpoint x="895" y="688"/>    
+    <end type="SOURCE" refId="36"/>    
+    <end type="TARGET" refId="19"/>  
+  </dependency>  
+  <association id="79">    
+    <bendpoint x="1504" y="967"/>    
+    <bendpoint x="1378" y="874"/>    
+    <end type="SOURCE" refId="38" navigable="false">      
+      <attribute id="80" name="viruses"/>      
+      <multiplicity id="81" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="82">    
+    <bendpoint x="138" y="316"/>    
+    <bendpoint x="117" y="409"/>    
+    <bendpoint x="96" y="502"/>    
+    <bendpoint x="96" y="595"/>    
+    <bendpoint x="96" y="688"/>    
+    <bendpoint x="96" y="781"/>    
+    <bendpoint x="96" y="874"/>    
+    <bendpoint x="117" y="967"/>    
+    <bendpoint x="169" y="1060"/>    
+    <bendpoint x="222" y="1153"/>    
+    <end type="SOURCE" refId="35" navigable="false">      
+      <attribute id="83" name="prevPos"/>      
+      <multiplicity id="84" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="39" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="85">    
+    <end type="SOURCE" refId="26" navigable="false">      
+      <attribute id="86" name="listeners"/>      
+      <multiplicity id="87" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="28" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="88">    
+    <bendpoint x="989" y="967"/>    
+    <bendpoint x="989" y="1060"/>    
+    <bendpoint x="989" y="1153"/>    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="89" name="w"/>      
+      <multiplicity id="90" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="47" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="91">    
+    <end type="SOURCE" refId="44"/>    
+    <end type="TARGET" refId="38"/>  
+  </dependency>  
+  <dependency id="92">    
+    <bendpoint x="2824" y="316"/>    
+    <bendpoint x="2799" y="409"/>    
+    <bendpoint x="2775" y="502"/>    
+    <bendpoint x="2763" y="595"/>    
+    <bendpoint x="2752" y="688"/>    
+    <bendpoint x="2737" y="781"/>    
+    <bendpoint x="2722" y="874"/>    
+    <bendpoint x="2680" y="967"/>    
+    <bendpoint x="2638" y="1060"/>    
+    <end type="SOURCE" refId="50"/>    
+    <end type="TARGET" refId="23"/>  
+  </dependency>  
+  <association id="93">    
+    <bendpoint x="329" y="316"/>    
+    <bendpoint x="348" y="409"/>    
+    <bendpoint x="390" y="502"/>    
+    <bendpoint x="517" y="595"/>    
+    <bendpoint x="558" y="688"/>    
+    <bendpoint x="685" y="781"/>    
+    <end type="SOURCE" refId="35" navigable="false">      
+      <attribute id="94" name="tissue"/>      
+      <multiplicity id="95" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="96">    
+    <bendpoint x="832" y="781"/>    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="97" name="cells"/>      
+      <multiplicity id="98" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="49" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="99">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="15"/>  
+  </realization>  
+  <dependency id="100">    
+    <bendpoint x="201" y="130"/>    
+    <bendpoint x="201" y="223"/>    
+    <bendpoint x="201" y="316"/>    
+    <bendpoint x="222" y="409"/>    
+    <bendpoint x="306" y="502"/>    
+    <bendpoint x="369" y="595"/>    
+    <bendpoint x="453" y="688"/>    
+    <bendpoint x="622" y="781"/>    
+    <end type="SOURCE" refId="34"/>    
+    <end type="TARGET" refId="9"/>  
+  </dependency>  
+  <association id="101">    
+    <bendpoint x="2381" y="316"/>    
+    <bendpoint x="2381" y="409"/>    
+    <bendpoint x="2381" y="502"/>    
+    <bendpoint x="2381" y="595"/>    
+    <bendpoint x="2381" y="688"/>    
+    <bendpoint x="2381" y="781"/>    
+    <bendpoint x="2381" y="874"/>    
+    <bendpoint x="2381" y="967"/>    
+    <end type="SOURCE" refId="37" navigable="false">      
+      <attribute id="102" name="player"/>      
+      <multiplicity id="103" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="38" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="104">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="31"/>  
+  </generalization>  
+  <dependency id="105">    
+    <bendpoint x="1273" y="130"/>    
+    <bendpoint x="1273" y="223"/>    
+    <end type="SOURCE" refId="34"/>    
+    <end type="TARGET" refId="32"/>  
+  </dependency>  
+  <realization id="106">    
+    <end type="SOURCE" refId="45"/>    
+    <end type="TARGET" refId="15"/>  
+  </realization>  
+  <dependency id="107">    
+    <bendpoint x="1981" y="316"/>    
+    <end type="SOURCE" refId="50"/>    
+    <end type="TARGET" refId="12"/>  
+  </dependency>  
+  <dependency id="108">    
+    <bendpoint x="2318" y="316"/>    
+    <end type="SOURCE" refId="37"/>    
+    <end type="TARGET" refId="17"/>  
+  </dependency>  
+  <association id="109">    
+    <bendpoint x="1546" y="1060"/>    
+    <bendpoint x="1546" y="1153"/>    
+    <end type="SOURCE" refId="44" navigable="false">      
+      <attribute id="110" name="gameClient"/>      
+      <multiplicity id="111" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="47" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="112">    
+    <end type="SOURCE" refId="42"/>    
+    <end type="TARGET" refId="1"/>  
+  </generalization>  
+  <generalization id="113">    
+    <end type="SOURCE" refId="24"/>    
+    <end type="TARGET" refId="50"/>  
+  </generalization>  
+  <dependency id="114">    
+    <end type="SOURCE" refId="37"/>    
+    <end type="TARGET" refId="32"/>  
+  </dependency>  
+  <dependency id="115">    
+    <end type="SOURCE" refId="50"/>    
+    <end type="TARGET" refId="6"/>  
+  </dependency>  
+  <association id="116">    
+    <end type="SOURCE" refId="23" navigable="false">      
+      <attribute id="117" name="gameClient"/>      
+      <multiplicity id="118" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="47" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="119">    
+    <bendpoint x="1672" y="409"/>    
+    <bendpoint x="1672" y="502"/>    
+    <bendpoint x="1672" y="595"/>    
+    <bendpoint x="1687" y="688"/>    
+    <bendpoint x="1693" y="781"/>    
+    <bendpoint x="1693" y="874"/>    
+    <bendpoint x="1693" y="967"/>    
+    <end type="SOURCE" refId="32" navigable="false">      
+      <attribute id="120" name="players"/>      
+      <multiplicity id="121" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="38" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="122">    
+    <bendpoint x="96" y="316"/>    
+    <bendpoint x="75" y="409"/>    
+    <bendpoint x="75" y="502"/>    
+    <bendpoint x="54" y="595"/>    
+    <bendpoint x="54" y="688"/>    
+    <bendpoint x="54" y="781"/>    
+    <bendpoint x="54" y="874"/>    
+    <bendpoint x="54" y="967"/>    
+    <bendpoint x="54" y="1060"/>    
+    <bendpoint x="54" y="1153"/>    
+    <end type="SOURCE" refId="35"/>    
+    <end type="TARGET" refId="7"/>  
+  </dependency>  
+  <association id="123">    
+    <bendpoint x="2065" y="130"/>    
+    <end type="SOURCE" refId="50" navigable="false">      
+      <attribute id="124" name="serverGame"/>      
+      <multiplicity id="125" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="34" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="126">    
+    <bendpoint x="918" y="316"/>    
+    <end type="SOURCE" refId="37"/>    
+    <end type="TARGET" refId="8"/>  
+  </dependency>  
+  <association id="127">    
+    <bendpoint x="2659" y="1153"/>    
+    <bendpoint x="2659" y="1060"/>    
+    <bendpoint x="2659" y="967"/>    
+    <bendpoint x="2659" y="874"/>    
+    <bendpoint x="2659" y="781"/>    
+    <bendpoint x="2652" y="688"/>    
+    <bendpoint x="2633" y="595"/>    
+    <bendpoint x="2589" y="502"/>    
+    <bendpoint x="2466" y="409"/>    
+    <end type="SOURCE" refId="47" navigable="false">      
+      <attribute id="128" name="clientLobbyScreen"/>      
+      <multiplicity id="129" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="24" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="130">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="2"/>  
+  </dependency>  
+  <dependency id="131">    
+    <bendpoint x="285" y="409"/>    
+    <bendpoint x="243" y="502"/>    
+    <bendpoint x="201" y="595"/>    
+    <bendpoint x="201" y="688"/>    
+    <bendpoint x="201" y="781"/>    
+    <bendpoint x="201" y="874"/>    
+    <bendpoint x="201" y="967"/>    
+    <bendpoint x="201" y="1060"/>    
+    <bendpoint x="201" y="1153"/>    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="22"/>  
+  </dependency>  
+  <dependency id="132">    
+    <bendpoint x="705" y="688"/>    
+    <bendpoint x="706" y="781"/>    
+    <bendpoint x="706" y="874"/>    
+    <end type="SOURCE" refId="36"/>    
+    <end type="TARGET" refId="21"/>  
+  </dependency>  
+  <dependency id="133">    
+    <bendpoint x="621" y="688"/>    
+    <bendpoint x="580" y="781"/>    
+    <bendpoint x="580" y="874"/>    
+    <bendpoint x="580" y="967"/>    
+    <bendpoint x="580" y="1060"/>    
+    <end type="SOURCE" refId="36"/>    
+    <end type="TARGET" refId="29"/>  
+  </dependency>  
+  <association id="134">    
+    <bendpoint x="1859" y="502"/>    
+    <bendpoint x="1859" y="595"/>    
+    <bendpoint x="1859" y="688"/>    
+    <bendpoint x="1859" y="781"/>    
+    <bendpoint x="1859" y="874"/>    
+    <bendpoint x="1859" y="967"/>    
+    <end type="SOURCE" refId="17" navigable="false">      
+      <attribute id="135" name="player"/>      
+      <multiplicity id="136" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="38" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="137">    
+    <end type="SOURCE" refId="48"/>    
+    <end type="TARGET" refId="38"/>  
+  </dependency>  
+  <association id="138">    
+    <bendpoint x="727" y="595"/>    
+    <bendpoint x="642" y="688"/>    
+    <bendpoint x="601" y="781"/>    
+    <bendpoint x="601" y="874"/>    
+    <bendpoint x="601" y="967"/>    
+    <bendpoint x="601" y="1060"/>    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="139" name="to"/>      
+      <multiplicity id="140" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="29" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="141">    
+    <bendpoint x="2023" y="223"/>    
+    <bendpoint x="2023" y="130"/>    
+    <end type="SOURCE" refId="24"/>    
+    <end type="TARGET" refId="34"/>  
+  </dependency>  
+  <association id="142">    
+    <bendpoint x="2761" y="316"/>    
+    <bendpoint x="2680" y="409"/>    
+    <bendpoint x="2568" y="502"/>    
+    <bendpoint x="2534" y="595"/>    
+    <bendpoint x="2527" y="688"/>    
+    <bendpoint x="2521" y="781"/>    
+    <bendpoint x="2516" y="874"/>    
+    <bendpoint x="2512" y="967"/>    
+    <end type="SOURCE" refId="50" navigable="false">      
+      <attribute id="143" name="players"/>      
+      <multiplicity id="144" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="38" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="145">    
+    <end type="SOURCE" refId="37"/>    
+    <end type="TARGET" refId="31"/>  
+  </dependency>  
+  <association id="146">    
+    <bendpoint x="1137" y="409"/>    
+    <bendpoint x="1137" y="502"/>    
+    <bendpoint x="1231" y="595"/>    
+    <bendpoint x="1231" y="688"/>    
+    <bendpoint x="1231" y="781"/>    
+    <end type="SOURCE" refId="16" navigable="false">      
+      <attribute id="147" name="tissue"/>      
+      <multiplicity id="148" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="149">    
+    <bendpoint x="348" y="688"/>    
+    <bendpoint x="327" y="781"/>    
+    <bendpoint x="348" y="874"/>    
+    <bendpoint x="369" y="967"/>    
+    <bendpoint x="369" y="1060"/>    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="29"/>  
+  </dependency>  
+  <association id="150">    
+    <bendpoint x="1429" y="1153"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="151" name="w"/>      
+      <multiplicity id="152" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="47" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="153">    
+    <bendpoint x="677" y="130"/>    
+    <bendpoint x="677" y="223"/>    
+    <bendpoint x="698" y="316"/>    
+    <end type="SOURCE" refId="34"/>    
+    <end type="TARGET" refId="15"/>  
+  </dependency>  
+  <dependency id="154">    
+    <bendpoint x="509" y="316"/>    
+    <bendpoint x="537" y="409"/>    
+    <bendpoint x="558" y="502"/>    
+    <bendpoint x="664" y="595"/>    
+    <end type="SOURCE" refId="35"/>    
+    <end type="TARGET" refId="49"/>  
+  </dependency>  
+  <dependency id="155">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="44"/>  
+  </dependency>  
+  <dependency id="156">    
+    <bendpoint x="551" y="130"/>    
+    <bendpoint x="551" y="223"/>    
+    <bendpoint x="551" y="316"/>    
+    <bendpoint x="600" y="409"/>    
+    <bendpoint x="621" y="502"/>    
+    <bendpoint x="706" y="595"/>    
+    <end type="SOURCE" refId="34"/>    
+    <end type="TARGET" refId="49"/>  
+  </dependency>  
+  <dependency id="157">    
+    <bendpoint x="896" y="502"/>    
+    <bendpoint x="896" y="595"/>    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="49"/>  
+  </dependency>  
+  <association id="158">    
+    <end type="SOURCE" refId="29" navigable="false">      
+      <attribute id="159" name="Z_VECTOR"/>      
+      <multiplicity id="160" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="39" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="161">    
+    <end type="SOURCE" refId="17"/>    
+    <end type="TARGET" refId="43"/>  
+  </generalization>  
+  <dependency id="162">    
+    <bendpoint x="411" y="688"/>    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <generalization id="163">    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="38"/>  
+  </generalization>  
+  <dependency id="164">    
+    <bendpoint x="350" y="316"/>    
+    <bendpoint x="411" y="409"/>    
+    <bendpoint x="411" y="502"/>    
+    <end type="SOURCE" refId="35"/>    
+    <end type="TARGET" refId="5"/>  
+  </dependency>  
+  <dependency id="165">    
+    <end type="SOURCE" refId="30"/>    
+    <end type="TARGET" refId="47"/>  
+  </dependency>  
+  <dependency id="166">    
+    <bendpoint x="54" y="130"/>    
+    <bendpoint x="54" y="223"/>    
+    <bendpoint x="54" y="316"/>    
+    <bendpoint x="54" y="409"/>    
+    <bendpoint x="54" y="502"/>    
+    <bendpoint x="75" y="595"/>    
+    <bendpoint x="75" y="688"/>    
+    <bendpoint x="117" y="781"/>    
+    <bendpoint x="180" y="874"/>    
+    <bendpoint x="243" y="967"/>    
+    <bendpoint x="285" y="1060"/>    
+    <end type="SOURCE" refId="34"/>    
+    <end type="TARGET" refId="29"/>  
+  </dependency>  
+  <association id="167">    
+    <bendpoint x="1031" y="1060"/>    
+    <end type="SOURCE" refId="48" navigable="false">      
+      <attribute id="168" name="to"/>      
+      <multiplicity id="169" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="29" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="170">    
+    <bendpoint x="2339" y="316"/>    
+    <bendpoint x="1798" y="409"/>    
+    <bendpoint x="1693" y="502"/>    
+    <bendpoint x="1546" y="595"/>    
+    <bendpoint x="1483" y="688"/>    
+    <bendpoint x="1441" y="781"/>    
+    <end type="SOURCE" refId="50"/>    
+    <end type="TARGET" refId="9"/>  
+  </dependency>  
+  <association id="171">    
+    <bendpoint x="2803" y="316"/>    
+    <bendpoint x="2762" y="409"/>    
+    <bendpoint x="2722" y="502"/>    
+    <bendpoint x="2676" y="595"/>    
+    <bendpoint x="2631" y="688"/>    
+    <bendpoint x="2596" y="781"/>    
+    <bendpoint x="2554" y="874"/>    
+    <bendpoint x="2533" y="967"/>    
+    <end type="SOURCE" refId="50" navigable="false">      
+      <attribute id="172" name="youPlayer"/>      
+      <multiplicity id="173" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="38" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="174">    
+    <end type="SOURCE" refId="39" navigable="false">      
+      <attribute id="175" name="i"/>      
+      <multiplicity id="176" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="39" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="177">    
+    <bendpoint x="75" y="130"/>    
+    <bendpoint x="75" y="223"/>    
+    <bendpoint x="75" y="316"/>    
+    <bendpoint x="96" y="409"/>    
+    <bendpoint x="117" y="502"/>    
+    <bendpoint x="159" y="595"/>    
+    <bendpoint x="222" y="688"/>    
+    <bendpoint x="306" y="781"/>    
+    <bendpoint x="453" y="874"/>    
+    <end type="SOURCE" refId="34"/>    
+    <end type="TARGET" refId="21"/>  
+  </dependency>  
+  <association id="178">    
+    <end type="SOURCE" refId="35" navigable="false">      
+      <attribute id="179" name="gameScreen"/>      
+      <multiplicity id="180" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="181">    
+    <bendpoint x="2402" y="316"/>    
+    <bendpoint x="2402" y="409"/>    
+    <bendpoint x="2479" y="502"/>    
+    <bendpoint x="2555" y="595"/>    
+    <bendpoint x="2601" y="688"/>    
+    <bendpoint x="2617" y="781"/>    
+    <bendpoint x="2617" y="874"/>    
+    <bendpoint x="2617" y="967"/>    
+    <bendpoint x="2617" y="1060"/>    
+    <end type="SOURCE" refId="37"/>    
+    <end type="TARGET" refId="23"/>  
+  </dependency>  
+  <association id="182">    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="183" name="bonuses"/>      
+      <multiplicity id="184" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="21" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="185">    
+    <bendpoint x="2866" y="1153"/>    
+    <bendpoint x="2866" y="1060"/>    
+    <bendpoint x="2866" y="967"/>    
+    <bendpoint x="2866" y="874"/>    
+    <bendpoint x="2866" y="781"/>    
+    <bendpoint x="2866" y="688"/>    
+    <bendpoint x="2866" y="595"/>    
+    <bendpoint x="2866" y="502"/>    
+    <bendpoint x="2866" y="409"/>    
+    <bendpoint x="2866" y="316"/>    
+    <end type="SOURCE" refId="47" navigable="false">      
+      <attribute id="186" name="lobbyScreen"/>      
+      <multiplicity id="187" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="50" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="188">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="9"/>  
+  </dependency>  
+  <dependency id="189">    
+    <bendpoint x="656" y="223"/>    
+    <bendpoint x="572" y="316"/>    
+    <bendpoint x="579" y="409"/>    
+    <bendpoint x="579" y="502"/>    
+    <bendpoint x="580" y="595"/>    
+    <bendpoint x="663" y="688"/>    
+    <bendpoint x="790" y="781"/>    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="9"/>  
+  </dependency>  
+  <dependency id="190">    
+    <end type="SOURCE" refId="29"/>    
+    <end type="TARGET" refId="22"/>  
+  </dependency>  
+  <generalization id="191">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="31"/>  
+  </generalization>  
+  <generalization id="192">    
+    <bendpoint x="939" y="316"/>    
+    <bendpoint x="1116" y="409"/>    
+    <bendpoint x="812" y="502"/>    
+    <end type="SOURCE" refId="37"/>    
+    <end type="TARGET" refId="36"/>  
+  </generalization>  
+  <association id="193">    
+    <bendpoint x="748" y="781"/>    
+    <bendpoint x="685" y="874"/>    
+    <bendpoint x="685" y="967"/>    
+    <bendpoint x="685" y="1060"/>    
+    <end type="SOURCE" refId="49" navigable="false">      
+      <attribute id="194" name="location"/>      
+      <multiplicity id="195" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="29" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="196">    
+    <end type="SOURCE" refId="37"/>    
+    <end type="TARGET" refId="43"/>  
+  </dependency>  
+  <generalization id="197">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="49"/>  
+  </generalization>  
+  <association id="198">    
+    <bendpoint x="306" y="409"/>    
+    <bendpoint x="264" y="502"/>    
+    <bendpoint x="243" y="595"/>    
+    <bendpoint x="243" y="688"/>    
+    <bendpoint x="232" y="781"/>    
+    <bendpoint x="222" y="874"/>    
+    <bendpoint x="222" y="967"/>    
+    <bendpoint x="222" y="1060"/>    
+    <bendpoint x="264" y="1153"/>    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="199" name="displacement"/>      
+      <multiplicity id="200" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="39" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="201">    
+    <bendpoint x="601" y="595"/>    
+    <bendpoint x="432" y="688"/>    
+    <bendpoint x="369" y="781"/>    
+    <bendpoint x="327" y="874"/>    
+    <bendpoint x="285" y="967"/>    
+    <bendpoint x="243" y="1060"/>    
+    <bendpoint x="243" y="1153"/>    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="22"/>  
+  </dependency>  
+  <dependency id="202">    
+    <bendpoint x="33" y="130"/>    
+    <bendpoint x="33" y="223"/>    
+    <bendpoint x="33" y="316"/>    
+    <bendpoint x="33" y="409"/>    
+    <bendpoint x="33" y="502"/>    
+    <bendpoint x="33" y="595"/>    
+    <bendpoint x="33" y="688"/>    
+    <bendpoint x="33" y="781"/>    
+    <bendpoint x="33" y="874"/>    
+    <bendpoint x="33" y="967"/>    
+    <bendpoint x="75" y="1060"/>    
+    <bendpoint x="110" y="1153"/>    
+    <end type="SOURCE" refId="34"/>    
+    <end type="TARGET" refId="22"/>  
+  </dependency>  
+  <association id="203">    
+    <bendpoint x="1588" y="967"/>    
+    <bendpoint x="1567" y="874"/>    
+    <bendpoint x="1546" y="781"/>    
+    <bendpoint x="1441" y="688"/>    
+    <bendpoint x="1315" y="595"/>    
+    <end type="SOURCE" refId="38" navigable="false">      
+      <attribute id="204" name="channels"/>      
+      <multiplicity id="205" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="206">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="12"/>  
+  </dependency>  
+  <dependency id="207">    
+    <bendpoint x="979" y="130"/>    
+    <bendpoint x="979" y="223"/>    
+    <end type="SOURCE" refId="34"/>    
+    <end type="TARGET" refId="16"/>  
+  </dependency>  
+  <association id="208">    
+    <bendpoint x="2044" y="130"/>    
+    <end type="SOURCE" refId="34" navigable="false">      
+      <attribute id="209" name="lobbyScreen"/>      
+      <multiplicity id="210" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="50" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="211">    
+    <end type="SOURCE" refId="36"/>    
+    <end type="TARGET" refId="49"/>  
+  </dependency>  
+  <generalization id="212">    
+    <bendpoint x="769" y="874"/>    
+    <bendpoint x="769" y="781"/>    
+    <end type="SOURCE" refId="21"/>    
+    <end type="TARGET" refId="49"/>  
+  </generalization>  
+  <association id="213">    
+    <end type="SOURCE" refId="19" navigable="false">      
+      <attribute id="214" name="cell"/>      
+      <multiplicity id="215" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="49" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="216">    
+    <bendpoint x="1315" y="409"/>    
+    <bendpoint x="1315" y="502"/>    
+    <bendpoint x="1336" y="595"/>    
+    <bendpoint x="1336" y="688"/>    
+    <bendpoint x="1336" y="781"/>    
+    <end type="SOURCE" refId="45" navigable="false">      
+      <attribute id="217" name="tissue"/>      
+      <multiplicity id="218" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="219">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="220" name="from"/>      
+      <multiplicity id="221" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="49" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="222">    
+    <bendpoint x="432" y="874"/>    
+    <bendpoint x="432" y="967"/>    
+    <bendpoint x="432" y="1060"/>    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="29"/>  
+  </dependency>  
+  <dependency id="223">    
+    <bendpoint x="2360" y="316"/>    
+    <bendpoint x="2018" y="409"/>    
+    <bendpoint x="1923" y="502"/>    
+    <bendpoint x="1829" y="595"/>    
+    <bendpoint x="1735" y="688"/>    
+    <bendpoint x="1672" y="781"/>    
+    <bendpoint x="1588" y="874"/>    
+    <end type="SOURCE" refId="37"/>    
+    <end type="TARGET" refId="44"/>  
+  </dependency>  
+  <nesting id="224">    
+    <end type="SOURCE" refId="34"/>    
+    <end type="TARGET" refId="20"/>  
+  </nesting>  
+  <association id="225">    
+    <bendpoint x="1463" y="409"/>    
+    <bendpoint x="1463" y="502"/>    
+    <bendpoint x="1525" y="595"/>    
+    <bendpoint x="1567" y="688"/>    
+    <bendpoint x="1630" y="781"/>    
+    <bendpoint x="1630" y="874"/>    
+    <bendpoint x="1630" y="967"/>    
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="226" name="player"/>      
+      <multiplicity id="227" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="38" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="228">    
+    <end type="SOURCE" refId="37" navigable="false">      
+      <attribute id="229" name="stream"/>      
+      <multiplicity id="230" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="26" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="231">    
+    <bendpoint x="1097" y="595"/>    
+    <bendpoint x="1097" y="688"/>    
+    <bendpoint x="1097" y="781"/>    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="232" name="tissue"/>      
+      <multiplicity id="233" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="234">    
+    <bendpoint x="117" y="130"/>    
+    <bendpoint x="117" y="223"/>    
+    <bendpoint x="117" y="316"/>    
+    <bendpoint x="159" y="409"/>    
+    <bendpoint x="201" y="502"/>    
+    <bendpoint x="264" y="595"/>    
+    <bendpoint x="327" y="688"/>    
+    <end type="SOURCE" refId="34"/>    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <dependency id="235">    
+    <bendpoint x="698" y="223"/>    
+    <bendpoint x="656" y="316"/>    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="14"/>  
+  </dependency>  
+  <dependency id="236">    
+    <end type="SOURCE" refId="37"/>    
+    <end type="TARGET" refId="25"/>  
+  </dependency>  
+  <realization id="237">    
+    <bendpoint x="876" y="316"/>    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="15"/>  
+  </realization>  
+  <dependency id="238">    
+    <bendpoint x="1106" y="874"/>    
+    <bendpoint x="1031" y="967"/>    
+    <bendpoint x="1202" y="1060"/>    
+    <end type="SOURCE" refId="19"/>    
+    <end type="TARGET" refId="23"/>  
+  </dependency>  
+  <association id="239">    
+    <bendpoint x="1052" y="967"/>    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="240" name="players"/>      
+      <multiplicity id="241" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="38" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="242">    
+    <bendpoint x="2002" y="223"/>    
+    <bendpoint x="2002" y="316"/>    
+    <bendpoint x="1756" y="409"/>    
+    <bendpoint x="1756" y="502"/>    
+    <bendpoint x="1756" y="595"/>    
+    <bendpoint x="1756" y="688"/>    
+    <bendpoint x="1756" y="781"/>    
+    <bendpoint x="1756" y="874"/>    
+    <bendpoint x="1756" y="967"/>    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="38"/>  
+  </dependency>  
+  <dependency id="243">    
+    <bendpoint x="2594" y="316"/>    
+    <bendpoint x="2701" y="409"/>    
+    <bendpoint x="2701" y="502"/>    
+    <bendpoint x="2701" y="595"/>    
+    <bendpoint x="2701" y="688"/>    
+    <bendpoint x="2701" y="781"/>    
+    <bendpoint x="2701" y="874"/>    
+    <bendpoint x="2701" y="967"/>    
+    <bendpoint x="2690" y="1060"/>    
+    <bendpoint x="2680" y="1153"/>    
+    <end type="SOURCE" refId="37"/>    
+    <end type="TARGET" refId="47"/>  
+  </dependency>  
+  <association id="244">    
+    <bendpoint x="1052" y="1060"/>    
+    <end type="SOURCE" refId="48" navigable="false">      
+      <attribute id="245" name="from"/>      
+      <multiplicity id="246" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="29" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="247">    
+    <end type="SOURCE" refId="38"/>    
+    <end type="TARGET" refId="29"/>  
+  </dependency>  
+  <dependency id="248">    
+    <bendpoint x="1357" y="502"/>    
+    <bendpoint x="1357" y="595"/>    
+    <bendpoint x="1357" y="688"/>    
+    <bendpoint x="1357" y="781"/>    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="9"/>  
+  </dependency>  
+  <dependency id="249">    
+    <bendpoint x="1336" y="502"/>    
+    <bendpoint x="1252" y="595"/>    
+    <bendpoint x="1210" y="688"/>    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="19"/>  
+  </dependency>  
+  <dependency id="250">    
+    <bendpoint x="1797" y="316"/>    
+    <bendpoint x="1498" y="409"/>    
+    <bendpoint x="1484" y="502"/>    
+    <bendpoint x="1441" y="595"/>    
+    <bendpoint x="1399" y="688"/>    
+    <bendpoint x="1378" y="781"/>    
+    <end type="SOURCE" refId="37"/>    
+    <end type="TARGET" refId="9"/>  
+  </dependency>  
+  <dependency id="251">    
+    <bendpoint x="453" y="409"/>    
+    <bendpoint x="495" y="502"/>    
+    <bendpoint x="538" y="595"/>    
+    <bendpoint x="474" y="688"/>    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <dependency id="252">    
+    <bendpoint x="635" y="130"/>    
+    <bendpoint x="635" y="223"/>    
+    <bendpoint x="635" y="316"/>    
+    <bendpoint x="747" y="409"/>    
+    <bendpoint x="854" y="502"/>    
+    <bendpoint x="980" y="595"/>    
+    <bendpoint x="1000" y="688"/>    
+    <end type="SOURCE" refId="34"/>    
+    <end type="TARGET" refId="19"/>  
+  </dependency>  
+  <association id="253">    
+    <bendpoint x="811" y="781"/>    
+    <end type="SOURCE" refId="49" navigable="false">      
+      <attribute id="254" name="tissue"/>      
+      <multiplicity id="255" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="256">    
+    <bendpoint x="705" y="409"/>    
+    <bendpoint x="1109" y="502"/>    
+    <bendpoint x="1378" y="595"/>    
+    <bendpoint x="1525" y="688"/>    
+    <bendpoint x="1588" y="781"/>    
+    <bendpoint x="1609" y="874"/>    
+    <bendpoint x="1609" y="967"/>    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="38"/>  
+  </dependency>  
+  <dependency id="257">    
+    <bendpoint x="727" y="967"/>    
+    <bendpoint x="727" y="1060"/>    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="29"/>  
+  </dependency>  
+  <dependency id="258">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="6"/>  
+  </dependency>  
+  <dependency id="259">    
+    <bendpoint x="1505" y="502"/>    
+    <bendpoint x="1504" y="595"/>    
+    <bendpoint x="1504" y="688"/>    
+    <bendpoint x="1504" y="781"/>    
+    <bendpoint x="1420" y="874"/>    
+    <bendpoint x="1010" y="967"/>    
+    <bendpoint x="968" y="1060"/>    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="29"/>  
+  </dependency>  
+  <association id="260">    
+    <end type="SOURCE" refId="29" navigable="false">      
+      <attribute id="261" name="X_VECTOR"/>      
+      <multiplicity id="262" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="39" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="263">    
+    <bendpoint x="495" y="688"/>    
+    <bendpoint x="643" y="781"/>    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="9"/>  
+  </dependency>  
+  <association id="264">    
+    <bendpoint x="685" y="595"/>    
+    <bendpoint x="516" y="688"/>    
+    <bendpoint x="411" y="781"/>    
+    <bendpoint x="411" y="874"/>    
+    <bendpoint x="411" y="967"/>    
+    <bendpoint x="411" y="1060"/>    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="265" name="from"/>      
+      <multiplicity id="266" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="29" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="267">    
+    <end type="SOURCE" refId="33" navigable="false">      
+      <attribute id="268" name="stream"/>      
+      <multiplicity id="269" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="26" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="270">    
+    <end type="SOURCE" refId="40" navigable="false">      
+      <attribute id="271" name="channels"/>      
+      <multiplicity id="272" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="273">    
+    <end type="SOURCE" refId="29" navigable="false">      
+      <attribute id="274" name="Y_VECTOR"/>      
+      <multiplicity id="275" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="39" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="276">    
+    <bendpoint x="1588" y="502"/>    
+    <bendpoint x="1588" y="595"/>    
+    <bendpoint x="1588" y="688"/>    
+    <bendpoint x="1567" y="781"/>    
+    <bendpoint x="1462" y="874"/>    
+    <bendpoint x="1094" y="967"/>    
+    <bendpoint x="1010" y="1060"/>    
+    <end type="SOURCE" refId="40" navigable="false">      
+      <attribute id="277" name="locs"/>      
+      <multiplicity id="278" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="29" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="279">    
+    <bendpoint x="1525" y="874"/>    
+    <bendpoint x="1609" y="781"/>    
+    <bendpoint x="1666" y="688"/>    
+    <bendpoint x="1735" y="595"/>    
+    <bendpoint x="1798" y="502"/>    
+    <bendpoint x="1819" y="409"/>    
+    <end type="SOURCE" refId="48"/>    
+    <end type="TARGET" refId="3"/>  
+  </generalization>  
+  <generalization id="280">    
+    <bendpoint x="1526" y="502"/>    
+    <bendpoint x="1567" y="595"/>    
+    <bendpoint x="1609" y="688"/>    
+    <bendpoint x="1651" y="781"/>    
+    <bendpoint x="1651" y="874"/>    
+    <bendpoint x="1651" y="967"/>    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="38"/>  
+  </generalization>  
+  <dependency id="281">    
+    <bendpoint x="390" y="409"/>    
+    <bendpoint x="369" y="502"/>    
+    <bendpoint x="348" y="595"/>    
+    <bendpoint x="369" y="688"/>    
+    <bendpoint x="390" y="781"/>    
+    <bendpoint x="622" y="874"/>    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="21"/>  
+  </dependency>  
+  <dependency id="282">    
+    <bendpoint x="1165" y="223"/>    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="25"/>  
+  </dependency>  
+  <dependency id="283">    
+    <bendpoint x="790" y="874"/>    
+    <bendpoint x="706" y="967"/>    
+    <bendpoint x="632" y="1060"/>    
+    <bendpoint x="558" y="1153"/>    
+    <end type="SOURCE" refId="19"/>    
+    <end type="TARGET" refId="22"/>  
+  </dependency>  
+  <dependency id="284">    
+    <end type="SOURCE" refId="36"/>    
+    <end type="TARGET" refId="2"/>  
+  </dependency>  
+  <dependency id="285">    
+    <bendpoint x="2039" y="409"/>    
+    <bendpoint x="1838" y="502"/>    
+    <bendpoint x="1693" y="595"/>    
+    <bendpoint x="1546" y="688"/>    
+    <bendpoint x="1462" y="781"/>    
+    <end type="SOURCE" refId="24"/>    
+    <end type="TARGET" refId="9"/>  
+  </dependency>  
+  <association id="286">    
+    <end type="SOURCE" refId="21" navigable="false">      
+      <attribute id="287" name="occupant"/>      
+      <multiplicity id="288" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="38" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="289">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="290" name="listener"/>      
+      <multiplicity id="291" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="35" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="292">    
+    <bendpoint x="474" y="409"/>    
+    <bendpoint x="516" y="502"/>    
+    <bendpoint x="559" y="595"/>    
+    <bendpoint x="600" y="688"/>    
+    <bendpoint x="727" y="781"/>    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="9"/>  
+  </dependency>  
+  <nesting id="293">    
+    <end type="SOURCE" refId="50"/>    
+    <end type="TARGET" refId="10"/>  
+  </nesting>  
+  <dependency id="294">    
+    <bendpoint x="180" y="316"/>    
+    <bendpoint x="180" y="409"/>    
+    <bendpoint x="180" y="502"/>    
+    <bendpoint x="222" y="595"/>    
+    <bendpoint x="285" y="688"/>    
+    <bendpoint x="348" y="781"/>    
+    <bendpoint x="548" y="874"/>    
+    <bendpoint x="748" y="967"/>    
+    <end type="SOURCE" refId="35"/>    
+    <end type="TARGET" refId="38"/>  
+  </dependency>  
+  <dependency id="295">    
+    <bendpoint x="1210" y="595"/>    
+    <bendpoint x="1304" y="688"/>    
+    <bendpoint x="1399" y="781"/>    
+    <bendpoint x="1399" y="874"/>    
+    <bendpoint x="1115" y="967"/>    
+    <bendpoint x="1223" y="1060"/>    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="23"/>  
+  </dependency>  
+  <association id="296">    
+    <bendpoint x="1273" y="595"/>    
+    <bendpoint x="1378" y="688"/>    
+    <bendpoint x="1483" y="781"/>    
+    <bendpoint x="1504" y="874"/>    
+    <bendpoint x="1546" y="967"/>    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="297" name="player"/>      
+      <multiplicity id="298" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="38" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="299">    
+    <bendpoint x="2423" y="409"/>    
+    <bendpoint x="2423" y="502"/>    
+    <bendpoint x="2423" y="595"/>    
+    <bendpoint x="2423" y="688"/>    
+    <bendpoint x="2423" y="781"/>    
+    <bendpoint x="2423" y="874"/>    
+    <bendpoint x="2423" y="967"/>    
+    <end type="SOURCE" refId="24"/>    
+    <end type="TARGET" refId="38"/>  
+  </dependency>  
+  <dependency id="300">    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="50"/>  
+  </dependency>  
+  <association id="301">    
+    <bendpoint x="937" y="688"/>    
+    <bendpoint x="1189" y="781"/>    
+    <bendpoint x="1441" y="874"/>    
+    <bendpoint x="1525" y="967"/>    
+    <end type="SOURCE" refId="36" navigable="false">      
+      <attribute id="302" name="activePlayer"/>      
+      <multiplicity id="303" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="38" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="304">    
+    <bendpoint x="2908" y="316"/>    
+    <bendpoint x="2908" y="409"/>    
+    <bendpoint x="2900" y="502"/>    
+    <bendpoint x="2893" y="595"/>    
+    <bendpoint x="2887" y="688"/>    
+    <bendpoint x="2845" y="781"/>    
+    <bendpoint x="2845" y="874"/>    
+    <bendpoint x="2824" y="967"/>    
+    <bendpoint x="2824" y="1060"/>    
+    <end type="SOURCE" refId="33" navigable="false">      
+      <attribute id="305" name="player"/>      
+      <multiplicity id="306" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="27" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="307">    
+    <bendpoint x="243" y="316"/>    
+    <bendpoint x="243" y="409"/>    
+    <bendpoint x="285" y="502"/>    
+    <bendpoint x="327" y="595"/>    
+    <bendpoint x="390" y="688"/>    
+    <end type="SOURCE" refId="35"/>    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <dependency id="308">    
+    <bendpoint x="938" y="595"/>    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="49"/>  
+  </dependency>  
+  <association id="309">    
+    <bendpoint x="2086" y="130"/>    
+    <end type="SOURCE" refId="34" navigable="false">      
+      <attribute id="310" name="socketBundles"/>      
+      <multiplicity id="311" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="46" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="312">    
+    <end type="SOURCE" refId="37"/>    
+    <end type="TARGET" refId="6"/>  
+  </dependency>  
+  <association id="313">    
+    <bendpoint x="706" y="1153"/>    
+    <bendpoint x="706" y="1060"/>    
+    <bendpoint x="664" y="967"/>    
+    <bendpoint x="664" y="874"/>    
+    <bendpoint x="664" y="781"/>    
+    <bendpoint x="684" y="688"/>    
+    <end type="SOURCE" refId="47" navigable="false">      
+      <attribute id="314" name="game"/>      
+      <multiplicity id="315" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="36" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="316">    
+    <bendpoint x="2845" y="316"/>    
+    <bendpoint x="2824" y="409"/>    
+    <bendpoint x="2824" y="502"/>    
+    <bendpoint x="2824" y="595"/>    
+    <bendpoint x="2824" y="688"/>    
+    <bendpoint x="2824" y="781"/>    
+    <bendpoint x="2824" y="874"/>    
+    <bendpoint x="2845" y="967"/>    
+    <bendpoint x="2845" y="1060"/>    
+    <bendpoint x="2845" y="1153"/>    
+    <end type="SOURCE" refId="50" navigable="false">      
+      <attribute id="317" name="w"/>      
+      <multiplicity id="318" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="47" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="319">    
+    <bendpoint x="874" y="781"/>    
+    <bendpoint x="874" y="688"/>    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="320" name="game"/>      
+      <multiplicity id="321" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="36" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="322">    
+    <bendpoint x="159" y="316"/>    
+    <bendpoint x="138" y="409"/>    
+    <bendpoint x="138" y="502"/>    
+    <bendpoint x="117" y="595"/>    
+    <bendpoint x="117" y="688"/>    
+    <bendpoint x="180" y="781"/>    
+    <bendpoint x="243" y="874"/>    
+    <bendpoint x="306" y="967"/>    
+    <bendpoint x="327" y="1060"/>    
+    <end type="SOURCE" refId="35"/>    
+    <end type="TARGET" refId="29"/>  
+  </dependency>  
+  <dependency id="323">    
+    <end type="SOURCE" refId="37"/>    
+    <end type="TARGET" refId="3"/>  
+  </dependency>  
+  <dependency id="324">    
+    <end type="SOURCE" refId="42"/>    
+    <end type="TARGET" refId="47"/>  
+  </dependency>  
+  <generalization id="325">    
+    <end type="SOURCE" refId="31"/>    
+    <end type="TARGET" refId="11"/>  
+  </generalization>  
+  <association id="326">    
+    <bendpoint x="432" y="409"/>    
+    <bendpoint x="432" y="502"/>    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="327" name="selection"/>      
+      <multiplicity id="328" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="329">    
+    <end type="SOURCE" refId="43"/>    
+    <end type="TARGET" refId="15"/>  
+  </realization>  
+  <dependency id="330">    
+    <end type="SOURCE" refId="37"/>    
+    <end type="TARGET" refId="45"/>  
+  </dependency>  
+  <association id="331">    
+    <end type="SOURCE" refId="39" navigable="false">      
+      <attribute id="332" name="j"/>      
+      <multiplicity id="333" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="39" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="334">    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="15"/>  
+  </realization>  
+  <association id="335">    
+    <bendpoint x="1357" y="874"/>    
+    <bendpoint x="1483" y="967"/>    
+    <end type="SOURCE" refId="19" navigable="false">      
+      <attribute id="336" name="player"/>      
+      <multiplicity id="337" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="38" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="338">    
+    <bendpoint x="1073" y="967"/>    
+    <end type="SOURCE" refId="38" navigable="false">      
+      <attribute id="339" name="tissue"/>      
+      <multiplicity id="340" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="341">    
+    <end type="SOURCE" refId="29"/>    
+    <end type="TARGET" refId="7"/>  
+  </dependency>  
+  <dependency id="342">    
+    <bendpoint x="1001" y="595"/>    
+    <bendpoint x="979" y="688"/>    
+    <bendpoint x="949" y="781"/>    
+    <bendpoint x="949" y="874"/>    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="21"/>  
+  </dependency>  
+  <dependency id="343">    
+    <bendpoint x="558" y="409"/>    
+    <bendpoint x="642" y="502"/>    
+    <bendpoint x="875" y="595"/>    
+    <bendpoint x="916" y="688"/>    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="19"/>  
+  </dependency>  
+  <association id="344">    
+    <bendpoint x="2887" y="316"/>    
+    <bendpoint x="2845" y="409"/>    
+    <bendpoint x="2796" y="502"/>    
+    <bendpoint x="2738" y="595"/>    
+    <bendpoint x="2680" y="688"/>    
+    <bendpoint x="2638" y="781"/>    
+    <bendpoint x="2596" y="874"/>    
+    <bendpoint x="2554" y="967"/>    
+    <end type="SOURCE" refId="46" navigable="false">      
+      <attribute id="345" name="player"/>      
+      <multiplicity id="346" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="38" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="347">    
+    <end type="SOURCE" refId="32"/>    
+    <end type="TARGET" refId="15"/>  
+  </realization>  
+  <dependency id="348">    
+    <bendpoint x="2782" y="316"/>    
+    <bendpoint x="2725" y="409"/>    
+    <bendpoint x="2669" y="502"/>    
+    <bendpoint x="2612" y="595"/>    
+    <bendpoint x="2580" y="688"/>    
+    <bendpoint x="2575" y="781"/>    
+    <bendpoint x="2575" y="874"/>    
+    <bendpoint x="2575" y="967"/>    
+    <bendpoint x="2050" y="1060"/>    
+    <bendpoint x="1525" y="1153"/>    
+    <end type="SOURCE" refId="50"/>    
+    <end type="TARGET" refId="22"/>  
+  </dependency>  
+  <dependency id="349">    
+    <bendpoint x="264" y="409"/>    
+    <bendpoint x="222" y="502"/>    
+    <bendpoint x="180" y="595"/>    
+    <bendpoint x="169" y="688"/>    
+    <bendpoint x="159" y="781"/>    
+    <bendpoint x="117" y="874"/>    
+    <bendpoint x="96" y="967"/>    
+    <bendpoint x="96" y="1060"/>    
+    <bendpoint x="89" y="1153"/>    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="7"/>  
+  </dependency>  
+  <dependency id="350">    
+    <bendpoint x="222" y="223"/>    
+    <bendpoint x="222" y="316"/>    
+    <bendpoint x="201" y="409"/>    
+    <bendpoint x="159" y="502"/>    
+    <bendpoint x="138" y="595"/>    
+    <bendpoint x="138" y="688"/>    
+    <bendpoint x="138" y="781"/>    
+    <bendpoint x="138" y="874"/>    
+    <bendpoint x="138" y="967"/>    
+    <bendpoint x="138" y="1060"/>    
+    <bendpoint x="138" y="1153"/>    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="22"/>  
+  </dependency>  
+  <dependency id="351">    
+    <bendpoint x="1547" y="502"/>    
+    <bendpoint x="1483" y="595"/>    
+    <bendpoint x="1462" y="688"/>    
+    <bendpoint x="1420" y="781"/>    
+    <end type="SOURCE" refId="40"/>    
+    <end type="TARGET" refId="9"/>  
+  </dependency>  
+  <association id="352">    
+    <bendpoint x="516" y="409"/>    
+    <bendpoint x="600" y="502"/>    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="353" name="game"/>      
+      <multiplicity id="354" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="36" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="355">    
+    <bendpoint x="327" y="1153"/>    
+    <bendpoint x="264" y="1060"/>    
+    <bendpoint x="264" y="967"/>    
+    <bendpoint x="264" y="874"/>    
+    <bendpoint x="264" y="781"/>    
+    <bendpoint x="264" y="688"/>    
+    <bendpoint x="285" y="595"/>    
+    <bendpoint x="327" y="502"/>    
+    <bendpoint x="327" y="409"/>    
+    <end type="SOURCE" refId="47" navigable="false">      
+      <attribute id="356" name="gameScreen"/>      
+      <multiplicity id="357" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="358">    
+    <end type="SOURCE" refId="37"/>    
+    <end type="TARGET" refId="18"/>  
+  </dependency>  
+  <dependency id="359">    
+    <bendpoint x="719" y="223"/>    
+    <bendpoint x="677" y="316"/>    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="8"/>  
+  </dependency>  
+  <dependency id="360">    
+    <bendpoint x="684" y="409"/>    
+    <bendpoint x="875" y="502"/>    
+    <bendpoint x="1294" y="595"/>    
+    <bendpoint x="1420" y="688"/>    
+    <bendpoint x="1525" y="781"/>    
+    <bendpoint x="1546" y="874"/>    
+    <bendpoint x="1567" y="967"/>    
+    <bendpoint x="1567" y="1060"/>    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="23"/>  
+  </dependency>  
+  <dependency id="361">    
+    <bendpoint x="1714" y="502"/>    
+    <bendpoint x="1714" y="595"/>    
+    <bendpoint x="1714" y="688"/>    
+    <bendpoint x="1714" y="781"/>    
+    <bendpoint x="1714" y="874"/>    
+    <bendpoint x="1714" y="967"/>    
+    <end type="SOURCE" refId="40"/>    
+    <end type="TARGET" refId="38"/>  
+  </dependency>  
+  <association id="362">    
+    <end type="SOURCE" refId="20" navigable="false">      
+      <attribute id="363" name="socketBundle"/>      
+      <multiplicity id="364" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="46" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="365">    
+    <bendpoint x="495" y="409"/>    
+    <bendpoint x="537" y="502"/>    
+    <bendpoint x="622" y="595"/>    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="49"/>  
+  </dependency>  
+  <realization id="366">    
+    <end type="SOURCE" refId="25"/>    
+    <end type="TARGET" refId="15"/>  
+  </realization>  
+  <association id="367">    
+    <end type="SOURCE" refId="37" navigable="false">      
+      <attribute id="368" name="clientLobbyScreen"/>      
+      <multiplicity id="369" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="24" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="370">    
+    <end type="SOURCE" refId="37"/>    
+    <end type="TARGET" refId="16"/>  
+  </dependency>  
+  <dependency id="371">    
+    <bendpoint x="833" y="502"/>    
+    <bendpoint x="643" y="595"/>    
+    <bendpoint x="537" y="688"/>    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <realization id="372">    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="15"/>  
+  </realization>  
+  <dependency id="373">    
+    <end type="SOURCE" refId="38"/>    
+    <end type="TARGET" refId="23"/>  
+  </dependency>  
+  <dependency id="374">    
+    <bendpoint x="1777" y="409"/>    
+    <bendpoint x="1777" y="502"/>    
+    <bendpoint x="1777" y="595"/>    
+    <bendpoint x="1777" y="688"/>    
+    <bendpoint x="1777" y="781"/>    
+    <bendpoint x="1777" y="874"/>    
+    <bendpoint x="1777" y="967"/>    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="38"/>  
+  </dependency>  
+  <dependency id="375">    
+    <bendpoint x="579" y="688"/>    
+    <bendpoint x="559" y="781"/>    
+    <bendpoint x="390" y="874"/>    
+    <bendpoint x="348" y="967"/>    
+    <bendpoint x="306" y="1060"/>    
+    <bendpoint x="306" y="1153"/>    
+    <end type="SOURCE" refId="36"/>    
+    <end type="TARGET" refId="22"/>  
+  </dependency>  
+  <dependency id="376">    
+    <bendpoint x="593" y="316"/>    
+    <bendpoint x="726" y="409"/>    
+    <end type="SOURCE" refId="35"/>    
+    <end type="TARGET" refId="2"/>  
+  </dependency>  
+  <dependency id="377">    
+    <bendpoint x="1252" y="223"/>    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="18"/>  
+  </dependency>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
     accessors="true" visibility="true">    
-    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
-    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+    <attributes public="false" package="false" protected="false" private="false" static="true"/>    
+    <operations public="false" package="false" protected="false" private="false" static="true"/>  
   </classifier-display>  
   <association-display labels="true" multiplicity="true"/>
 </class-diagram>
