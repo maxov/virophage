@@ -69,12 +69,24 @@ public class ClientGame extends Game implements Runnable {
         out.reset();
     }
 
+    /**
+     * Write an action
+     *
+     * @param action an Action
+     * @throws IOException
+     */
     public void writeAction(Action action) throws IOException {
         out.writeObject(action);
         out.flush();
         out.reset();
     }
 
+    /**
+     * Write a chat
+     *
+     * @param action a BroadcastPacket
+     * @throws IOException
+     */
     public void writeChat(BroadcastPacket action) throws IOException {
         out.writeObject(action);
         out.flush();
