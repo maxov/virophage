@@ -24,7 +24,7 @@ public class Virus implements Serializable {
     private int timeToUpdate;
     private int creationTime;
 
-    private TimerTask task = recreateTask();
+    private transient TimerTask task = recreateTask();
 
     /**
      * Recreates a TimerTask;
@@ -58,6 +58,10 @@ public class Virus implements Serializable {
         this.player = player;
         this.energy = energy;
         this.timeToUpdate = 10000;
+    }
+
+    public Virus() {
+
     }
 
     public boolean canGrowAt(int time) {

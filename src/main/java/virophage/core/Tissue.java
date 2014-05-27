@@ -125,6 +125,14 @@ public class Tissue implements Serializable {
             }
         }
     }
+
+    public int getOccupiedCells() {
+        int n = 0;
+        for(Cell cell: flatCells()) {
+            if(cell.hasOccupant()) n++;
+        }
+        return n;
+    }
     
     public void addBonusCell(BonusCell c){
         bonuses.add(c);

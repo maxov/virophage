@@ -25,7 +25,7 @@ public class Channel implements Serializable {
     public Virus virus;
     private int creationTime;
 
-    private TimerTask task = new TimerTask() {
+    private transient TimerTask task = new TimerTask() {
         /**
          * Timer - Timeout Method.
          * Transfers energy and removes channel when "conquered" by opponent.
@@ -131,6 +131,10 @@ public class Channel implements Serializable {
         this.player = player;
         virus = null;
         GameScreen.timer.schedule(task, 2000, 2000);
+    }
+
+    public Channel() {
+
     }
 
     public boolean canInfectAt(int time) {

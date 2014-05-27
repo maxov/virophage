@@ -69,7 +69,7 @@ public class Game {
                 (isUpgraded(virus.getPlayer()) ?
                         ((ticks - c.getCreationTime()) % GameConstants.UPGRADED_CHANNEL_MOVE_TICKS == 0) :
                         ((ticks - c.getCreationTime()) % GameConstants.CHANNEL_MOVE_TICKS == 0)) &&
-                getOutgoing(from).size() < virus.getEnergy();
+                (getOutgoing(from, c).size() + 1) < virus.getEnergy();
     }
 
     private boolean canGrow(Cell c) {
@@ -82,9 +82,20 @@ public class Game {
 
     private boolean isUpgraded(Player player) {
         for(BonusCell cell: getTissue().getBonuses()) {
-            if(!cell.getPlayer().equals(player)) return false;
+            if(cell.getPlayer() == null || !cell.getPlayer().equals(player)) return false;
         }
         return true;
+    }
+
+    private ArrayList<Channel> getOutgoing(Cell c, Channel cha) {
+        ArrayList<Channel> channels = new ArrayList<Channel>();
+        if(c.hasOccupant()) {
+            Player player = c.getOccupant().getPlayer();
+            for(Channel channel: player.getChannels()) {
+                if(channel != cha && channel.from.equals(c.location) && canInfect(channel)) channels.add(channel);
+            }
+        }
+        return channels;
     }
 
     private ArrayList<Channel> getOutgoing(Cell c) {
@@ -194,14 +205,16 @@ public class Game {
                         occupant.setEnergy(GameConstants.MAX_ENERGY);
                 } else {
                     Map.Entry<Player, Integer> highest = highestEntry(count);
-                    int highestVal = highest.getValue();
-                    int rest = sumEntries(otherEntries(count, highest.getKey()));
-                    int delta2 = rest - highestVal;
-                    if(delta2 > 0) {
-                        cell.setOccupant(new Virus(highest.getKey(), delta2));
-                        Virus occupant = cell.getOccupant();
-                        if(occupant.getEnergy() > GameConstants.MAX_ENERGY)
-                            occupant.setEnergy(GameConstants.MAX_ENERGY);
+                    if(highest != null) {
+                        int highestVal = highest.getValue();
+                        int rest = sumEntries(otherEntries(count, highest.getKey()));
+                        int delta2 = rest - highestVal;
+                        if(delta2 > 0) {
+                            cell.setOccupant(new Virus(highest.getKey(), delta2));
+                            Virus occupant = cell.getOccupant();
+                            if(occupant.getEnergy() > GameConstants.MAX_ENERGY)
+                                occupant.setEnergy(GameConstants.MAX_ENERGY);
+                        }
                     }
                 }
                 ArrayList<Channel> channels = new ArrayList<Channel>();
@@ -215,13 +228,15 @@ public class Game {
                 ArrayList<Channel> channels = getInfectors(cell);
                 Map<Player, Integer> count = countChannels(groupChannels(channels));
                 Map.Entry<Player, Integer> highest = highestEntry(count);
-                int highestVal = highest.getValue();
-                int rest = sumEntries(otherEntries(count, highest.getKey()));
-                int delta = rest - highestVal;
-                if(delta > 0) {
-                    cell.setOccupant(new Virus(highest.getKey(), delta));
-                    if(cell.getOccupant().getEnergy() > GameConstants.MAX_ENERGY)
-                        cell.getOccupant().setEnergy(GameConstants.MAX_ENERGY);
+                if(highest != null) {
+                    int highestVal = highest.getValue();
+                    int rest = sumEntries(otherEntries(count, highest.getKey()));
+                    int delta = rest - highestVal;
+                    if(delta > 0) {
+                        cell.setOccupant(new Virus(highest.getKey(), delta));
+                        if(cell.getOccupant().getEnergy() > GameConstants.MAX_ENERGY)
+                            cell.getOccupant().setEnergy(GameConstants.MAX_ENERGY);
+                    }
                 }
                 for(Channel channel: channels) {
                     Virus occupant = tissue.getCell(channel.from).getOccupant();

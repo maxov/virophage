@@ -1,5 +1,6 @@
 package virophage.game;
 
+import virophage.SerializeTest;
 import virophage.Start;
 import virophage.core.*;
 import virophage.gui.ClientLobbyScreen;
@@ -10,6 +11,7 @@ import virophage.network.packet.Action;
 import virophage.util.GameConstants;
 import virophage.util.Location;
 
+import javax.sql.rowset.serial.SerialException;
 import javax.swing.*;
 import java.io.*;
 import java.net.Socket;
@@ -81,7 +83,12 @@ public class ClientGame extends Game implements Runnable {
             in = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
             writeName(player.getName());
             while(true) {
-                Object packet = in.readObject();
+                Object packet = null;
+                try {
+                    packet = in.readObject();
+                } catch (Throwable e) {
+                    e.printStackTrace();
+                }
                 if(accepted) {
                     if(inLobbyMode) {
                         if(packet instanceof LobbyPacket) {
@@ -93,13 +100,15 @@ public class ClientGame extends Game implements Runnable {
                             clientLobbyScreen.resetPlayers();
                         } else if(packet instanceof StartGamePacket) {
                             setTissue(((StartGamePacket) packet).getTissue());
+                            Start.gameClient.changePanel("renderTree");
                             Start.gameClient.getGameScreen().gameStart(this);
-                            Start.gameClient.changePanel("gameScreen");
                             inLobbyMode = false;
                         }
                     } else {
                         if(packet instanceof TissueUpdate) {
                             setTissue(((TissueUpdate) packet).getTissue());
+                            SerializeTest.serialize(((TissueUpdate) packet).getTissue());
+                            Start.log.info("recv" + ((TissueUpdate) packet).getTissue() +"occupied cells= " + getTissue().getOccupiedCells());
                         } else if(packet instanceof BroadcastPacket) {
                             if(packet instanceof ChatPacket) {
 
@@ -113,7 +122,7 @@ public class ClientGame extends Game implements Runnable {
                         if(packet instanceof TooManyPlayersError) {
                             JOptionPane.showMessageDialog(
                                     Start.gameClient,
-                                    "Disconnected: Too many players",
+                                    ((TooManyPlayersError) packet).getError(),
                                     "Disconnected",
                                     JOptionPane.WARNING_MESSAGE);
                             Start.gameClient.changePanel("menuScreen");
@@ -121,7 +130,6 @@ public class ClientGame extends Game implements Runnable {
                             new Thread(new Runnable() {
                                 @Override
                                 public void run() {
-
                                     new ConnectionDialog(Start.gameClient);
                                 }
                             }).start();
@@ -153,8 +161,6 @@ public class ClientGame extends Game implements Runnable {
                         JOptionPane.ERROR_MESSAGE);
             }
             Start.gameClient.changePanel("menuScreen");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
     }
 
