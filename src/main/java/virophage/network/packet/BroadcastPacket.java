@@ -1,5 +1,7 @@
 package virophage.network.packet;
 
+import virophage.network.Chat;
+
 /**
  * Packet for broadcast.
  *
@@ -7,23 +9,18 @@ package virophage.network.packet;
  */
 public class BroadcastPacket implements Packet {
 
-    private String message;
+    private Chat chat;
 
-    /**
-     * Construct this broadcast packet.
-     *
-     * @param message message
-     */
-    public BroadcastPacket(String message) {
-        this.message = message;
+    public BroadcastPacket(Chat chat) {
+        this.chat = chat;
     }
 
-    public String getMessage() {
-        return message;
+    public Chat getChat() {
+        return chat;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setChat(Chat chat) {
+        this.chat = chat;
     }
 
 }

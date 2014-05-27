@@ -1,9 +1,9 @@
 package virophage.game;
 
-import com.sun.xml.internal.ws.encoding.soap.SerializationException;
 import virophage.Start;
 import virophage.core.*;
 import virophage.gui.LobbyScreen;
+import virophage.network.Chat;
 import virophage.network.SocketBundle;
 import virophage.network.packet.*;
 import virophage.util.GameConstants;
@@ -13,6 +13,7 @@ import java.awt.*;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.*;
 
 public class ServerGame extends Game implements Runnable {
@@ -138,8 +139,10 @@ public class ServerGame extends Game implements Runnable {
         return inLobbyMode;
     }
 
-    private void writeToAll(Packet packet) {
-        for(SocketBundle bundle: socketBundles) {
+    public void writeToAll(Packet packet) {
+        Iterator<SocketBundle> socketBundleIterator = socketBundles.iterator();
+        while(socketBundleIterator.hasNext()) {
+            SocketBundle bundle = socketBundleIterator.next();
             ObjectOutputStream out = bundle.getOut();
             if(out != null) {
                 try {
@@ -152,11 +155,14 @@ public class ServerGame extends Game implements Runnable {
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
-                } catch (SerializationException e) {
+                } catch (Throwable e) {
                     e.printStackTrace();
                 }
             }
-            }
+        }
+        if(packet instanceof BroadcastPacket) {
+            Start.chatList.queueChat(((BroadcastPacket) packet).getChat());
+        }
     }
 
     public void setInLobbyMode(boolean inLobbyMode) {
@@ -281,7 +287,9 @@ public class ServerGame extends Game implements Runnable {
                 ((AIPlayer) p).schedule();
             }
         }
+
         writeToAll(new StartGamePacket(getTissue()));
+        writeToAll(new BroadcastPacket(new Chat(null, "Game has started!")));
         setInLobbyMode(false);
         setGameStarted(true);
         new GameLoop(this).start();
@@ -370,10 +378,37 @@ public class ServerGame extends Game implements Runnable {
                 lobbyScreen.resetPlayers();
 
                 while (socketBundles.contains(socketBundle) && isListening()) {
+                    try {
+                        Packet packet = (Packet) in.readObject();
+                        if(packet instanceof CreateChannelAction) {
+                            Tissue tissue = getTissue();
+                            Location to = ((CreateChannelAction) packet).getTo();
+                            Location from = ((CreateChannelAction) packet).getFrom();
+                            Cell cell = tissue.getCell(to);
+                            Cell cellFrom = tissue.getCell(from);
+                            if(cellFrom != null && !(cellFrom instanceof DeadCell) &&
+                                    cell != null && !(player.hasChannelBetween(from, to)) &&
+                                    cellFrom.hasOccupant() && !(from.equals(to)) &&
+                                    to.isNeighbor(from)) {
+                                synchronized (tissue) {
+                                    Channel channel = new Channel(tissue, from, to, player);
+                                    player.addChannel(channel);
+                                }
+                            }
+                        } else if(packet instanceof BroadcastPacket) {
+                            writeToAll(packet);
+                        }
+                    } catch (SocketException e) {
+                        e.printStackTrace();
+                        return;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
+                String name = socketBundle.getPlayer().getName();
                 if (socketBundle != null) {
                         synchronized(socketBundles) {
                             socketBundles.remove(socketBundle);
@@ -395,6 +430,7 @@ public class ServerGame extends Game implements Runnable {
                         lobbyScreen.resetPlayers();
                     }
                 }
+                writeToAll(new BroadcastPacket(new Chat(null, "Player " + name + " has disconnected")));
             }
         }
 

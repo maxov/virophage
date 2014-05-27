@@ -20,7 +20,7 @@ public class MenuScreen extends JPanel implements ActionListener {
     private JButton joinGameButton;
     private JButton instrButton;
     private JButton credButton;
-    private ImageIcon icon = new ImageIcon("Viro-Background.png");
+    private ImageIcon icon = new ImageIcon(getClass().getResource("/Viro-Background.png"));
 
     /**
      * Construct a MenuScreen.

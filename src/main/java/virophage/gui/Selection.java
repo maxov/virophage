@@ -45,13 +45,13 @@ public class Selection {
         this.from = from;
     }
 
-    private ArrayList<Cell> possible() {
-        ArrayList<Cell> possible = new ArrayList<Cell>();
+    private ArrayList<Location> possible() {
+        ArrayList<Location> possible = new ArrayList<Location>();
         if (hasFrom()) {
             for (Location loc : from.location.getNeighbors()) {
                 Cell c = from.tissue.getCell(loc);
-                if (!(c instanceof DeadCell)) {
-                    possible.add(c);
+                if (c != null && !(c instanceof DeadCell)) {
+                    possible.add(loc);
                 }
             }
         }
@@ -65,17 +65,20 @@ public class Selection {
      * @return a boolean
      */
     public boolean isFrom(Cell cell) {
-        return hasFrom() && from.equals(cell);
+        return hasFrom() && from.location.equals(cell.location);
     }
 
     /**
-     * Checks to see if this cell is one of the possible move locations within this selection.
+     * Checks to see if this loc is one of the possible move locations within this selection.
      *
-     * @param cell a Cell
+     * @param loc a Cell
      * @return a boolean
      */
-    public boolean isPossible(Cell cell) {
-        return possible().contains(cell);
+    public boolean isPossible(Location loc) {
+        for(Location l: possible()) {
+            if(l.equals(loc)) return true;
+        }
+        return false;
     }
 
 }

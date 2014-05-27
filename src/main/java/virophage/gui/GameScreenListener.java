@@ -6,11 +6,17 @@ import virophage.core.Channel;
 import virophage.core.DeadCell;
 import virophage.core.Player;
 import virophage.core.Tissue;
+import virophage.game.ClientGame;
+import virophage.game.ServerGame;
+import virophage.network.Chat;
+import virophage.network.packet.BroadcastPacket;
+import virophage.network.packet.CreateChannelAction;
 import virophage.util.HexagonConstants;
 import virophage.util.Vector;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 
 /**
  * A class that listens for GameScreen events.
@@ -21,9 +27,10 @@ import java.awt.event.*;
 class GameScreenListener implements KeyListener, MouseListener, MouseMotionListener, MouseWheelListener {
 
     private GameScreen gameScreen;
-    private Tissue tissue;
     private Vector prevPos;
     private double zoomFactor;
+
+    private String currentChat = "";
 
     /**
      * Creates a GameScreenListener from a GameScreen.
@@ -32,17 +39,12 @@ class GameScreenListener implements KeyListener, MouseListener, MouseMotionListe
      */
     public GameScreenListener(GameScreen gameScreen) {
         this.gameScreen = gameScreen;
-        tissue = null;
         zoomFactor = 1;
-    }
-
-    public void setTissue(Tissue tissue) {
-    	this.tissue = tissue;
     }
 
     private Cell getCellAround(MouseEvent e) {
         Vector p = new Vector(e.getPoint()).scale(1 / gameScreen.zoom).subtract(gameScreen.displacement);
-        for (Cell cell: tissue.flatCells()) {
+        for (Cell cell: gameScreen.getGame().getTissue().flatCells()) {
             if (cell != null && insideCell(cell, p)) return cell;
         }
         return null;
@@ -79,18 +81,39 @@ class GameScreenListener implements KeyListener, MouseListener, MouseMotionListe
         if (code == KeyEvent.VK_LEFT) {
             gameScreen.displacement = gameScreen.displacement.add(Vector.i.scale(50 / gameScreen.zoom));
         }
-        if (code == KeyEvent.VK_RIGHT) {
+        else if (code == KeyEvent.VK_RIGHT) {
             gameScreen.displacement = gameScreen.displacement.add(Vector.i.scale(-50 / gameScreen.zoom));
         }
-        if (code == KeyEvent.VK_UP) {
+        else if (code == KeyEvent.VK_UP) {
             gameScreen.displacement = gameScreen.displacement.add(Vector.j.scale(50 / gameScreen.zoom));
         }
-        if (code == KeyEvent.VK_DOWN) {
+        else if (code == KeyEvent.VK_DOWN) {
             gameScreen.displacement = gameScreen.displacement.add(Vector.j.scale(-50 / gameScreen.zoom));
         }
-        if (code == KeyEvent.VK_ESCAPE) {
+        else if (code == KeyEvent.VK_ESCAPE) {
             // how to stop all thread's timer? and clean up the game?
             System.exit(0);
+        } else if(code ==KeyEvent.VK_T && currentChat.length() == 0) {
+            if(gameScreen.getIdentityPlayer() != null) {
+                Start.chatList.inProgressChat(gameScreen.getIdentityPlayer());
+            }
+        } else if(code == KeyEvent.VK_ENTER && currentChat.length() > 0) {
+            Chat chat = Start.chatList.progressFinished();
+            currentChat = "";
+            if(gameScreen.getGame() instanceof ServerGame) {
+                ((ServerGame) gameScreen.getGame()).writeToAll(new BroadcastPacket(chat));
+            } else if(gameScreen.getGame() instanceof ClientGame) {
+                try {
+                    ((ClientGame) gameScreen.getGame()).writeChat(new BroadcastPacket(chat));
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        } else {
+            if(32 < e.getKeyChar() && e.getKeyChar()  < 176) {
+                currentChat += e.getKeyChar();
+                Start.chatList.progressUpdate(currentChat);
+            }
         }
         gameScreen.repaint();
     }
@@ -102,9 +125,9 @@ class GameScreenListener implements KeyListener, MouseListener, MouseMotionListe
     @Override
     public void mousePressed(MouseEvent e) {
         prevPos = new Vector(e.getPoint());
-        if (!e.isControlDown() && tissue != null) {
+        if (!e.isControlDown() && gameScreen.getGame().getTissue() != null && gameScreen.getIdentityPlayer() != null) {
             Cell c = getCellAround(e);
-            if (c != null && c.hasOccupant()) {
+            if (c != null && c.hasOccupant() && c.getOccupant().getPlayer().getName().equals(gameScreen.getIdentityPlayer().getName())) {
                 GameScreen.selection.setFrom(c);
             }
         }
@@ -157,15 +180,25 @@ class GameScreenListener implements KeyListener, MouseListener, MouseMotionListe
     }
 
     public void mouseReleased(MouseEvent e) {
-        if (GameScreen.selection.hasFrom() && tissue != null) {
+        Tissue tissue = gameScreen.getGame().getTissue();
+        if (GameScreen.selection.hasFrom() && tissue != null && gameScreen.getIdentityPlayer() != null) {
             Cell to = getCellAround(e);
             Cell from = GameScreen.selection.getFrom();
             Player p = from.getOccupant().getPlayer();
-            if (!(to.equals(from)) && !(to instanceof DeadCell) && !p.hasChannelBetween(to.location, from.location)
-                    && to.location.isNeighbor(from.location)) {
-                synchronized(tissue) {
-                    Channel c = new Channel(tissue, from.location, to.location, p);
-                    p.addChannel(c);
+            if (!(to.equals(from)) && !(to instanceof DeadCell) && !p.hasChannelBetween(from.location, to.location)
+                    && to.location.isNeighbor(from.location) && p.getName().equals(gameScreen.getIdentityPlayer().getName())) {
+                if(gameScreen.getGame() instanceof ServerGame) {
+                    synchronized(tissue) {
+                        Channel c = new Channel(tissue, from.location, to.location, p);
+                        p.addChannel(c);
+                    }
+                } else if(gameScreen.getGame() instanceof ClientGame) {
+                    ClientGame game = (ClientGame) gameScreen.getGame();
+                    try {
+                        game.writeAction(new CreateChannelAction(p, from.location, to.location));
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
                 }
             }
             GameScreen.selection = new Selection();

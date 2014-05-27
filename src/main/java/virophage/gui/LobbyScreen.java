@@ -3,6 +3,8 @@ package virophage.gui;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.*;
 
 import javax.swing.*;
@@ -109,6 +111,13 @@ public class LobbyScreen extends JPanel implements ActionListener, ListSelection
         Font f = new Font("calibri", Font.PLAIN, 18);
         g.setFont(f);
         g.drawString("Player List:", x / 12, y / 18);
+        try {
+            String ip = "IP address: " + InetAddress.getLocalHost();
+            int width = g.getFontMetrics().stringWidth(ip);
+            g.drawString(ip, x / 12 * 11 - width / 2 - 100, y / 18);
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
         list.setBounds(x / 12, y / 15, x / 3, y / 2);
 
         b2.setBounds(x - x / 3, y * 2 / 5, 300, 30);
@@ -139,11 +148,16 @@ public class LobbyScreen extends JPanel implements ActionListener, ListSelection
             c1.setSelected(false);
             w.changePanel("menuScreen");
             serverGame.stopListening();
+            serverGame.getTissue().removeAllPlayers();
+            serverGame.getTissue().addPlayer(youPlayer);
         } else if (x == buttonContinue) {
             w.changePanel("renderTree");
 
             serverGame.setInLobbyMode(false);
             serverGame.beginGame();
+            for(Player p: serverGame.getTissue().getPlayers()) {
+                if(p.equals(youPlayer)) w.gameScreen.setIdentityPlayer(youPlayer);
+            }
             w.gameScreen.gameStart(serverGame);
         } else if (x == b2) {
             synchronized (players) {

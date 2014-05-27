@@ -4,6 +4,7 @@ import virophage.Start;
 import virophage.core.*;
 import virophage.game.Game;
 import virophage.game.ServerGame;
+import virophage.network.Chat;
 import virophage.util.GameConstants;
 import virophage.util.HexagonConstants;
 import virophage.util.Location;
@@ -27,6 +28,10 @@ public class GameScreen extends Canvas implements Runnable {
     public Vector displacement = new Vector(0, 0);
     private Game game;
     private GameScreenListener listener;
+
+    private boolean running = true;
+
+    private Player identityPlayer;
 
     public static Timer timer = new Timer();
     public static Selection selection = new Selection();
@@ -127,7 +132,7 @@ public class GameScreen extends Canvas implements Runnable {
             Color dark = light.darker();
             if (selection.isFrom(cell)) {
                 light = Color.GRAY;
-            } else if (selection.isPossible(cell)) {
+            } else if (selection.isPossible(cell.location)) {
                 light = Color.LIGHT_GRAY;
             }
             g.setColor(light);
@@ -147,7 +152,7 @@ public class GameScreen extends Canvas implements Runnable {
             else {
                 if (selection.isFrom(cell)) {
                     g.setColor(Color.GRAY);
-                } else if (selection.isPossible(cell)) {
+                } else if (selection.isPossible(cell.location)) {
                     g.setColor(Color.LIGHT_GRAY);
                 } else {
                     g.setColor(Color.WHITE);
@@ -250,6 +255,37 @@ public class GameScreen extends Canvas implements Runnable {
         	}
         	i ++;
         }
+
+       f = new Font("arial",0, 14);
+       FontMetrics fm = g.getFontMetrics();
+       g.setFont(f);
+       g.setColor(Color.GRAY);
+       g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 9 * 0.1f));
+       int h = (fm.getHeight() + 5);
+       synchronized (Start.chatList.chats) {
+           ArrayList<Chat> chats = Start.chatList.chats;
+           int messages = chats.size();
+           if(messages > 8) messages = 8;
+           g.fillRect(0, 0, 500, messages * h);
+           g.setClip(0, 0, 500, messages * h);
+           for(int j = 0; j < messages; j++) {
+               try {
+                   Chat chat = chats.get(j);
+                   if(chat.getPlayer() == null) {
+                      g.setColor(Color.WHITE);
+                      g.drawString(chat.getMessage(), 20, h * j + 20);
+                   } else {
+                       String name = "<" + chat.getPlayer().getName() + "> ";
+                       int wid = fm.stringWidth(name);
+                       g.setColor(chat.getPlayer().getColor());
+                       g.drawString(name, 20, h * j + 20);
+                       g.setColor(Color.WHITE);
+                       g.drawString(chat.getMessage(), 20 + wid, h * j + 20);
+                   }
+               } catch(ArrayIndexOutOfBoundsException ignored) {}
+           }
+           g.setClip(0, 0, getWidth(), getHeight());
+       }
         
        if (numPlayersOut == (p.length - 1)){
         	g.setColor(Color.GRAY);
@@ -264,7 +300,6 @@ public class GameScreen extends Canvas implements Runnable {
             g.setFont(f);
             g.drawString("Press ESC to exit the game.", x * 3 / 7, y/2 + y/6);
         }
-        g.setTransform(new AffineTransform());
     }
 
     /**
@@ -275,7 +310,8 @@ public class GameScreen extends Canvas implements Runnable {
         Thread.currentThread().setName("RenderThread");
         this.createBufferStrategy(2);
         BufferStrategy strategy = this.getBufferStrategy();
-        while (true) {
+        running = true;
+        while (running) {
             do {
                 do {
                     Graphics gr = strategy.getDrawGraphics();
@@ -288,7 +324,11 @@ public class GameScreen extends Canvas implements Runnable {
         }
     }
 
-    /**
+    public void stopRunning() {
+        running = false;
+    }
+
+     /**
      * Starts the game by placing the players and dead cells.
      *
      * @param game a ServerGame
@@ -297,14 +337,19 @@ public class GameScreen extends Canvas implements Runnable {
         Start.log.info("Game Started!");
         this.game = game;
 
-        listener.setTissue(game.getTissue());
 
         (new Thread(this)).start();
     }
 
     public void resetTissue(Tissue tissue) {
-        listener.setTissue(tissue);
+    }
 
+    public Player getIdentityPlayer() {
+        return identityPlayer;
+    }
+
+    public void setIdentityPlayer(Player identityPlayer) {
+        this.identityPlayer = identityPlayer;
     }
 
 }

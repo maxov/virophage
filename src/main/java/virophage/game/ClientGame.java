@@ -15,6 +15,7 @@ import javax.sql.rowset.serial.SerialException;
 import javax.swing.*;
 import java.io.*;
 import java.net.Socket;
+import java.net.SocketException;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +38,7 @@ public class ClientGame extends Game implements Runnable {
     private boolean inLobbyMode = true;
     private boolean loud = true;
     private ClientLobbyScreen clientLobbyScreen;
+
 
     public PacketStream stream;
 
@@ -67,7 +69,13 @@ public class ClientGame extends Game implements Runnable {
         out.reset();
     }
 
-    private void writeAction(Action action) throws IOException {
+    public void writeAction(Action action) throws IOException {
+        out.writeObject(action);
+        out.flush();
+        out.reset();
+    }
+
+    public void writeChat(BroadcastPacket action) throws IOException {
         out.writeObject(action);
         out.flush();
         out.reset();
@@ -80,15 +88,28 @@ public class ClientGame extends Game implements Runnable {
     public void run() {
         try {
             boolean accepted = false;
+            boolean running = true;
             out = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
             out.flush();
             out.reset();
             in = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
             writeName(player.getName());
-            while(true) {
+            while(running) {
                 Serializable packet = null;
                 try {
                     packet = (Serializable) in.readObject();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    running = false;
+                    if(loud) {
+                        JOptionPane.showMessageDialog(
+                                Start.gameClient,
+                                "Error: Disconnected",
+                                "Disconnected",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+                    Start.gameClient.changePanel("menuScreen");
+                    Start.gameClient.getGameScreen().stopRunning();
                 } catch (Throwable e) {
                     e.printStackTrace();
                 }
@@ -113,11 +134,7 @@ public class ClientGame extends Game implements Runnable {
                                 setTissue(((TissueUpdate) packet).getTissue());
                             }
                         } else if(packet instanceof BroadcastPacket) {
-                            if(packet instanceof ChatPacket) {
-
-                            } else {
-
-                            }
+                            Start.chatList.queueChat(((BroadcastPacket) packet).getChat());
                         }
                     }
                 } else {
@@ -150,6 +167,7 @@ public class ClientGame extends Game implements Runnable {
                         constructTissue();
                         Start.gameClient.changePanel("clientLobbyScreen");
                         clientLobbyScreen = Start.gameClient.getClientLobbyScreen();
+                        Start.gameClient.getGameScreen().setIdentityPlayer(player);
                         clientLobbyScreen.setClientGame(this);
                     }
                 }
