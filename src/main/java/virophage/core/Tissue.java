@@ -83,6 +83,10 @@ public class Tissue implements Serializable {
         return flat;
     }
 
+    public void setCells(Cell[][] cells) {
+        this.cells = cells;
+    }
+
     /**
      * Add a player to this tissue.
      * @pre player is not null

@@ -1,7 +1,6 @@
 package virophage.game;
 
 import com.sun.xml.internal.ws.encoding.soap.SerializationException;
-import virophage.SerializeTest;
 import virophage.Start;
 import virophage.core.*;
 import virophage.gui.LobbyScreen;
@@ -130,7 +129,9 @@ public class ServerGame extends Game implements Runnable {
     }
 
     public void updateGameState() {
-        writeToAll(new TissueUpdate(getTissue()));
+        synchronized(tissue) {
+            writeToAll(new TissueUpdate(getTissue()));
+        }
     }
 
     public boolean isInLobbyMode() {
@@ -144,6 +145,7 @@ public class ServerGame extends Game implements Runnable {
                 try {
                     out.writeObject(packet);
                     out.flush();
+                    out.reset();
                     if(packet instanceof TissueUpdate) {
                         Start.log.info("sent" + packet + "occupied cells= " + ((TissueUpdate) packet).getTissue().getOccupiedCells());
                         //SerializeTest.serialize(((TissueUpdate) packet).getTissue());
@@ -154,7 +156,7 @@ public class ServerGame extends Game implements Runnable {
                     e.printStackTrace();
                 }
             }
-        }
+            }
     }
 
     public void setInLobbyMode(boolean inLobbyMode) {
@@ -302,6 +304,7 @@ public class ServerGame extends Game implements Runnable {
                 Socket socket = socketBundle.getSocket();
                 out = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
                 out.flush();
+                out.reset();
                 in = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
                 socketBundle.setIn(in);
                 socketBundle.setOut(out);
@@ -310,12 +313,14 @@ public class ServerGame extends Game implements Runnable {
                 if(getTissue().getPlayers().size() >= GameConstants.MAX_PLAYERS) {
                     out.writeObject(new TooManyPlayersError("already " + GameConstants.MAX_PLAYERS + " players(too many)"));
                     out.flush();
+                    out.reset();
                     return;
                 }
 
                 if(isGameStarted()) {
                     out.writeObject(new TooManyPlayersError("game already started"));
                     out.flush();
+                    out.reset();
                     return;
                 }
 
@@ -335,6 +340,7 @@ public class ServerGame extends Game implements Runnable {
                                 if(n.equals(name)) {
                                     out.writeObject(new PlayerNameError("that name is already taken"));
                                     out.flush();
+                                    out.reset();
                                     taken = true;
                                 }
                             }
@@ -342,6 +348,7 @@ public class ServerGame extends Game implements Runnable {
                         } else {
                             out.writeObject(new PlayerNameError("name not between 4 and 12 chars"));
                             out.flush();
+                            out.reset();
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -358,6 +365,7 @@ public class ServerGame extends Game implements Runnable {
                 socketBundle.setPlayer(player);
                 out.writeObject(new AssignPlayer(player));
                 out.flush();
+                out.reset();
                 updateLobby(getTissue().getPlayers());
                 lobbyScreen.resetPlayers();
 

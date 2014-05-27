@@ -33,85 +33,85 @@ public class Channel implements Serializable {
          */
         @Override
         public void run() {
-            Cell f = tissue.getCell(from);
-            Cell t = tissue.getCell(to);
-            Virus v = f.occupant;
-            Virus v1 = t.occupant;
-            if (v != null && v.getEnergy() > 1) {
-                if (v1 != null) {
-                    if (v.getPlayer().equals(v1.getPlayer())) {
-                        if (v1.getEnergy() < GameConstants.MAX_ENERGY) {
-                            v1.setEnergy(v1.getEnergy() + 1);
-                            v.setEnergy(v.getEnergy() - 1);
+            synchronized(tissue) {
+                Cell f = tissue.getCell(from);
+                Cell t = tissue.getCell(to);
+                Virus v = f.occupant;
+                Virus v1 = t.occupant;
+                if (v != null && v.getEnergy() > 1) {
+                    if (v1 != null) {
+                        if (v.getPlayer().equals(v1.getPlayer())) {
+                            if (v1.getEnergy() < GameConstants.MAX_ENERGY) {
+                                v1.setEnergy(v1.getEnergy() + 1);
+                                v.setEnergy(v.getEnergy() - 1);
+                            }
+                        } else {
+                            if (!hasVirus()) {
+                                createVirus();
+                            }
+                            Virus my = getVirus();
+                            if (my.getEnergy() < GameConstants.MAX_ENERGY) {
+                                my.setEnergy(my.getEnergy() + 1);
+                                v.setEnergy(v.getEnergy() - 1);
+                                if (my.getEnergy() >= v1.getEnergy()) {
+                                    Player p = t.occupant.getPlayer();
+                                    Iterator<Channel> channels = p.getChannels().iterator();
+                                    while (channels.hasNext()) {
+                                        Channel c = channels.next();
+                                        if (c.from.equals(to) || c.to.equals(to)) {
+                                            channels.remove();
+                                            p.removeChannel(c);
+                                            c.destroy();
+                                        }
+                                    }
+                                    p.removeVirus(t.occupant);
+                                    t.occupant.destroy();
+                                    t.setOccupant(my);
+                                    my.setCell(t);
+                                    my.getPlayer().addVirus(my);
+                                    my.schedule();
+                                    setVirus(null);
+                                }
+                            }
+
                         }
                     } else {
-                        if (!hasVirus()) {
-                            createVirus();
-                        }
-                        Virus my = getVirus();
-                        if (my.getEnergy() < GameConstants.MAX_ENERGY) {
-                            my.setEnergy(my.getEnergy() + 1);
-                            v.setEnergy(v.getEnergy() - 1);
-                            if (my.getEnergy() >= v1.getEnergy()) {
-                                Player p = t.occupant.getPlayer();
-                                Iterator<Channel> channels = p.getChannels().iterator();
-                                while (channels.hasNext()) {
-                                    Channel c = channels.next();
-                                    if (c.from.equals(to) || c.to.equals(to)) {
-                                        channels.remove();
-                                        p.removeChannel(c);
-                                        c.destroy();
+                        if (t instanceof BonusCell) {
+                            ((BonusCell) t).setPlayer(v.getPlayer());
+                            //tissue.getTree().getGame().removeBonusCell((BonusCell)t);
+                            Player p = null;
+                            int numTaken = 0;
+                            for (BonusCell c : tissue.getBonuses()) {
+                                if (p == null && c.getPlayer() != null) {
+                                    p = c.getPlayer();
+                                    numTaken++;
+                                } else if (c.getPlayer() != null) {
+                                    if (!p.equals(c.getPlayer())) {
+                                        break;
+                                    } else {
+                                        numTaken++;
                                     }
                                 }
-                                p.removeVirus(t.occupant);
-                                t.occupant.destroy();
-                                t.setOccupant(my);
-                                my.setCell(t);
-                                my.getPlayer().addVirus(my);
-                                my.schedule();
-                                setVirus(null);
+                            }
+                            if (numTaken == 7) {
+                                Start.log.info("ALL BONUSES TAKEN");
+                                for (Virus vx : p.getViruses()) {
+                                    if (vx.getUpdateTime() == 5000) {
+                                        continue;
+                                    }
+                                    // half the time to update
+                                    vx.setTimeToUpdate(5000);
+                                    vx.reschedule();
+                                }
                             }
                         }
 
+                        t.occupant = new Virus(v.getPlayer(), 0);
+                        t.occupant.setCell(t);
+                        v.getPlayer().addVirus(t.occupant);
+                        t.occupant.schedule();
+                        v.setEnergy(v.getEnergy() - 1);
                     }
-                } else {
-                	if(t instanceof BonusCell){
-                		((BonusCell)t).setPlayer(v.getPlayer());
-                		//tissue.getTree().getGame().removeBonusCell((BonusCell)t);
-                		Player p = null;
-                	    int numTaken = 0;
-                	    for (BonusCell c : tissue.getBonuses()){
-                	    	if(p == null && c.getPlayer() != null){
-                	    		p = c.getPlayer();
-                	    		numTaken ++;
-                	    	}
-                	    	else if (c.getPlayer() != null){
-                	    		if (!p.equals(c.getPlayer())){
-                	    			break;
-                	    		}
-                	    		else{
-                	    			numTaken ++;
-                	    		}
-                	    	}
-                	    }
-                	    if (numTaken == 7){
-                	    	Start.log.info("ALL BONUSES TAKEN");
-                	    	for (Virus vx : p.getViruses()){
-                	    		if (vx.getUpdateTime() == 5000){
-                	    			continue;
-                	    		}
-                	    		// half the time to update
-                	    		vx.setTimeToUpdate(5000);
-                	    		vx.reschedule();
-                	    	}
-                	    }
-                	}
-
-                    t.occupant = new Virus(v.getPlayer(), 0);
-                    t.occupant.setCell(t);
-                    v.getPlayer().addVirus(t.occupant);
-                    t.occupant.schedule();
-                    v.setEnergy(v.getEnergy() - 1);
                 }
             }
         }

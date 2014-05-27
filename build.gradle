@@ -15,7 +15,6 @@ dependencies {
     compile 'org.lwjgl.lwjgl:lwjgl:2.9.1'
     compile 'org.lwjgl.lwjgl:lwjgl_util:2.9.1'
     compile 'org.slick2d:slick2d-core:1.0.0'
-    compile 'com.esotericsoftware.kryo:kryo:2.24.0'
 
     // testing
     testCompile 'junit:junit:4.11'

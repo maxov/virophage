@@ -64,11 +64,13 @@ public class ClientGame extends Game implements Runnable {
     private void writeName(String name) throws IOException {
         out.writeObject(new RequestPlayerName(name));
         out.flush();
+        out.reset();
     }
 
     private void writeAction(Action action) throws IOException {
         out.writeObject(action);
         out.flush();
+        out.reset();
     }
 
     /**
@@ -80,12 +82,13 @@ public class ClientGame extends Game implements Runnable {
             boolean accepted = false;
             out = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
             out.flush();
+            out.reset();
             in = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
             writeName(player.getName());
             while(true) {
-                Object packet = null;
+                Serializable packet = null;
                 try {
-                    packet = in.readObject();
+                    packet = (Serializable) in.readObject();
                 } catch (Throwable e) {
                     e.printStackTrace();
                 }

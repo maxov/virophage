@@ -163,8 +163,10 @@ class GameScreenListener implements KeyListener, MouseListener, MouseMotionListe
             Player p = from.getOccupant().getPlayer();
             if (!(to.equals(from)) && !(to instanceof DeadCell) && !p.hasChannelBetween(to.location, from.location)
                     && to.location.isNeighbor(from.location)) {
-                Channel c = new Channel(tissue, from.location, to.location, p);
-                p.addChannel(c);
+                synchronized(tissue) {
+                    Channel c = new Channel(tissue, from.location, to.location, p);
+                    p.addChannel(c);
+                }
             }
             GameScreen.selection = new Selection();
         }

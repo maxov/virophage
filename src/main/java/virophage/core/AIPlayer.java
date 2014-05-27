@@ -45,20 +45,22 @@ public class AIPlayer extends Player {
             for (Virus v : getViruses()) {
                 try {
                     Tissue tissue = getTissue();
-                    if (v.getCell() == null) {
-                        continue;
-                    }
-                    Location from = v.getCell().location;
-                    for (Location to : from.getNeighbors()) {
-                        Cell cellTo = tissue.getCell(to);
-                        if (cellTo != null && !(cellTo instanceof DeadCell) &&
-                                !hasChannelBetween(from, to) && !hasChannelBetween(to, from) &&
-                                v.getEnergy() >= 4
-                                && Math.random() < 0.1) {
+                    synchronized(tissue) {
+                        if (v.getCell() == null) {
+                            continue;
+                        }
+                        Location from = v.getCell().location;
+                        for (Location to : from.getNeighbors()) {
+                            Cell cellTo = tissue.getCell(to);
+                            if (cellTo != null && !(cellTo instanceof DeadCell) &&
+                                    !hasChannelBetween(from, to) && !hasChannelBetween(to, from) &&
+                                    v.getEnergy() >= 4
+                                    && Math.random() < 0.1) {
                         /*if (cellTo != null && !(cellTo instanceof DeadCell) &&
                                 !hasChannelBetween(from, to) && !hasChannelBetween(to, from)) {*/
-                            Channel c = new Channel(tissue, from, to, AIPlayer.this);
-                            addChannel(c);
+                                Channel c = new Channel(tissue, from, to, AIPlayer.this);
+                                addChannel(c);
+                            }
                         }
                     }
                 } catch (Exception e) {

@@ -15,7 +15,7 @@ import virophage.util.Location;
  */
 public class Game {
 
-    private Tissue tissue;
+    protected Tissue tissue;
     private boolean gameStarted = false;
     private boolean gameEnded = false;
     private Player activePlayer;
