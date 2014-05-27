@@ -25,7 +25,7 @@ public class GameClient extends JFrame {
 
     private LobbyScreen lobbyScreen;
     private ClientLobbyScreen clientLobbyScreen;
-    private GameScreen gameScreen;
+    GameScreen gameScreen;
     private Game game;
     
     /**

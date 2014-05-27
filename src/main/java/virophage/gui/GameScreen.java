@@ -200,7 +200,7 @@ public class GameScreen extends Canvas implements Runnable {
         Graphics2D g = (Graphics2D) gr;
         Tissue tissue = game.getTissue();
         // makes the game look really nice, but also really slow
-       // g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        //g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         g.setColor(new Color(230, 230, 230));
         g.fillRect(0, 0, getWidth(), getHeight());
@@ -272,6 +272,7 @@ public class GameScreen extends Canvas implements Runnable {
      */
     @Override
     public void run() {
+        Thread.currentThread().setName("RenderThread");
         this.createBufferStrategy(2);
         BufferStrategy strategy = this.getBufferStrategy();
         while (true) {

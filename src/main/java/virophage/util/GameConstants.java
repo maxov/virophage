@@ -22,6 +22,8 @@ public class GameConstants {
     };
 
     public static final int VIRUS_GROW_TICKS = 100;
+    public static final int UPGRADED_VIRUS_GROW_TICKS = 50;
+    public static final int UPGRADED_CHANNEL_MOVE_TICKS = 10;
     public static final int CHANNEL_MOVE_TICKS = 20;
 
 }

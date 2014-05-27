@@ -1,5 +1,7 @@
 package virophage.game;
 
+import com.sun.xml.internal.ws.encoding.soap.SerializationException;
+import virophage.SerializeTest;
 import virophage.Start;
 import virophage.core.*;
 import virophage.gui.LobbyScreen;
@@ -45,6 +47,7 @@ public class ServerGame extends Game implements Runnable {
      * Starts a new serverGame that listens to the client.
      */
     public void run() {
+        Thread.currentThread().setName("ServerGame");
         startListening();
 
         try {
@@ -58,7 +61,7 @@ public class ServerGame extends Game implements Runnable {
             serverSocket.close();
             serverSocket = null;
 
-        } catch (IOException e) {
+        } catch (Throwable e) {
             e.printStackTrace();
         }
     }
@@ -107,13 +110,15 @@ public class ServerGame extends Game implements Runnable {
     public void stopListening() {
         this.listening = false;
         try {
-            serverSocket.close();
+            if(serverSocket != null)
+                serverSocket.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
         Iterator<SocketBundle> socketIterator = socketBundles.iterator();
         while(socketIterator.hasNext()) {
             SocketBundle socketBundle = socketIterator.next();
+            getTissue().getPlayers().remove(socketBundle.getPlayer());
             try {
                 socketBundle.getSocket().close();
             } catch (IOException e) {
@@ -121,7 +126,11 @@ public class ServerGame extends Game implements Runnable {
             }
             socketIterator.remove();
         }
-        getTissue().removeAllPlayers();
+        lobbyScreen.resetPlayers();
+    }
+
+    public void updateGameState() {
+        writeToAll(new TissueUpdate(getTissue()));
     }
 
     public boolean isInLobbyMode() {
@@ -135,7 +144,13 @@ public class ServerGame extends Game implements Runnable {
                 try {
                     out.writeObject(packet);
                     out.flush();
+                    if(packet instanceof TissueUpdate) {
+                        Start.log.info("sent" + packet + "occupied cells= " + ((TissueUpdate) packet).getTissue().getOccupiedCells());
+                        //SerializeTest.serialize(((TissueUpdate) packet).getTissue());
+                    }
                 } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (SerializationException e) {
                     e.printStackTrace();
                 }
             }
@@ -267,6 +282,7 @@ public class ServerGame extends Game implements Runnable {
         writeToAll(new StartGamePacket(getTissue()));
         setInLobbyMode(false);
         setGameStarted(true);
+        new GameLoop(this).start();
     }
 
     private class Handler implements Runnable{
@@ -292,12 +308,18 @@ public class ServerGame extends Game implements Runnable {
 
                 // There are already too many players
                 if(getTissue().getPlayers().size() >= GameConstants.MAX_PLAYERS) {
-                    out.writeObject(new TooManyPlayersError("already " + GameConstants.MAX_PLAYERS + " players"));
+                    out.writeObject(new TooManyPlayersError("already " + GameConstants.MAX_PLAYERS + " players(too many)"));
                     out.flush();
                     return;
                 }
 
-                String name= null;
+                if(isGameStarted()) {
+                    out.writeObject(new TooManyPlayersError("game already started"));
+                    out.flush();
+                    return;
+                }
+
+                String name = null;
 
                 waitForPlayerName: while (true) {
                     try {
@@ -329,15 +351,14 @@ public class ServerGame extends Game implements Runnable {
 
                 Color c = requestPlayerColor();
                 Player player = new Player(name);
+                Thread.currentThread().setName(name);
                 player.setTissue(getTissue());
                 player.setColor(c);
                 getTissue().addPlayer(player);
                 socketBundle.setPlayer(player);
                 out.writeObject(new AssignPlayer(player));
                 out.flush();
-                out.writeObject(new LobbyPacket(getTissue().getPlayers()));
-                out.flush();
-
+                updateLobby(getTissue().getPlayers());
                 lobbyScreen.resetPlayers();
 
                 while (socketBundles.contains(socketBundle) && isListening()) {

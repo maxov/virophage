@@ -1,6 +1,7 @@
 package virophage;
 
 
+import com.esotericsoftware.kryo.Kryo;
 import virophage.gui.GameClient;
 import java.util.logging.Logger;
 
@@ -16,10 +17,12 @@ public class Start {
         String pathsep = System.getProperty("file.separator");
         String dir = System.getProperty("user.dir");
         System.setProperty("org.lwjgl.librarypath", dir + pathsep + "lib" + pathsep + "natives");
+        //System.setProperty("sun.java2d.opengl","True");
     }
 
     public static Logger log = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     public static GameClient gameClient;
+    public static Kryo kryo = new Kryo();
 
     /**
      * Starts the game.
