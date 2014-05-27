@@ -12,6 +12,10 @@ public class AssignPlayer implements Packet {
 
     private Player player;
 
+    /**
+     * Construct an assign player packet.
+     * @param player
+     */
     public AssignPlayer(Player player) {
         this.player = player;
     }

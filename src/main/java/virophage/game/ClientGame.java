@@ -109,9 +109,9 @@ public class ClientGame extends Game implements Runnable {
                         }
                     } else {
                         if(packet instanceof TissueUpdate) {
-                            setTissue(((TissueUpdate) packet).getTissue());
-                            SerializeTest.serialize(((TissueUpdate) packet).getTissue());
-                            Start.log.info("recv" + ((TissueUpdate) packet).getTissue() +"occupied cells= " + getTissue().getOccupiedCells());
+                            synchronized(this) {
+                                setTissue(((TissueUpdate) packet).getTissue());
+                            }
                         } else if(packet instanceof BroadcastPacket) {
                             if(packet instanceof ChatPacket) {
 

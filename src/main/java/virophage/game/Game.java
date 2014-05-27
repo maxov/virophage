@@ -36,11 +36,11 @@ public class Game {
         this(null);
     }
 
-    public Tissue getTissue() {
+    public synchronized Tissue getTissue() {
         return tissue;
     }
-    public Tissue setTissue(Tissue tissue) {
-        return tissue;
+    public synchronized void setTissue(Tissue tissue) {
+        this.tissue = tissue;
     }
 
     /**

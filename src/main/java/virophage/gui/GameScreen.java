@@ -302,4 +302,9 @@ public class GameScreen extends Canvas implements Runnable {
         (new Thread(this)).start();
     }
 
+    public void resetTissue(Tissue tissue) {
+        listener.setTissue(tissue);
+
+    }
+
 }

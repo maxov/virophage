@@ -34,9 +34,9 @@ public class GameLoop implements Runnable {
             long t1 = getTime();
             game.updateGameState();
             long delta = getTime() - t1;
-            if(delta < 1000) {
+            if(delta < 100) {
                 try {
-                    Thread.sleep(1000 - delta);
+                    Thread.sleep(100 - delta);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
