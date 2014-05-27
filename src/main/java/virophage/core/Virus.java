@@ -60,10 +60,18 @@ public class Virus implements Serializable {
         this.timeToUpdate = 10000;
     }
 
+    /**
+     * No args constructor
+     */
     public Virus() {
 
     }
 
+    /**
+     * Check if can grow at time
+     * @param time a tick
+     * @return a boolean
+     */
     public boolean canGrowAt(int time) {
         return (time - creationTime) % GameConstants.VIRUS_GROW_TICKS == 0;
     }

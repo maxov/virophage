@@ -83,6 +83,10 @@ public class Tissue implements Serializable {
         return flat;
     }
 
+    /**
+     * Reset the cells
+     * @param cells new cells
+     */
     public void setCells(Cell[][] cells) {
         this.cells = cells;
     }

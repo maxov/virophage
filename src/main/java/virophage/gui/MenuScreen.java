@@ -20,7 +20,7 @@ public class MenuScreen extends JPanel implements ActionListener {
     private JButton joinGameButton;
     private JButton instrButton;
     private JButton credButton;
-    private ImageIcon icon = new ImageIcon(getClass().getResource("/Viro-Background.png"));
+    private ImageIcon icon;
 
     /**
      * Construct a MenuScreen.
@@ -29,6 +29,11 @@ public class MenuScreen extends JPanel implements ActionListener {
      */
     public MenuScreen(GameClient w) {
         this.w = w;
+        try {
+            icon = new ImageIcon(getClass().getResource("/Viro-Background.png"));
+        } catch(Exception e) {
+            icon = new ImageIcon("Viro-Background.png");
+        }
         setBackground(Color.LIGHT_GRAY);
         this.setLayout(null);
         int x = w.getWidth();
